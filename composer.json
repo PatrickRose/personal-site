@@ -5,7 +5,8 @@
     "license": "MIT",
     "require": {
         "laravel/framework": "4.1.*",
-        "patricktalmadge/bootstrapper": "4.1.*"
+        "patricktalmadge/bootstrapper": "4.1.*",
+	"vtalbot/markdown": "1.*"
     },
     "require-dev": {
         "way/generators": "dev-master"
