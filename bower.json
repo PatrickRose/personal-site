@@ -1,0 +1,22 @@
+{
+  "name": "personal-site",
+  "version": "0.0.0",
+  "homepage": "https://github.com/PatrickRose/personal-site",
+  "authors": [
+    "Patrick Rose <pjr0911025@googlemail.com>"
+  ],
+  "description": "Personal site frontend dependencies",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "app/assets/bower",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap-sass-official": "~3.1.1+1",
+    "jquery": "~2.1.0"
+  }
+}

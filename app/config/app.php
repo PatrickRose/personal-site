@@ -13,7 +13,7 @@ return array(
   |
    */
 
-  'debug' => true,
+  'debug' => false,
 
   /*
   |--------------------------------------------------------------------------
@@ -46,7 +46,8 @@ return array(
   | Application Locale Configuration
   |--------------------------------------------------------------------------
   |
-  | The application locale determines the default locale that will be used
+  |
+   The application locale determines the default locale that will be used
   | by the translation service provider. You are free to set this value
   | to any of the locales which will be supported by the application.
   |
@@ -195,7 +196,6 @@ return array(
     'Tabbable'        => 'Bootstrapper\Tabbable',
     'Table'           => 'Bootstrapper\Table',
     'Thumbnail'       => 'Bootstrapper\Thumbnail',
-    'Typeahead'       => 'Bootstrapper\Typeahead',
     'Typography'      => 'Bootstrapper\Typography',
   ),
 

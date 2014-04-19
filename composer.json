@@ -6,10 +6,15 @@
     "require": {
         "laravel/framework": "4.1.*",
         "patricktalmadge/bootstrapper": "4.1.*",
-	"vtalbot/markdown": "1.*"
+        "vtalbot/markdown": "1.*"
     },
     "require-dev": {
-        "way/generators": "dev-master"
+        "way/generators": "dev-master",
+        "barryvdh/laravel-ide-helper": "1.*",
+        "behat/behat": "*",
+        "behat/mink": "*",
+        "behat/mink-extension": "*",
+        "behat/mink-goutte-driver": "*"
     },
     "autoload": {
         "classmap": [
@@ -19,7 +24,10 @@
             "app/database/migrations",
             "app/database/seeds",
             "app/tests/TestCase.php"
-        ]
+        ],
+        "psr-4": {
+            "PatrickRose\\": "app/PatrickRose"
+        }
     },
     "scripts": {
         "post-install-cmd": [
@@ -28,6 +36,7 @@
         ],
         "post-update-cmd": [
             "php artisan clear-compiled",
+            "php artisan ide-helper:generate",
             "php artisan optimize"
         ],
         "post-create-project-cmd": [
