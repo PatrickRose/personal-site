@@ -11,3 +11,4 @@ Thumbs.db
 /app/assets/bower/
 /node_modules/
 _ide_helper.php
+jm_behat_report.html
