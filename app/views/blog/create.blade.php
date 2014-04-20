@@ -5,7 +5,7 @@
 @stop
 
 @section('content')
-    {{ Form::open(array('role' => 'form')) }}
+    {{ Form::open(array('route' => 'blog.store', 'role' => 'form')) }}
         <div class="form-group">
             {{ Form::label("title", "Title: ") }}
             {{ Form::text("title", null, array("placeholder" => "Title...")) }}

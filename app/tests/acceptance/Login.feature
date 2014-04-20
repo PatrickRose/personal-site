@@ -8,7 +8,9 @@ Feature: Login
     Given I am on "/login"
     And I fill in my login details
     Then I should be logged in
-    
+    Then I should be on "/"
+    And I should see a flash message "Login successful!"
+
   Scenario: I can't log in without valid information
     Given I am on "/login"
     And I fill in invalid login details

@@ -5,3 +5,10 @@ default:
         Behat\MinkExtension\Extension:
             goutte: ~
             base_url: http://localhost/personal-site/public/index.php/
+            selenium2:
+                wd_host: "http://localhost:8643/wd/hub"
+
+    formatter:
+        name:               pretty,html
+        parameters:
+            output_path:    null,jm_behat_report.html

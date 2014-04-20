@@ -6,6 +6,7 @@ use Behat\Behat\Context\ClosuredContextInterface,
     Behat\Behat\Exception\PendingException;
 use Behat\Gherkin\Node\PyStringNode,
     Behat\Gherkin\Node\TableNode;
+use Behat\Mink\Exception\ResponseTextException;
 use Behat\MinkExtension\Context\MinkContext;
 
 /**
@@ -63,8 +64,16 @@ class FeatureContext extends MinkContext
      */
     public function iShouldSeeAFlashMessage($message)
     {
-
-        $this->assertPageContainsText($message);
+        //TODO: This doesn't always work, but does in live testing. Problem with Goutte?
+        $session = $this->getMink()->getSession();
+        $field = $session->getPage()->find("css", ".flash-message");
+        if (!$field) {
+            throw new ResponseTextException("There was no flash message.", $session);
+        }
+        if ($field->getText() != $message) {
+            $message = sprintf('The text "%s" was not found anywhere in the flash message div.', $message);
+            throw new ResponseTextException($message, $session);
+        };
     }
 
     /**
@@ -103,5 +112,24 @@ class FeatureContext extends MinkContext
     {
         $this->assertPageNotContainsText("Logout");
         $this->assertPageContainsText("Login");
+    }
+
+    /**
+     * @Given /^I fill in the blog form with invalid data$/
+     */
+    public function iFillInTheBlogFormWithInvalidData()
+    {
+        $this->fillField("title", "Foo");
+        $this->pressButton("Create Post");
+    }
+
+    /**
+     * @Given /^I create a blog post with title "([^"]*)" and content "([^"]*)"$/
+     */
+    public function iCreateABlogPostWithTitleAndContent($title, $content)
+    {
+        $this->visit("/blog/create");
+        $this->fillField("title", $title);
+        $this->fillField("content", $content);
     }
 }

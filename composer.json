@@ -14,7 +14,8 @@
         "behat/behat": "*",
         "behat/mink": "*",
         "behat/mink-extension": "*",
-        "behat/mink-goutte-driver": "*"
+        "behat/mink-goutte-driver": "*",
+        "behat/mink-selenium2-driver": "1.1.*"
     },
     "autoload": {
         "classmap": [

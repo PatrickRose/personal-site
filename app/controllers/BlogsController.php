@@ -1,10 +1,19 @@
 <?php
 
+use PatrickRose\Repositories\BlogRepositoryInterface;
+use PatrickRose\Validation\ValidationException;
+
 class BlogsController extends \BaseController {
 
-    public function __construct() {
+    /**
+     * @var BlogRepositoryInterface
+     */
+    private $repository;
+
+    public function __construct(BlogRepositoryInterface $blogRepositoryInterface) {
         $this->beforeFilter('auth', array('except' => 'index|show'));
         $this->beforeFilter('csrf', array('on' => 'store|update'));
+        $this->repository = $blogRepositoryInterface;
     }
 
 	/**
@@ -36,18 +45,29 @@ class BlogsController extends \BaseController {
 	 */
 	public function store()
 	{
-		//
+        try {
+            $blog = $this->repository->create(Input::all());
+        } catch (ValidationException $validation) {
+            return Redirect::back()->withErrors($validation->getErrors())
+                ->withInput()->with("flash_message", "That's not a valid blog post");
+        }
+        return Redirect::route("blog.show", $blog->slug)->with("flash_message", "Blog post created!");
+//        try {
+//
+//        } catch (ModelValidationException $e) {
+//
+//        }
 	}
 
 
-	/**
-	 * Display the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function show($id)
+    /**
+     * Display the specified resource.
+     *
+     */
+	public function show($slug)
 	{
+        $blog = $this->repository->find($slug);
+        return View::make("blog.show", compact('blog'));
 		//
 	}
 

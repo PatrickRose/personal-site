@@ -19,3 +19,8 @@ Route::get('/', array(
     'uses' => 'StaticPagesController@homePage',
     'as' => 'home'
 ));
+
+Route::get('admin', array(
+    'uses' => 'StaticPagesController@homePage',
+    'as' => 'admin'
+));
