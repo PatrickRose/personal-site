@@ -7,7 +7,7 @@
 @section('content')
     <div class="blog-title">
         <h2>
-            {{ $blog->title }}
+            {{ ucwords($blog->title) }}
         </h2>
     </div>
     <div class="blog-content">

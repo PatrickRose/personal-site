@@ -49,22 +49,10 @@ class FeatureContext extends MinkContext
     }
 
     /**
-     * @Given /^I fill in the blog form$/
-     */
-    public function iFillInTheBlogForm()
-    {
-        $this->visit("blog/create");
-        $this->fillField("title", "Foo");
-        $this->fillField("content", "Baring all the baz");
-        $this->pressButton("Create Post");
-    }
-
-    /**
      * @Given /^I should see a flash message "([^"]*)"$/
      */
     public function iShouldSeeAFlashMessage($message)
     {
-        //TODO: This doesn't always work, but does in live testing. Problem with Goutte?
         $session = $this->getMink()->getSession();
         $field = $session->getPage()->find("css", ".flash-message");
         if (!$field) {
@@ -131,5 +119,66 @@ class FeatureContext extends MinkContext
         $this->visit("/blog/create");
         $this->fillField("title", $title);
         $this->fillField("content", $content);
+        $this->pressButton("Create Post");
+    }
+
+    /**
+     * @Given /^I then log out$/
+     */
+    public function iThenLogOut()
+    {
+        $this->visit("/logout");
+    }
+
+    /**
+     * @Given /^I then am on "([^"]*)"$/
+     */
+    public function iThenAmOn($uri)
+    {
+        $this->visit($uri);
+    }
+
+    /**
+     * @Then /^I should see all blogs$/
+     */
+    public function iShouldSeeAllBlogs()
+    {
+        $this->assertPageContainsText("First Post");
+        $this->assertPageContainsText("first post content");
+        $this->assertPageContainsText("Second Post");
+        $this->assertPageContainsText("second post content");
+    }
+
+    /**
+     * @Then /^the title should be "([^"]*)"$/
+     */
+    public function theTitleShouldBe($title)
+    {
+        $session = $this->getMink()->getSession();
+        $field = $session->getPage()->find("css", ".blog-title");
+        if (!$field) {
+            throw new ResponseTextException("There was no blog title.", $session);
+        }
+        if ($field->getText() != $title) {
+            $message = sprintf('The text "%s" was not found exactly in the title.', $title);
+            throw new ResponseTextException($message, $session);
+        };
+    }
+
+    /**
+     * @Given /^when I go to "([^"]*)" I should see the title "([^"]*)"$/
+     */
+    public function whenIGoToIShouldSeeTheTitle($url, $text)
+    {
+        $this->visit($url);
+        $session = $this->getMink()->getSession();
+        $fields = $session->getPage()->findAll("css", ".blog-title");
+        $found = false;
+        foreach($fields as $field) {
+            if ($field->getText() == $text) {
+                $found = true;
+            }
+        }
+        if (!$found) throw new ResponseTextException("{$text} was not found on the page", $session);
     }
 }

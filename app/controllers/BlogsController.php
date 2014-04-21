@@ -11,8 +11,8 @@ class BlogsController extends \BaseController {
     private $repository;
 
     public function __construct(BlogRepositoryInterface $blogRepositoryInterface) {
-        $this->beforeFilter('auth', array('except' => 'index|show'));
-        $this->beforeFilter('csrf', array('on' => 'store|update'));
+        $this->beforeFilter('auth', array('except' => array('index','show')));
+        $this->beforeFilter('csrf', array('on' => array('store','update')));
         $this->repository = $blogRepositoryInterface;
     }
 
@@ -23,7 +23,8 @@ class BlogsController extends \BaseController {
 	 */
 	public function index()
 	{
-		//
+        $blogs = $this->repository->all();
+        return View::make("blog.index", compact("blogs"));
 	}
 
 
@@ -52,11 +53,6 @@ class BlogsController extends \BaseController {
                 ->withInput()->with("flash_message", "That's not a valid blog post");
         }
         return Redirect::route("blog.show", $blog->slug)->with("flash_message", "Blog post created!");
-//        try {
-//
-//        } catch (ModelValidationException $e) {
-//
-//        }
 	}
 
 

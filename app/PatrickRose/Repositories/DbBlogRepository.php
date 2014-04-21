@@ -25,6 +25,7 @@ class DbBlogRepository implements BlogRepositoryInterface {
 
     public function all()
     {
+        return Blog::all();
         // TODO: Implement all() method.
     }
 
