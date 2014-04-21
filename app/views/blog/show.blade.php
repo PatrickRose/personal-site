@@ -11,6 +11,6 @@
         </h2>
     </div>
     <div class="blog-content">
-        {{ $blog->content }}
+        {{ Markdown::string($blog->content) }}
     </div>
 @stop

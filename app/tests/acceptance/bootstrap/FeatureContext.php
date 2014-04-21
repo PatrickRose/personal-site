@@ -181,4 +181,25 @@ class FeatureContext extends MinkContext
         }
         if (!$found) throw new ResponseTextException("{$text} was not found on the page", $session);
     }
+
+    /**
+     * @Given /^I create a blog post with the title "([^"]*)" and content:$/
+     */
+    public function iCreateABlogPostWithTheTitleAndContent($title, PyStringNode $string)
+    {
+        $this->iCreateABlogPostWithTitleAndContent($title, $string->getRaw());
+    }
+
+    /**
+     * @Then /^I should see the compiled markdown$/
+     */
+    public function iShouldSeeTheCompiledMarkdown() {
+        $this->assertElementOnPage("h1");
+        $this->assertElementOnPage("h2");
+        $this->assertElementOnPage("em");
+        $this->assertElementOnPage("strong");
+        $this->assertElementOnPage("ol");
+        $this->assertElementOnPage("li");
+        $this->assertElementOnPage("ul");
+    }
 }

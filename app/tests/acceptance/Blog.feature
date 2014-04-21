@@ -45,3 +45,31 @@ Feature: Blog
     And I create a blog post with title "no capitals" and content "first post content"
     Then the title should be "No Capitals"
     And when I go to "/blog" I should see the title "No Capitals"
+
+  Scenario: I can use markdown to create posts
+    Given I am logged in
+    And I create a blog post with the title "Markdown Test" and content:
+    """
+    # Heading 1
+
+    ## Heading 2
+
+    *emphasis*
+
+    **strong**
+
+    1. First ordered item
+    2. Second ordered item
+
+    * First unordered item
+    * Second unordered item
+
+    [link](http://foo.bar.com)
+
+    Test we can create `inline code`
+
+    Test that we an also add paragraphs
+
+    Hey look, more paragraphs!
+    """
+    Then I should see the compiled markdown

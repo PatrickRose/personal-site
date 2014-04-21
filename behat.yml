@@ -12,6 +12,7 @@ default:
             output_path:    null,jm_behat_report.html
             selenium2:
                 wd_host: "http://localhost:8643/wd/hub"
+
 phantomjs:
     extensions:
         Behat\MinkExtension\Extension:
