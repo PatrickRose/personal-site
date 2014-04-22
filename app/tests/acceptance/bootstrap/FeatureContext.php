@@ -1,11 +1,9 @@
 <?php
 
-use Behat\Behat\Context\ClosuredContextInterface,
-    Behat\Behat\Context\TranslatedContextInterface,
-    Behat\Behat\Context\BehatContext,
-    Behat\Behat\Exception\PendingException;
-use Behat\Gherkin\Node\PyStringNode,
-    Behat\Gherkin\Node\TableNode;
+require_once __DIR__ . "/../../../../vendor/autoload.php";
+
+use Behat\Behat\Exception\PendingException;
+use Behat\Gherkin\Node\PyStringNode;
 use Behat\Mink\Exception\ResponseTextException;
 use Behat\MinkExtension\Context\MinkContext;
 
@@ -201,5 +199,62 @@ class FeatureContext extends MinkContext
         $this->assertElementOnPage("ol");
         $this->assertElementOnPage("li");
         $this->assertElementOnPage("ul");
+    }
+
+    /**
+     * @Given /^I create (\d+) blog posts$/
+     */
+    public function iCreateBlogPosts($number)
+    {
+        $factory = Faker\Factory::create();
+        for($i = 0; $i<$number; $i++) {
+            $title = implode(" ", $factory->words(5));
+            $content = implode("\n\n", $factory->paragraphs(5));
+            $this->iCreateABlogPostWithTitleAndContent($title, $content);
+        }
+    }
+
+    /**
+     * @Given /^I should see (\d+) copies of "([^"]*)"$/
+     */
+    public function iShouldSee($number, $title)
+    {
+        $session = $this->getMink()->getSession();
+        $search = $session->getPage()->findAll('css', $title);
+        if (!$search) {
+            throw new ResponseTextException("I couldn't find {$title}.", $session);
+        }
+        $count = 0;
+        foreach($search as $i) {
+            $count++;
+        }
+        if ($number != $count) {
+            throw new ResponseTextException("I wanted {$number} of {$title}, but only found {$count}.", $session);
+        }
+    }
+
+    /**
+     * @Given /^when I go to "([^"]*)" I should see the compiled markdown$/
+     */
+    public function whenIGoToIShouldSeeTheCompiledMarkdown($url)
+    {
+        $this->visit($url);
+        $this->iShouldSeeTheCompiledMarkdown();
+    }
+
+    /**
+     * @Given /^I run "([^"]*)"$/
+     */
+    public function iRun($arg1)
+    {
+        exec($arg1, $output, $return);
+    }
+
+    /**
+     * @Given /^I shouldn\'t see "([^"]*)"$/
+     */
+    public function iShouldntSee($arg1)
+    {
+        $this->assertPageNotContainsText($arg1);
     }
 }

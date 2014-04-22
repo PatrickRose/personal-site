@@ -25,7 +25,7 @@ class DbBlogRepository implements BlogRepositoryInterface {
 
     public function all()
     {
-        return Blog::all();
+        return Blog::orderBy('created_at', 'desc')->paginate(6);
         // TODO: Implement all() method.
     }
 

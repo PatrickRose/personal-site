@@ -4,6 +4,10 @@ Feature: Blog
   As the site owner
   I can write blog posts
 
+  Background: I should have an empty site
+    Given I run "php artisan migrate:refresh"
+    And I run "php artisan db:seed"
+
   Scenario: Nobody except the site owner can create a blog post
     Given I am on "blog/create"
     Then I should be on "/login"
@@ -73,3 +77,23 @@ Feature: Blog
     Hey look, more paragraphs!
     """
     Then I should see the compiled markdown
+
+    Scenario: When we see blog posts, they are paginated
+      Given I am logged in
+      And I create 15 blog posts
+      And I am on "/blog"
+      Then I should see "«"
+      And I should see "»"
+      And I should see 6 copies of ".blog-title"
+
+    Scenario: The index page only shows the first paragraph of each post
+      Given I am logged in
+      And I create a blog post with the title "Paragraph Test" and content:
+      """
+      This is a nice paragraph
+
+      I shouldn't be able to see this
+      """
+      And I am on "/blog"
+      Then I should see "This is a nice paragraph"
+      And I shouldn't see "I shouldn't be able to see this"

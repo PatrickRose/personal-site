@@ -20,4 +20,8 @@ class Blog extends Eloquent {
         return $slug;
     }
 
+    public function getFirstParagraph() {
+        return substr($this->content, 0, strpos($this->content, "\n")) ? : $this->content;
+    }
+
 } 
