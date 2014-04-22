@@ -1,8 +1,22 @@
 // Import Bootstrap
 @import "bower/bootstrap-sass-official/vendor/assets/stylesheets/bootstrap";
 
+@import "partials/home";
 @import "partials/blog";
 
 body {
-  padding-top: 50px;
+  padding-top: 60px;
+}
+
+.flash-message {
+  @extend .alert;
+  @extend .alert-info;
+}
+
+.main-text {
+  @extend .col-md-12;
+}
+
+.sidebar {
+  @extend .col-md-4;
 }

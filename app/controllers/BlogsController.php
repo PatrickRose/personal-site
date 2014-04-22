@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use PatrickRose\Repositories\BlogRepositoryInterface;
 use PatrickRose\Validation\ValidationException;
 
@@ -62,9 +63,12 @@ class BlogsController extends \BaseController {
      */
 	public function show($slug)
 	{
-        $blog = $this->repository->find($slug);
-        return View::make("blog.show", compact('blog'));
-		//
+        try {
+            $blog = $this->repository->find($slug);
+            return View::make("blog.show", compact('blog'));
+        } catch (ModelNotFoundException $e) {
+            return Redirect::route('blog.index')->with('flash_message', "Blog post not found");
+        }
 	}
 
 

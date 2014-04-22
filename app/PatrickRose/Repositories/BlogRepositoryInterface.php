@@ -21,4 +21,6 @@ interface BlogRepositoryInterface {
 
     public function create($input);
 
+    public function getOnly($number = 3);
+
 } 

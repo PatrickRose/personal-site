@@ -2,17 +2,25 @@
 <html>
 <head>
     <title>@yield("title") - Patrick Rose</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     {{ HTML::style("assets/css/main.min.css") }}
 </head>
 <body>
     <div class="container">
         @include('partials/_navigation')
 
-        @if (Session::has("flash_message"))
-            <div class='flash-message'>{{ Session::get('flash_message') }}</div>
-        @endif
+        <div class="main-text">
+            @if (Session::has("flash_message"))
+                <div class='flash-message'>
+                    {{ Session::get('flash_message') }}
+                </div>
+            @endif
 
-        @yield("content")
+            @yield("content")
+
+        </div>
     </div>
+    {{ Bootstrapper\Helpers::get_JS() }}
+    {{ HTML::script('assets/js/fading.js') }}
 </body>
 </html>

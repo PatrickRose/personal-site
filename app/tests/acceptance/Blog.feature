@@ -78,22 +78,31 @@ Feature: Blog
     """
     Then I should see the compiled markdown
 
-    Scenario: When we see blog posts, they are paginated
-      Given I am logged in
-      And I create 15 blog posts
-      And I am on "/blog"
-      Then I should see "«"
-      And I should see "»"
-      And I should see 6 copies of ".blog-title"
-
-    Scenario: The index page only shows the first paragraph of each post
+    Scenario: The index page only shows the first two paragraphs of each post
       Given I am logged in
       And I create a blog post with the title "Paragraph Test" and content:
       """
       This is a nice paragraph
 
+      Oh goodness, so is this!
+
       I shouldn't be able to see this
       """
       And I am on "/blog"
       Then I should see "This is a nice paragraph"
+      Then I should see "Oh goodness, so is this!"
       And I shouldn't see "I shouldn't be able to see this"
+      And I should see a button saying "Continue Reading..."
+
+  Scenario: We get a graceful fail when a blog post isn't found
+    Given I am on "/blog/foo"
+    Then I should see a flash message "Blog post not found"
+    And I should be on "/blog"
+
+  Scenario: When we see blog posts, they are paginated
+    Given I am logged in
+    And I create 15 blog posts
+    And I am on "/blog"
+    Then I should see "«"
+    And I should see "»"
+    And I should see 6 copies of ".blog-title"

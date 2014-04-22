@@ -257,4 +257,19 @@ class FeatureContext extends MinkContext
     {
         $this->assertPageNotContainsText($arg1);
     }
+
+    /**
+     * @Given /^I should see a button saying "([^"]*)"$/
+     */
+    public function iShouldSeeAButtonSaying($text)
+    {
+        $session = $this->getMink()->getSession();
+        $field = $session->getPage()->find("css", ".btn-blog");
+        if (!$field) {
+            throw new ResponseTextException("I couldn't find the button.", $session);
+        }
+        if ($field->getText() != $text) {
+            throw new ResponseTextException("The text of the button was '{$field->getText}', instead of '{$text}'.", $session);
+        }
+    }
 }

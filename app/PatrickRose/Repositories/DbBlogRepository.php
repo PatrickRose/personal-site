@@ -50,4 +50,9 @@ class DbBlogRepository implements BlogRepositoryInterface {
         };
         return $blog;
     }
+
+    public function getOnly($number = 3)
+    {
+        return Blog::orderBy('created_at', 'desc')->limit($number)->get(array("title"));
+    }
 }

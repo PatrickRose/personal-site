@@ -1,4 +1,6 @@
 <?php
+use PatrickRose\Repositories\BlogRepositoryInterface;
+
 /**
  * Created by PhpStorm.
  * User: patrick
@@ -8,8 +10,19 @@
 
 class StaticPagesController extends Controller {
 
+
+    /**
+     * @var PatrickRose\Repositories\BlogRepositoryInterface
+     */
+    private $blogRepo;
+
+    function __construct(BlogRepositoryInterface $blogRepo) {
+        $this->blogRepo = $blogRepo;
+    }
+
     public function homePage() {
-        return View::make("staticpages.home");
+        $blogs = $this->blogRepo->getOnly(6);
+        return View::make("staticpages.home", compact("blogs"));
     }
 
 } 

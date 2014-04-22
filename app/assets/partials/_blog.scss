@@ -5,3 +5,7 @@
     color: green;
   }
 }
+
+.btn-blog {
+  @include button-variant(#ffffff, green, darkgreen)
+}

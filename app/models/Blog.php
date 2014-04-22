@@ -21,7 +21,8 @@ class Blog extends Eloquent {
     }
 
     public function getFirstParagraph() {
-        return substr($this->content, 0, strpos($this->content, "\n")) ? : $this->content;
+        $content = $this->content;
+        return substr($content, 0, strpos($content, "\n", strpos($content, "\n\n") + 2)) ? : $content;
     }
 
 } 
