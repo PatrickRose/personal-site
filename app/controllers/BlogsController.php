@@ -76,25 +76,37 @@ class BlogsController extends \BaseController {
 	/**
 	 * Show the form for editing the specified resource.
 	 *
-	 * @param  int  $id
+	 * @param  string $slug
 	 * @return Response
 	 */
-	public function edit($id)
+	public function edit($slug)
 	{
-		//
+        try {
+            $blog = $this->repository->find($slug);
+            return View::make('blog.edit', compact('blog'));
+        } catch(ModelNotFoundException $e) {
+            return Redirect::route('blog.index')->with('flash_message', "Blog post not found");
+        }
 	}
 
 
 	/**
 	 * Update the specified resource in storage.
 	 *
-	 * @param  int  $id
-	 * @return Response
+	 * @param  string  $slug
+     * @return Response
 	 */
-	public function update($id)
+	public function update($slug)
 	{
-		//
-	}
+        try {
+            $this->repository->update($slug, Input::all());
+        } catch (ModelNotFoundException $e) {
+            return Redirect::route('blog.index');
+        } catch (ValidationException $e) {
+            return Redirect::back()->with('flash_message', "That's not a valid blog post")->withInput();
+        }
+        return Redirect::route("blog.show", $blog->slug)->with('flash_message', "Blog post updated");
+    }
 
 
 	/**

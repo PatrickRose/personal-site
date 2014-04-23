@@ -17,6 +17,9 @@ class BlogValidator extends Validator {
             'content' => 'required',
             'slug' => 'required|unique:blogs'
         );
-        $this->updateRules = array();
+        $this->updateRules = array(
+            'title' => 'required',
+            'content' => 'required'
+        );
     }
 }

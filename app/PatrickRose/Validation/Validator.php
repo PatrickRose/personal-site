@@ -36,7 +36,7 @@ abstract class Validator {
     {
         $validator = V::make($data, $rules);
         if ($validator->fails()) {
-            throw new ValidationException($validator->errors());
+            throw new ValidationException($validator->messages());
         }
     }
 

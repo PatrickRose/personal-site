@@ -90,7 +90,7 @@ Feature: Blog
       """
       And I am on "/blog"
       Then I should see "This is a nice paragraph"
-      Then I should see "Oh goodness, so is this!"
+      And I should see "Oh goodness, so is this!"
       And I shouldn't see "I shouldn't be able to see this"
       And I should see a button saying "Continue Reading..."
 
@@ -99,6 +99,35 @@ Feature: Blog
     Then I should see a flash message "Blog post not found"
     And I should be on "/blog"
 
+  Scenario: We can edit blog posts
+    Given I am logged in
+    And I create a blog post with title "Editing Test" and content "I made a boo boo"
+    When I am on "blog/editing-test/edit"
+    Then I should be able to edit the post
+    And I should see the edited content
+
+  Scenario: We can only edit posts if you're logged in
+    Given I am logged in
+    And I create a blog post with title "Editing Test" and content "I made a boo boo"
+    And I then log out
+    When I am on "blog/editing-test/edit"
+    Then I should be on "/login"
+    And I should see a flash message "You're not authorised to do that"
+
+  Scenario: We can only edit posts that are real
+    Given I am logged in
+    When I am on "blog/editing-test/edit"
+    Then I should be on "/blog"
+    And I should see a flash message "Blog post not found"
+
+  Scenario: We can only edit posts so they are valid
+    Given I am logged in
+    And I create a blog post with title "Editing Test" and content "I made a boo boo"
+    And I am on "blog/editing-test/edit"
+    When I input invalid blog data
+    Then I should see a flash message "That's not a valid blog post"
+    And I should be on "blog/editing-test/edit"
+
   Scenario: When we see blog posts, they are paginated
     Given I am logged in
     And I create 15 blog posts
@@ -106,3 +135,4 @@ Feature: Blog
     Then I should see "«"
     And I should see "»"
     And I should see 6 copies of ".blog-title"
+

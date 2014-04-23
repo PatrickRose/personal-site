@@ -15,7 +15,7 @@ interface BlogRepositoryInterface {
 
     public function all();
 
-    public function update($id, $blog);
+    public function update($slug, $input);
 
     public function delete($id);
 

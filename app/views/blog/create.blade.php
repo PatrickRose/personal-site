@@ -17,5 +17,5 @@
 
         {{ Form::submit("Create Post", array("class" => "btn btn-primary")) }}
 
-{{ Form::close() }}
+    {{ Form::close() }}
 @stop

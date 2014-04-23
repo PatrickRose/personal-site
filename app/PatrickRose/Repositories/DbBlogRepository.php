@@ -29,9 +29,15 @@ class DbBlogRepository implements BlogRepositoryInterface {
         // TODO: Implement all() method.
     }
 
-    public function update($id, $blog)
+    public function update($slug, $input)
     {
-        // TODO: Implement update() method.
+        $validator = new BlogValidator();
+        $validator->validateForUpdating($input);
+        $blog = $this->find($slug);
+        if (!$blog->update($input)) {
+            throw new DatabaseConnectionException();
+        };
+        return $blog;
     }
 
     public function delete($id)

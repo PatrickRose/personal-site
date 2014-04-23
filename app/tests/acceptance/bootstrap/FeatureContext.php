@@ -272,4 +272,31 @@ class FeatureContext extends MinkContext
             throw new ResponseTextException("The text of the button was '{$field->getText}', instead of '{$text}'.", $session);
         }
     }
+
+    /**
+     * @Then /^I should be able to edit the post$/
+     */
+    public function iShouldBeAbleToEditThePost()
+    {
+        $this->fillField("content", "I fixed it!");
+        $this->pressButton("Edit Post");
+    }
+
+    /**
+     * @Given /^I should see the edited content$/
+     */
+    public function iShouldSeeTheEditedContent()
+    {
+        $this->assertPageContainsText("I fixed it!");
+        $this->assertPageNotContainsText("I made a boo boo");
+    }
+
+    /**
+     * @When /^I input invalid blog data$/
+     */
+    public function iInputInvalidBlogData()
+    {
+        $this->fillField("content", "");
+        $this->pressButton("Edit Post");
+    }
 }
