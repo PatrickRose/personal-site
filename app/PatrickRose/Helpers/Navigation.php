@@ -13,7 +13,8 @@ class Navigation {
     public static function getLogin() {
         $links = array(
             array('Home', route('home')),
-            array('Blog', route('blog.index'))
+            array('About', route('about')),
+            array('Blog', route('blog.index')),
         );
 
         if (Auth::check()) {

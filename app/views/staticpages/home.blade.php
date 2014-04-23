@@ -36,6 +36,7 @@
                     <p>
                         He is well known on the Sheffield folk scene as a singer of chorus songs and ceilidh caller.
                     </p>
+                    {{ link_to_route("about", "Learn More", null, array('class' => 'btn btn-block btn-blog')) }}
                 </div>
             </div>
             <div class="col-md-4">
@@ -53,6 +54,7 @@
                             <li>{{ link_to_route('blog.show', ucwords($blog->title), $blog->slug) }} </li>
                         @endforeach
                     </ul>
+                    {{ link_to_route("blog.index", "Read More", null, array('class' => 'btn btn-block btn-blog')) }}
                 </div>
             </div>
             <div class="col-md-4">
@@ -65,28 +67,26 @@
                     <p>
                         Buy Patrick's albums from Bandcamp.
                     </p>
-                    <ul>
-                        <li>
-                            Overall, this is an album which shows plenty of promise
-                            and good old-fashioned Yorkshire heart -
-                            {{ link_to("http://brightyoungfolk.com/gigs/paradise-square-patrick-rose/record-detail.aspx", "Lucy Houlden, Bright Young Folk") }}
-                        </li>
-                        <li>
-                            The boy done good - Raymond Greenoaken, {{ link_to("http://www.stirrings.org.uk/", "Stirrings") }}
-                        </li>
-                    </ul>
+                    <blockquote>
+                        Overall, this is an album which shows plenty of promise
+                        and good old-fashioned Yorkshire heart
+                        <footer>
+                            {{ link_to("http://brightyoungfolk.com/gigs/paradise-square-patrick-rose/record-detail.aspx",
+                            "Lucy Houlden") }}, Bright Young Folk on
+                            {{ link_to("http://patrickrose.bandcamp.com/paradise-square", "Paradise Square") }}
+                        </footer>
+                    </blockquote>
+                    {{ link_to("http://patrickrose.bandcamp.com", "Visit the shop", array('class' => 'btn btn-block btn-blog')) }}
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col-md-4">
-                {{ link_to_route("about", "Learn More", null, array('class' => 'btn btn-block btn-blog')) }}
             </div>
             <div class="col-md-4">
-                {{ link_to_route("about", "Read More", null, array('class' => 'btn btn-block btn-blog')) }}
+
             </div>
             <div class="col-md-4">
-                {{ link_to("http://patrickrose.bandcamp.com", "Visit the shop", array('class' => 'btn btn-block btn-blog')) }}
             </div>
         </div>
     </div>

@@ -15,12 +15,6 @@
                    <div class="blog-text">
                        {{ Markdown::string($blog->getFirstParagraph()) }}
                    </div>
-               </div>
-           @endforeach
-       </div>
-       <div class="row">
-           @foreach($row as $blog)
-               <div class="col-md-4">
                    {{ link_to_route("blog.show", "Continue Reading...",
                    $blog->slug, array('class' => 'btn btn-blog btn-block')) }}
                </div>

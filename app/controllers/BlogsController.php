@@ -65,7 +65,8 @@ class BlogsController extends \BaseController {
 	{
         try {
             $blog = $this->repository->find($slug);
-            return View::make("blog.show", compact('blog'));
+            $blogs = $this->repository->getOnly(6);
+            return View::make("blog.show", compact('blog', 'blogs'));
         } catch (ModelNotFoundException $e) {
             return Redirect::route('blog.index')->with('flash_message', "Blog post not found");
         }

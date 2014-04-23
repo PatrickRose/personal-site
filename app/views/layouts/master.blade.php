@@ -20,7 +20,8 @@
 
         </div>
     </div>
-    {{ Bootstrapper\Helpers::get_JS() }}
+    {{ HTML::script('assets/js/jquery.min.js') }}
+    {{ HTML::script('assets/js/bootstrap.js') }}
     {{ HTML::script('assets/js/fading.js') }}
 </body>
 </html>
