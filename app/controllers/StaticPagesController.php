@@ -25,4 +25,8 @@ class StaticPagesController extends Controller {
         return View::make("staticpages.home", compact("blogs"));
     }
 
+    public function aboutPage() {
+        return View::make('staticpages.about');
+    }
+
 } 

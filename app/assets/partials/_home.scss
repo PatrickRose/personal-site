@@ -1,0 +1,39 @@
+.home-page {
+  @extend .jumbotron;
+
+  background-image: url("../img/singing.jpg");
+  background-position: 0%, 25%;
+
+  .header {
+    @extend .page-header;
+    text-align: center;
+    background-color: #ffffff;
+    background-image: none;
+    opacity:0.6;
+    color: #000000;
+    filter:alpha(opacity=60); /* For IE8 and earlier */
+    h1 {
+      small {
+        font-size: 30px;
+        color: #000000;
+      }
+    }
+  }
+}
+
+.home-lead {
+  @extend .lead;
+}
+
+.header {
+  @extend .page-header;
+  margin: 0;
+}
+
+.home-info {
+  margin-top: 10px;
+
+  ul {
+    list-style-type: none;
+  }
+}
