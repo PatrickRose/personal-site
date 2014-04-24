@@ -128,6 +128,19 @@ Feature: Blog
     Then I should see a flash message "That's not a valid blog post"
     And I should be on "blog/editing-test/edit"
 
+  Scenario: We can see the edit button if we're logged in
+    Given I am logged in
+    And I create a blog post with title "Editing Test" and content "I made a boo boo"
+    When I am on "blog/editing-test"
+    Then  I should see "Edit Post"
+
+  Scenario: We can't see the edit button if we're not logged in
+    Given I am logged in
+    And I create a blog post with title "Editing Test" and content "I made a boo boo"
+    And I then log out
+    When I am on "blog/editing-test"
+    Then  I should not see "Edit Post"
+
   Scenario: When we see blog posts, they are paginated
     Given I am logged in
     And I create 15 blog posts
