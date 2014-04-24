@@ -21,6 +21,11 @@
                 <div class="panel-heading">
                     <h4>Other Posts...</h4>
                 </div>
+                @if(Auth::user())
+                    <div class="panel-body">
+                        {{ link_to_route('blog.edit', "Edit Post", $blog->slug, array('class'=>'btn btn-blog btn-block')) }}
+                    </div>
+                @endif
                 <ul class="list-group">
                     @foreach($blogs as $blog)
                         <li class="list-group-item">
