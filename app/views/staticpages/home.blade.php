@@ -64,9 +64,6 @@
                     </h4>
                 </div>
                 <div class="home-info">
-                    <p>
-                        Buy Patrick's albums from Bandcamp.
-                    </p>
                     <blockquote>
                         Overall, this is an album which shows plenty of promise
                         and good old-fashioned Yorkshire heart
