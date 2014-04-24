@@ -32,7 +32,7 @@
                 </div>
                 <div class="home-info">
                     <p>
-                        A self taught singer, who's guitar playing has been described as "soothing" and music
+                        A self taught singer, whose guitar playing has been described as "soothing" and music
                         called "Yorkshire bred if not Yorkshire born".
                     </p>
                     <p>
