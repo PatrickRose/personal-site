@@ -299,4 +299,12 @@ class FeatureContext extends MinkContext
         $this->fillField("content", "");
         $this->pressButton("Edit Post");
     }
+
+    /**
+     * @Given /^I click "([^"]*)"$/
+     */
+    public function iClick($link)
+    {
+        $this->clickLink($link);
+    }
 }
