@@ -99,7 +99,7 @@ class BlogsController extends \BaseController {
 	public function update($slug)
 	{
         try {
-            $this->repository->update($slug, Input::all());
+            $blog = $this->repository->update($slug, Input::all());
         } catch (ModelNotFoundException $e) {
             return Redirect::route('blog.index');
         } catch (ValidationException $e) {

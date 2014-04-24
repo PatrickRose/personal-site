@@ -29,3 +29,8 @@ Route::get('about', array(
     'uses' => 'StaticPagesController@aboutPage',
     'as' => 'about'
 ));
+
+Route::get('gigs', array(
+    'uses' => 'StaticPagesController@gigPage',
+    'as' => 'gigs'
+));

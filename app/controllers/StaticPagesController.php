@@ -29,4 +29,8 @@ class StaticPagesController extends Controller {
         return View::make('staticpages.about');
     }
 
+    public function gigPage() {
+        return View::make('staticpages.gigs');
+    }
+
 } 
