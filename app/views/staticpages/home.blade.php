@@ -10,9 +10,11 @@
             <h1>
                 Patrick Rose <br />
                 <small>
-                    Singer, Guitarist, Caller<br />
+                    Singer, Guitarist, Caller
+                </small><br />
+                <email>
                     <a href="mailto:whoelse@patrickrosemusic.co.uk">whoelse@patrickrosemusic.co.uk</a>
-                </small>
+                </email>
             </h1>
         </div>
     </div>

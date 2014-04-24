@@ -1,6 +1,7 @@
 // Import Bootstrap
 @import "bower/bootstrap-sass-official/vendor/assets/stylesheets/bootstrap";
 
+@import "partials/mixins";
 @import "partials/home";
 @import "partials/blog";
 @import "partials/about";
