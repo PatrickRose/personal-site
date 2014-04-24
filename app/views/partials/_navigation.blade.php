@@ -4,6 +4,13 @@
     ->autoroute(true)
     ->collapsible()
     ->with_menus(Navigation::links(
-        \PatrickRose\Helpers\Navigation::getLogin()
+        array(
+            array('Home', route('home')),
+            array('About', route('about')),
+            array('Blog', route('blog.index')),
+        )
     ))
+    ->with_menus(
+          \PatrickRose\Helpers\Navigation::getLogin()
+    )
 }}

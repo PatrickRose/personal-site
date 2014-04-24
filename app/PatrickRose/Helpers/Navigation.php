@@ -7,23 +7,22 @@
  */
 
 use Auth;
+use HTML;
 
 class Navigation {
 
     public static function getLogin() {
-        $links = array(
-            array('Home', route('home')),
-            array('About', route('about')),
-            array('Blog', route('blog.index')),
-        );
-
         if (Auth::check()) {
-            $links[] = array('Logout', route('logout'));
+            $link = HTML::linkRoute("logout", "Logout");
         } else {
-            $links[] = array('Login', route('login'));
+            $link = HTML::linkRoute("login", "Login");
         }
-
-        return $links;
+        return "
+<ul class='nav navbar-nav navbar-right'>
+    <li>
+        {$link}
+    </li>
+</ul>";
     }
 
 } 
