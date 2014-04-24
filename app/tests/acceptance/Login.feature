@@ -22,14 +22,3 @@ Feature: Login
     And I am on "/logout"
     Then I should not be logged in
     And I should see a flash message "You are now logged out"
-
-  Scenario: I can log in using the navbar
-    Given I am on "/"
-    And I click "Login"
-    Then I should be on "/login"
-
-  Scenario: I can log out using the navbar
-    Given I am logged in
-    And I am on "/"
-    And I click "Logout"
-    Then I should not be logged in

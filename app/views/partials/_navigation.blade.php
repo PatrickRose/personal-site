@@ -7,10 +7,12 @@
         array(
             array('Home', route('home')),
             array('About', route('about')),
+            array('Gigs', route('gigs')),
             array('Blog', route('blog.index')),
         )
     ))
     ->with_menus(
-          \PatrickRose\Helpers\Navigation::getLogin()
+          \PatrickRose\Helpers\Navigation::getLogin(),
+          array('class' => 'navbar-right')
     )
 }}

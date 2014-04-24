@@ -307,4 +307,12 @@ class FeatureContext extends MinkContext
     {
         $this->clickLink($link);
     }
+
+    /**
+     * @Then /^I should be on the home page$/
+     */
+    public function iShouldBeOnTheHomePage()
+    {
+        $this->iAmOnHomepage();
+    }
 }
