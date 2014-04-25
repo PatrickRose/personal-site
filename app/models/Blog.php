@@ -25,4 +25,8 @@ class Blog extends Eloquent {
         return substr($content, 0, strpos($content, "\n", strpos($content, "\n\n") + 2)) ? : $content;
     }
 
+    public function tags() {
+        return $this->belongsToMany("Tag");
+    }
+
 } 

@@ -19,6 +19,18 @@
         <div class="col-md-4">
             <div class="panel panel-default">
                 <div class="panel-heading">
+                    <h4>Tagged with</h4>
+                </div>
+                <ul class="blog-tags">
+                    @foreach($blog->tags as $tag)
+                        <li class="blog-tag">
+                            {{ $tag->tag }}
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
                     <h4>Other Posts...</h4>
                 </div>
                 @if(Auth::user())

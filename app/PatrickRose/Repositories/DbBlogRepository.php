@@ -16,7 +16,7 @@ class DbBlogRepository implements BlogRepositoryInterface {
 
     public function find($slug)
     {
-        $blog = Blog::whereSlug($slug)->first();
+        $blog = Blog::whereSlug($slug)->with('tags')->first();
         if(!$blog) {
             throw new ModelNotFoundException();
         }
@@ -60,5 +60,15 @@ class DbBlogRepository implements BlogRepositoryInterface {
     public function getOnly($number = 3)
     {
         return Blog::orderBy('created_at', 'desc')->limit($number)->get(array("title"));
+    }
+
+    public function tagged($tag)
+    {
+        // TODO: Implement tagged() method.
+    }
+
+    public function tagPostWithTags($post, $tags = [])
+    {
+        $post->tags()->sync($tags);
     }
 }

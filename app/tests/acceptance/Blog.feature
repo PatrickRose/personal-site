@@ -17,9 +17,9 @@ Feature: Blog
     Given I am logged in
     And I am on "blog/create"
     And I create a blog post with title "Foo" and content "Baring all the baz"
-    Then I should see "Foo"
+    Then I should see a flash message "Blog post created!"
     And I should see "Baring all the baz"
-    And I should see a flash message "Blog post created!"
+    And I should see "Foo"
 
   Scenario: Site owner cannot create an invalid blog post
     Given I am logged in

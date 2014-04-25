@@ -315,4 +315,35 @@ class FeatureContext extends MinkContext
     {
         $this->iAmOnHomepage();
     }
+
+    /**
+     * @Given /^I create a blog post and tag it "([^"]*)"$/
+     */
+    public function iCreateABlogPostAndTagIt($tag)
+    {
+        $factory = Faker\Factory::create();
+        $title = "Tagging";
+        $content = "Tags are cool";
+        $this->visit("/blog/create");
+        $this->fillField("title", $title);
+        $this->fillField("content", $content);
+        $this->fillField("tags", $tag);
+        $this->pressButton("Create Post");
+    }
+
+    /**
+     * @Then /^I should see the tag "([^"]*)"$/
+     */
+    public function iShouldSeeTheTag($tag)
+    {
+        $session = $this->getMink()->getSession();
+        $tagDiv = $session->getPage()->find("css", '.blog-tags');
+        if (!$tagDiv) {
+            throw new ResponseTextException("Couldn't find .blog-tags", $session);
+        }
+        if (strpos($tagDiv->getText(), $tag) === false) {
+            throw new ResponseTextException("Couldn't find {$tag} inside .blog-tags", $session);
+        }
+    }
+
 }

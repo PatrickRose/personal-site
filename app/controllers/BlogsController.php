@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use PatrickRose\Repositories\BlogRepositoryInterface;
+use PatrickRose\Repositories\TagRepositoryInterface;
 use PatrickRose\Validation\ValidationException;
 
 class BlogsController extends \BaseController {
@@ -9,12 +10,17 @@ class BlogsController extends \BaseController {
     /**
      * @var BlogRepositoryInterface
      */
-    private $repository;
+    private $blogRepository;
+    private $tagRepository;
 
-    public function __construct(BlogRepositoryInterface $blogRepositoryInterface) {
+    public function __construct(
+        BlogRepositoryInterface $blogRepositoryInterface,
+        TagRepositoryInterface $tagRepositoryInterface
+    ) {
         $this->beforeFilter('auth', array('except' => array('index','show')));
         $this->beforeFilter('csrf', array('on' => array('store','update')));
-        $this->repository = $blogRepositoryInterface;
+        $this->blogRepository = $blogRepositoryInterface;
+        $this->tagRepository = $tagRepositoryInterface;
     }
 
 	/**
@@ -24,7 +30,7 @@ class BlogsController extends \BaseController {
 	 */
 	public function index()
 	{
-        $blogs = $this->repository->all();
+        $blogs = $this->blogRepository->all();
         return View::make("blog.index", compact("blogs"));
 	}
 
@@ -48,7 +54,12 @@ class BlogsController extends \BaseController {
 	public function store()
 	{
         try {
-            $blog = $this->repository->create(Input::all());
+            $blog = $this->blogRepository->create(Input::except(array('tags')));
+
+            if (Input::has('tags')) {
+                $tags = $this->tagRepository->createMany(Input::get('tags'));
+                $this->blogRepository->tagPostWithTags($blog, $tags);
+            }
         } catch (ValidationException $validation) {
             return Redirect::back()->withErrors($validation->getErrors())
                 ->withInput()->with("flash_message", "That's not a valid blog post");
@@ -64,8 +75,8 @@ class BlogsController extends \BaseController {
 	public function show($slug)
 	{
         try {
-            $blog = $this->repository->find($slug);
-            $blogs = $this->repository->getOnly(6);
+            $blog = $this->blogRepository->find($slug);
+            $blogs = $this->blogRepository->getOnly(6);
             return View::make("blog.show", compact('blog', 'blogs'));
         } catch (ModelNotFoundException $e) {
             return Redirect::route('blog.index')->with('flash_message', "Blog post not found");
@@ -82,7 +93,7 @@ class BlogsController extends \BaseController {
 	public function edit($slug)
 	{
         try {
-            $blog = $this->repository->find($slug);
+            $blog = $this->blogRepository->find($slug);
             return View::make('blog.edit', compact('blog'));
         } catch(ModelNotFoundException $e) {
             return Redirect::route('blog.index')->with('flash_message', "Blog post not found");
@@ -99,7 +110,7 @@ class BlogsController extends \BaseController {
 	public function update($slug)
 	{
         try {
-            $blog = $this->repository->update($slug, Input::all());
+            $blog = $this->blogRepository->update($slug, Input::all());
         } catch (ModelNotFoundException $e) {
             return Redirect::route('blog.index');
         } catch (ValidationException $e) {

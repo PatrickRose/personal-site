@@ -23,4 +23,8 @@ interface BlogRepositoryInterface {
 
     public function getOnly($number = 3);
 
+    public function tagged($tag);
+
+    public function tagPostWithTags($post, $tags = []);
+
 } 
