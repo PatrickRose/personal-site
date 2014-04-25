@@ -8,6 +8,7 @@
 
 namespace PatrickRose\Repositories;
 
+use Tag;
 use Blog;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use PatrickRose\Validation\BlogValidator;
@@ -64,7 +65,9 @@ class DbBlogRepository implements BlogRepositoryInterface {
 
     public function tagged($tag)
     {
-        // TODO: Implement tagged() method.
+        return Blog::whereHas("tags", function($query) use($tag) {
+            $query->where('tag', '=', $tag);
+        })->paginate(6);
     }
 
     public function tagPostWithTags($post, $tags = [])

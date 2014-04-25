@@ -24,7 +24,7 @@
                 <ul class="blog-tags">
                     @foreach($blog->tags as $tag)
                         <li class="blog-tag">
-                            {{ $tag->tag }}
+                            {{ link_to_route('blog.tag', $tag->tag, $tag->tag) }}
                         </li>
                     @endforeach
                 </ul>

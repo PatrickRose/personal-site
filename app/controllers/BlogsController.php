@@ -131,5 +131,10 @@ class BlogsController extends \BaseController {
 		//
 	}
 
+    public function tagged($tag) {
+        $blogs = $this->blogRepository->tagged($tag);
+        return View::make("blog.tagged", compact('blogs', 'tag'));
+    }
+
 
 }

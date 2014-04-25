@@ -321,7 +321,6 @@ class FeatureContext extends MinkContext
      */
     public function iCreateABlogPostAndTagIt($tag)
     {
-        $factory = Faker\Factory::create();
         $title = "Tagging";
         $content = "Tags are cool";
         $this->visit("/blog/create");
@@ -346,4 +345,21 @@ class FeatureContext extends MinkContext
         }
     }
 
+
+    /**
+     * @Given /^I create (\d+) blog posts with the tag "([^"]*)"$/
+     */
+    public function iCreateBlogPostsWithTheTag($number, $tag)
+    {
+        $factory = Faker\Factory::create();
+        for ($i = 0; $i < $number; $i++) {
+            $title = implode(" ", $factory->words(5));
+            $content = implode("\n\n", $factory->paragraphs(5));
+            $this->visit("/blog/create");
+            $this->fillField("title", $title);
+            $this->fillField("content", $content);
+            $this->fillField("tags", $tag);
+            $this->pressButton("Create Post");
+        }
+    }
 }
