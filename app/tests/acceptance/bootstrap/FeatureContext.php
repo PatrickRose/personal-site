@@ -362,4 +362,20 @@ class FeatureContext extends MinkContext
             $this->pressButton("Create Post");
         }
     }
+
+    /**
+     * @Given /^There are no tags$/
+     */
+    public function thereAreNoTags()
+    {
+    }
+
+    /**
+     * @Given /^I tag it "([^"]*)"$/
+     */
+    public function iTagIt($tag)
+    {
+        $this->fillField("tags", $tag);
+        $this->pressButton("Edit Post");
+    }
 }

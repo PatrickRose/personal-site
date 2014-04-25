@@ -110,7 +110,11 @@ class BlogsController extends \BaseController {
 	public function update($slug)
 	{
         try {
-            $blog = $this->blogRepository->update($slug, Input::all());
+            $blog = $this->blogRepository->update($slug, Input::except('tags'));
+            if (Input::has('tags')) {
+                $tags = $this->tagRepository->createMany(Input::get('tags'));
+                $this->blogRepository->tagPostWithTags($blog, $tags);
+            }
         } catch (ModelNotFoundException $e) {
             return Redirect::route('blog.index');
         } catch (ValidationException $e) {
@@ -132,7 +136,11 @@ class BlogsController extends \BaseController {
 	}
 
     public function tagged($tag) {
-        $blogs = $this->blogRepository->tagged($tag);
+        try {
+            $blogs = $this->blogRepository->tagged($tag);
+        } catch (ModelNotFoundException $e) {
+            return Redirect::route('tag.index')->with('flash_message', 'Tag not found');
+        }
         $thisTag = explode("/", Request::getPathInfo())[2];
         $allTags = $this->tagRepository->all(false);
         return View::make("blog.tagged", compact('blogs', 'tag', 'thisTag', 'allTags'));

@@ -41,3 +41,15 @@ Feature: Tags
     And I should see "bar"
     And I should see "baz"
     And I should see 18 copies of ".tagged-post"
+
+  Scenario: We get a graceful fail when a tag isn't found
+    Given There are no tags
+    When I am on "/tag/foo"
+    Then I should see a flash message "Tag not found"
+    And I should be on "/tag"
+
+  Scenario: I can tag a post after editing it
+    Given I create a blog post with title "Editing Test" and content "I made a boo boo"
+    When I am on "/blog/editing-test/edit"
+    And I tag it "testing"
+    Then I should see the tag "testing"

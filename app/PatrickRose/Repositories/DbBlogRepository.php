@@ -27,7 +27,6 @@ class DbBlogRepository implements BlogRepositoryInterface {
     public function all()
     {
         return Blog::orderBy('created_at', 'desc')->paginate(6);
-        // TODO: Implement all() method.
     }
 
     public function update($slug, $input)
@@ -39,11 +38,6 @@ class DbBlogRepository implements BlogRepositoryInterface {
             throw new DatabaseConnectionException();
         };
         return $blog;
-    }
-
-    public function delete($id)
-    {
-        // TODO: Implement delete() method.
     }
 
     public function create($input)
@@ -65,13 +59,22 @@ class DbBlogRepository implements BlogRepositoryInterface {
 
     public function tagged($tag)
     {
-        return Blog::whereHas("tags", function($query) use($tag) {
+        $blogs = Blog::whereHas("tags", function($query) use($tag) {
             $query->where('tag', '=', $tag);
         })->paginate(6);
+        if (count($blogs)) {
+            return $blogs;
+        }
+        throw new ModelNotFoundException();
     }
 
     public function tagPostWithTags($post, $tags = [])
     {
         $post->tags()->sync($tags);
+    }
+
+    public function delete($id)
+    {
+        // TODO: Implement delete() method.
     }
 }
