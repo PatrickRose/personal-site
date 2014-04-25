@@ -2,9 +2,14 @@
 
 Route::resource('sessions', 'SessionsController', array("only" => array("create", "store")));
 Route::resource('blog', 'BlogsController');
+
 Route::get('tag/{tag}', array(
     'uses' => 'BlogsController@tagged',
     'as' => 'blog.tag'
+));
+Route::get("tag", array(
+    'uses' => 'TagsController@index',
+    'as' => 'tag.index'
 ));
 
 Route::get('login', array(

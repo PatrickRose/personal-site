@@ -17,4 +17,6 @@ interface TagRepositoryInterface {
 
     public function createMany($input);
 
+    public function all($paginate = true);
+
 }

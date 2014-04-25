@@ -17,8 +17,8 @@ class BlogsController extends \BaseController {
         BlogRepositoryInterface $blogRepositoryInterface,
         TagRepositoryInterface $tagRepositoryInterface
     ) {
-        $this->beforeFilter('auth', array('except' => array('index','show')));
-        $this->beforeFilter('csrf', array('on' => array('store','update')));
+        $this->beforeFilter('auth', array('except' => array('index', 'show', 'tagged')));
+        $this->beforeFilter('csrf', array('on' => array('store', 'update')));
         $this->blogRepository = $blogRepositoryInterface;
         $this->tagRepository = $tagRepositoryInterface;
     }
