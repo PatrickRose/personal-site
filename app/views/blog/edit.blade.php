@@ -20,7 +20,7 @@
          </div>
          <div class="form-group">
              {{ Form::label("tags", "Tags: ") }}
-             {{ Form::text("tags", null, array("class" => "form-control", "placeholder" => "Content...")) }}
+             {{ Form::text("tags", $tags, array("class" => "form-control", "placeholder" => "Content...")) }}
          </div>
 
          {{ Form::submit("Edit Post", array("class" => "btn btn-primary")) }}

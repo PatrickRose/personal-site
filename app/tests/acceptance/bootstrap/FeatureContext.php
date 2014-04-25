@@ -378,4 +378,42 @@ class FeatureContext extends MinkContext
         $this->fillField("tags", $tag);
         $this->pressButton("Edit Post");
     }
+
+    /**
+     * @When /^I go to the edit page$/
+     */
+    public function iGoToTheEditPage()
+    {
+        $this->clickLink("Edit Post");
+    }
+
+    /**
+     * @Given /^I should not see the tag "([^"]*)"$/
+     */
+    public function iShouldNotSeeTheTag($tag)
+    {
+        $session = $this->getMink()->getSession();
+        $tagDiv = $session->getPage()->find("css", '.blog-tags');
+        if (!$tagDiv) {
+            throw new ResponseTextException("Couldn't find .blog-tags", $session);
+        }
+        if (!(strpos($tagDiv->getText(), $tag) === false)) {
+            throw new ResponseTextException("Found {$tag} inside .blog-tags", $session);
+        }
+    }
+
+    /**
+     * @Then /^I should see it tagged "([^"]*)"$/
+     */
+    public function iShouldSeeItTagged($tag)
+    {
+        $session = $this->getMink()->getSession();
+        $input = $session->getPage()->findField("tags");
+        if (!$input) {
+            throw new ResponseTextException("Couldn't find the tag input", $session);
+        }
+        if ($input->getValue() != $tag) {
+            throw new ResponseTextException("The tags are {$input->getValue()}, not {$tag}", $session);
+        }
+    }
 }

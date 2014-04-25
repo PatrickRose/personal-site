@@ -29,4 +29,12 @@ class Blog extends Eloquent {
         return $this->belongsToMany("Tag");
     }
 
+    public function getTags() {
+        $temp = [];
+        foreach($this->tags as $tag) {
+            $temp[] = $tag->tag;
+        };
+        return implode(", ", $temp);
+    }
+
 } 

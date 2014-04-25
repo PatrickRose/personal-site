@@ -53,3 +53,15 @@ Feature: Tags
     When I am on "/blog/editing-test/edit"
     And I tag it "testing"
     Then I should see the tag "testing"
+
+  Scenario: When I edit a post the previous tags are there
+    Given I create a blog post and tag it "foo, bar"
+    When I go to the edit page
+    Then I should see it tagged "foo, bar"
+
+  Scenario: I can change the tags of a post while editing it
+    Given I create a blog post and tag it "foo"
+    When I go to the edit page
+    And I tag it "bar"
+    Then I should see the tag "bar"
+    And I should not see the tag "foo"
