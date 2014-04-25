@@ -6,16 +6,7 @@ Tags
 
 @section('content')
 <div class="col-md-3">
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            Tag List
-        </div>
-        <ul class="all-tags">
-            @foreach($allTags as $tag)
-                {{ link_to_route("blog.tag", $tag->tag, $tag->tag, ['class'=>'tag']) }}
-            @endforeach
-        </ul>
-    </div>
+    @include('partials/_tags')
 </div>
 <div class="col-md-9">
     <div class="tag-header" xmlns="http://www.w3.org/1999/html">

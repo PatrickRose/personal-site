@@ -133,7 +133,9 @@ class BlogsController extends \BaseController {
 
     public function tagged($tag) {
         $blogs = $this->blogRepository->tagged($tag);
-        return View::make("blog.tagged", compact('blogs', 'tag'));
+        $thisTag = explode("/", Request::getPathInfo())[2];
+        $allTags = $this->tagRepository->all(false);
+        return View::make("blog.tagged", compact('blogs', 'tag', 'thisTag', 'allTags'));
     }
 
 
