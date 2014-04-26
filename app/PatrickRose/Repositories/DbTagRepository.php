@@ -39,7 +39,7 @@ class DbTagRepository implements TagRepositoryInterface {
 
     public function createMany($input)
     {
-        $tags = strpos($input, ",") === false ? [$input] : explode(", ", $input);
+        $tags = explode(", ", strtolower($input));
         $created = [];
         DB::beginTransaction();
         foreach($tags as $tag) {

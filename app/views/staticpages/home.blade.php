@@ -53,7 +53,9 @@
                 <div class="home-info">
                     <ul>
                         @foreach($blogs as $blog)
-                            <li>{{ link_to_route('blog.show', ucwords($blog->title), $blog->slug) }} </li>
+                            <li>
+                                {{ link_to_route("blog.show", ucwords($blog->title), $blog->slug) }}
+                            </li>
                         @endforeach
                     </ul>
                     {{ link_to_route("blog.index", "Read More", null, array('class' => 'btn btn-block btn-blog')) }}

@@ -65,3 +65,8 @@ Feature: Tags
     And I tag it "bar"
     Then I should see the tag "bar"
     And I should not see the tag "foo"
+
+  Scenario: All tags are lower case
+    Given I create a blog post and tag it "foo, Bar"
+    Then I should see the tag "foo"
+    And I should see the tag "bar"
