@@ -31,9 +31,10 @@ class DbBlogRepository implements BlogRepositoryInterface {
 
     public function update($slug, $input)
     {
-        $validator = new BlogValidator();
-        $validator->validateForUpdating($input);
         $blog = $this->find($slug);
+        $validator = new BlogValidator($blog->id);
+        $input['slug'] = $slug;
+        $validator->validateForUpdating($input);
         if (!$blog->update($input)) {
             throw new DatabaseConnectionException();
         };
@@ -44,7 +45,7 @@ class DbBlogRepository implements BlogRepositoryInterface {
     {
         $blog = new Blog($input);
         $blog->slug = $blog->makeSlug();
-        $validator = new BlogValidator();
+        $validator = new BlogValidator(null);
         $validator->validateForCreation($blog->toArray());
         if (!$blog->save()) {
             throw new DatabaseConnectionException();
@@ -54,7 +55,7 @@ class DbBlogRepository implements BlogRepositoryInterface {
 
     public function getOnly($number = 3)
     {
-        return Blog::orderBy('created_at', 'desc')->limit($number)->get(array("title"));
+        return Blog::orderBy('created_at', 'desc')->limit($number)->get(array("title", "slug"));
     }
 
     public function tagged($tag)

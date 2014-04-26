@@ -11,7 +11,7 @@ namespace PatrickRose\Validation;
 
 class BlogValidator extends Validator {
 
-    function __construct() {
+    function __construct($id) {
         $this->createRules = array(
             'title' => 'required',
             'content' => 'required',
@@ -19,7 +19,8 @@ class BlogValidator extends Validator {
         );
         $this->updateRules = array(
             'title' => 'required',
-            'content' => 'required'
+            'content' => 'required',
+            'slug' => "required|unique:blogs,id,{$id}"
         );
     }
 }
