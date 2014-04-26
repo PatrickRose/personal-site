@@ -213,23 +213,6 @@ class FeatureContext extends MinkContext
     }
 
     /**
-     * @Given /^I create (\d+) blog posts$/
-     */
-    public function iCreateBlogPosts($number)
-    {
-        $factory = Faker\Factory::create();
-        for($i = 0; $i<$number; $i++) {
-            $title = implode(" ", $factory->words(5));
-            $content = implode("\n\n", $factory->paragraphs(5));
-            $blog = new Blog();
-            $blog->title = $title;
-            $blog->content = $content;
-            $blog->slug = $blog->makeSlug();
-            $blog->save();
-        }
-    }
-
-    /**
      * @Given /^I should see (\d+) copies of "([^"]*)"$/
      */
     public function iShouldSee($number, $title)
@@ -494,5 +477,48 @@ class FeatureContext extends MinkContext
         }
         $blog->tags()->sync($tagIds);
         $this->visit("blog/{$blog->slug}");
+    }
+
+    /**
+     * @Given /^there is a blog post with title "([^"]*)" and content "([^"]*)"$/
+     */
+    public function thereIsABlogPostWithTitleAndContent($title, $content)
+    {
+        $blog = new Blog(compact('title', 'content'));
+        $blog->slug = $blog->makeSlug();
+        $blog->save();
+    }
+
+    /**
+     * @Given /^there is a blog post with the title "([^"]*)" and content:$/
+     */
+    public function thereIsABlogPostWithTheTitleAndContent($title, PyStringNode $content)
+    {
+        $this->thereIsABlogPostWithTitleAndContent($title, $content);
+    }
+
+    /**
+     * @Given /^there are no blog posts$/
+     */
+    public function thereAreNoBlogPosts()
+    {
+        // Blog::truncate();
+    }
+
+    /**
+     * @Given /^there are (\d+) blog posts$/
+     */
+    public function thereAreBlogPosts($number)
+    {
+        $factory = Faker\Factory::create();
+        for($i = 0; $i<$number; $i++) {
+            $title = implode(" ", $factory->words(5));
+            $content = implode("\n\n", $factory->paragraphs(5));
+            $blog = new Blog();
+            $blog->title = $title;
+            $blog->content = $content;
+            $blog->slug = $blog->makeSlug();
+            $blog->save();
+        }
     }
 }

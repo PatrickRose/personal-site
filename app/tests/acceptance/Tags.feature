@@ -46,7 +46,7 @@ Feature: Tags
     And I should be on "/tag"
 
   Scenario: I can tag a post after editing it
-    Given I create a blog post with title "Editing Test" and content "I made a boo boo"
+    Given there is a blog post with title "Editing Test" and content "I made a boo boo"
     When I am on "/blog/editing-test/edit"
     And I tag it "testing"
     Then I should see the tag "testing"

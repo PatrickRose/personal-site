@@ -22,7 +22,7 @@ class Blog extends Eloquent {
 
     public function getFirstParagraph() {
         $content = $this->content;
-        return substr($content, 0, strpos($content, "\n", strpos($content, "\n\n") + 2)) ? : $content;
+        return substr($content, 0, strpos($content, "\n")) ? : $content;
     }
 
     public function tags() {
