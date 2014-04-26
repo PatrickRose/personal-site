@@ -12,9 +12,9 @@ class Navigation {
 
     public static function getLogin() {
         if (Auth::check()) {
-            $link = array('Logout', "logout");
+            $link = array('Logout', route("logout"));
         } else {
-            $link = array('Login', "login");
+            $link = array('Login', route("login"));
         }
         return \Navigation::links(
             array($link)

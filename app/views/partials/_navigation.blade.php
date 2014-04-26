@@ -9,6 +9,7 @@
             array('About', route('about')),
             array('Gigs', route('gigs')),
             array('Blog', route('blog.index')),
+            array('Tags', route('tag.index')),
         )
     ))
     ->with_menus(
