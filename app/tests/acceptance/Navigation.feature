@@ -12,7 +12,8 @@ Feature: Navigation
     Then I should be on "/login"
 
   Scenario: I can log out using the navbar
-    Given I am logged in
+    Given I create a user
+    And I am logged in
     And I click "Logout"
     Then I should not be logged in
 

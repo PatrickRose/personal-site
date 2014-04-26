@@ -4,6 +4,9 @@ Feature: Login
   I can log in
   To update the site
 
+  Background: There is a user
+    Given I create a user
+
   Scenario: I can log in with valid information
     Given I am on "/login"
     And I fill in my login details

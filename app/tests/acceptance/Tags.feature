@@ -5,8 +5,7 @@ Feature: Tags
   So that we can find similar posts
 
   Background: I should have an empty site
-    Given I run "php artisan migrate:refresh"
-    And I run "php artisan db:seed"
+    Given I create a user
     And I am logged in
 
   Scenario: I can tag a post

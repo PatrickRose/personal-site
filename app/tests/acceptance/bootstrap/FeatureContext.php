@@ -1,7 +1,10 @@
 <?php
 
-require_once __DIR__ . "/../../../../vendor/autoload.php";
+require_once __DIR__ . "/../../../../bootstrap/start.php";
 
+use Behat\Behat\Event\FeatureEvent;
+use Behat\Behat\Event\ScenarioEvent;
+use Behat\Behat\Event\SuiteEvent;
 use Behat\Behat\Exception\PendingException;
 use Behat\Gherkin\Node\PyStringNode;
 use Behat\Mink\Exception\ResponseTextException;
@@ -36,6 +39,13 @@ class FeatureContext extends MinkContext
 //
 
     /**
+     * @BeforeScenario
+     */
+    public static function before(ScenarioEvent $event)
+    {
+        Artisan::call('migrate:refresh', array("seed"));
+    }
+    /**
      * @Given /^I am logged in$/
      */
     public function iAmLoggedIn()
@@ -44,6 +54,7 @@ class FeatureContext extends MinkContext
         $this->fillField("username", "test");
         $this->fillField("password", "foo");
         $this->pressButton("Log in");
+
     }
 
     /**
@@ -210,7 +221,11 @@ class FeatureContext extends MinkContext
         for($i = 0; $i<$number; $i++) {
             $title = implode(" ", $factory->words(5));
             $content = implode("\n\n", $factory->paragraphs(5));
-            $this->iCreateABlogPostWithTitleAndContent($title, $content);
+            $blog = new Blog();
+            $blog->title = $title;
+            $blog->content = $content;
+            $blog->slug = $blog->makeSlug();
+            $blog->save();
         }
     }
 
@@ -415,5 +430,27 @@ class FeatureContext extends MinkContext
         if ($input->getValue() != $tag) {
             throw new ResponseTextException("The tags are {$input->getValue()}, not {$tag}", $session);
         }
+    }
+
+    /**
+     * @Given /^I create a user$/
+     */
+    public function iCreateAUser()
+    {
+        $user = new User;
+        $user->username = "test";
+        $user->password = Hash::make("foo");
+        if (!$user->save()) {
+            throw new ResponseTextException("Couldn't create a user");
+        }
+    }
+
+    /**
+     * @Given /^I should see a user$/
+     */
+    public function iShouldSeeAUser()
+    {
+        $this->visit("/users");
+        $this->assertPageContainsText("test");
     }
 }

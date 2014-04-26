@@ -4,9 +4,8 @@ Feature: Blog
   As the site owner
   I can write blog posts
 
-  Background: I should have an empty site
-    Given I run "php artisan migrate:refresh"
-    And I run "php artisan db:seed"
+  Background: There is a user
+    Given I create a user
 
   Scenario: Nobody except the site owner can create a blog post
     Given I am on "blog/create"
@@ -15,9 +14,10 @@ Feature: Blog
 
   Scenario: Site owner creates a blog post
     Given I am logged in
+    And I should be logged in
     And I am on "blog/create"
     And I create a blog post with title "Foo" and content "Baring all the baz"
-    Then I should see a flash message "Blog post created!"
+    And I should see a flash message "Blog post created!"
     And I should see "Baring all the baz"
     And I should see "Foo"
 
