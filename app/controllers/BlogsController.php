@@ -119,7 +119,7 @@ class BlogsController extends \BaseController {
         } catch (ModelNotFoundException $e) {
             return Redirect::route('blog.index');
         } catch (ValidationException $e) {
-            return Redirect::back()->with('flash_message', "That's not a valid blog post")->withInput()->withErrors($e);
+            return Redirect::back()->with('flash_message', "That's not a valid blog post")->withInput()->withErrors($e->getErrors());
         }
         return Redirect::route("blog.show", $blog->slug)->with('flash_message', "Blog post updated");
     }
