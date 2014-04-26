@@ -5,7 +5,7 @@ Feature: Login
   To update the site
 
   Background: There is a user
-    Given I create a user
+    Given there is a user
 
   Scenario: I can log in with valid information
     Given I am on "/login"

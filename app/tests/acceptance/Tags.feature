@@ -5,7 +5,7 @@ Feature: Tags
   So that we can find similar posts
 
   Background: I should have an empty site
-    Given I create a user
+    Given there is a user
     And I am logged in
 
   Scenario: I can tag a post

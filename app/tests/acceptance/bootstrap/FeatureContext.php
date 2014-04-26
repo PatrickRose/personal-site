@@ -421,9 +421,9 @@ class FeatureContext extends MinkContext
     }
 
     /**
-     * @Given /^I create a user$/
+     * @Given /^there is a user$/
      */
-    public function iCreateAUser()
+    public function thereIsAUser()
     {
         $user = new User;
         $user->username = "test";
