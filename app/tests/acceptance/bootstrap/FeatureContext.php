@@ -362,9 +362,9 @@ class FeatureContext extends MinkContext
 
 
     /**
-     * @Given /^I create (\d+) blog posts with the tag "([^"]*)"$/
+     * @Given /^there are (\d+) blog posts with the tag "([^"]*)"$/
      */
-    public function iCreateBlogPostsWithTheTag($number, $tag)
+    public function thereAreBlogPostsWithTheTag($number, $tag)
     {
         $factory = Faker\Factory::create();
         $blogIds = [];
@@ -384,7 +384,7 @@ class FeatureContext extends MinkContext
     }
 
     /**
-     * @Given /^There are no tags$/
+     * @Given /^there are no tags$/
      */
     public function thereAreNoTags()
     {
@@ -457,5 +457,42 @@ class FeatureContext extends MinkContext
     {
         $this->visit("/users");
         $this->assertPageContainsText("test");
+    }
+
+    /**
+     * @Given /^there is a blog post with tag "([^"]*)"$/
+     */
+    public function thereIsABlogPostWithTag($tag)
+    {
+        $factory = Faker\Factory::create();
+        $title = implode(" ", $factory->words(5));
+        $content = implode("\n\n", $factory->paragraphs(5));
+        $blog = new Blog(compact("title", "content"));
+        $blog->slug = $blog->makeSlug();
+        $blog->save();
+        Tag::create(compact("tag"));
+        $blog->tags()->attach(Tag::whereTag($tag)->first()->id);
+        $this->visit("blog/{$blog->slug}");
+    }
+
+
+    /**
+     * @Given /^there is a blog post with tags "([^"]*)"$/
+     */
+    public function thereIsABlogPostWithTags($tags)
+    {
+        $factory = Faker\Factory::create();
+        $title = implode(" ", $factory->words(5));
+        $content = implode("\n\n", $factory->paragraphs(5));
+        $blog = new Blog(compact("title", "content"));
+        $blog->slug = $blog->makeSlug();
+        $blog->save();
+        $tagIds = [];
+        foreach(explode(", ", $tags) as $tag) {
+            Tag::create(compact("tag"));
+            $tagIds[] = Tag::whereTag($tag)->first()->id;
+        }
+        $blog->tags()->sync($tagIds);
+        $this->visit("blog/{$blog->slug}");
     }
 }
