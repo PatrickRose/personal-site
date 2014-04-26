@@ -367,14 +367,19 @@ class FeatureContext extends MinkContext
     public function iCreateBlogPostsWithTheTag($number, $tag)
     {
         $factory = Faker\Factory::create();
+        $blogIds = [];
         for ($i = 0; $i < $number; $i++) {
             $title = implode(" ", $factory->words(5));
             $content = implode("\n\n", $factory->paragraphs(5));
-            $this->visit("/blog/create");
-            $this->fillField("title", $title);
-            $this->fillField("content", $content);
-            $this->fillField("tags", $tag);
-            $this->pressButton("Create Post");
+            $blog = new Blog(compact("title", "content"));
+            $blog->slug = $blog->makeSlug();
+            $blog->save();
+            $blogIds[] = Blog::whereSlug($blog->slug)->first()->id;
+        }
+        Tag::create(compact('tag'));
+        $tag = Tag::whereTag($tag)->first();
+        foreach($blogIds as $id) {
+            Blog::find($id)->tags()->sync([$tag->id]);
         }
     }
 
