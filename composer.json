@@ -6,7 +6,8 @@
     "require": {
         "laravel/framework": "4.1.*",
         "patricktalmadge/bootstrapper": "4.1.*",
-        "vtalbot/markdown": "1.*"
+        "michelf/php-markdown": "1.4.*",
+        "laracasts/presenter": "0.1.*"
     },
     "require-dev": {
         "way/generators": "dev-master",

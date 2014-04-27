@@ -22,7 +22,7 @@
                         <h2>{{ link_to_route("blog.show", ucwords($blog->title), $blog->slug) }}</h2>
                     </div>
                     <div class="blog-text">
-                        {{ Markdown::string($blog->getFirstParagraph()) }}
+                        {{ $blog->getFirstParagraph() }}
                     </div>
                     {{ link_to_route("blog.show", "Continue Reading...",
                     $blog->slug, array('class' => 'btn btn-blog btn-block')) }}

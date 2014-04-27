@@ -13,7 +13,7 @@
                 </h2>
             </div>
             <div class="blog-content">
-                {{ Markdown::string($blog->content) }}
+                {{ $blog->present()->content($blog->content) }}
             </div>
         </div>
         <div class="col-md-4">

@@ -1,4 +1,6 @@
 <?php
+use Laracasts\Presenter\PresentableTrait;
+
 /**
  * Created by PhpStorm.
  * User: patrick
@@ -7,6 +9,10 @@
  */
 
 class Blog extends Eloquent {
+
+    use PresentableTrait;
+
+    protected $presenter = "PatrickRose\\Presenters\\BlogPresenter";
 
     protected $fillable = array("title", "content");
 
@@ -21,7 +27,7 @@ class Blog extends Eloquent {
     }
 
     public function getFirstParagraph() {
-        $content = $this->content;
+        $content = $this->present()->content($this->content);
         return substr($content, 0, strpos($content, "\n")) ? : $content;
     }
 

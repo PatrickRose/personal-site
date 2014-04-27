@@ -108,7 +108,6 @@ return array(
         'Illuminate\View\ViewServiceProvider',
         'Illuminate\Workbench\WorkbenchServiceProvider',
         'Bootstrapper\BootstrapperServiceProvider',
-        'VTalbot\Markdown\MarkdownServiceProvider',
         'PatrickRose\Repositories\BackendServiceProvider'
     ),
 
@@ -174,7 +173,6 @@ return array(
         'URL'             => 'Illuminate\Support\Facades\URL',
         'Validator'       => 'Illuminate\Support\Facades\Validator',
         'View'            => 'Illuminate\Support\Facades\View',
-        'Markdown'        => 'VTalbot\Markdown\Facades\Markdown',
         'Alert'           => 'Bootstrapper\Alert',
         'Badge'           => 'Bootstrapper\Badge',
         'Breadcrumb'      => 'Bootstrapper\Breadcrumb',
