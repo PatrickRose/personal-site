@@ -4,6 +4,7 @@
     <title>@yield("title") - Patrick Rose</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     {{ HTML::style("assets/css/main.min.css") }}
+    <link rel="stylesheet" href="http://yandex.st/highlightjs/8.0/styles/default.min.css">
 </head>
 <body>
     <div class="container">
@@ -23,5 +24,7 @@
     {{ HTML::script('assets/js/jquery.min.js') }}
     {{ HTML::script('assets/js/bootstrap.js') }}
     {{ HTML::script('assets/js/fading.js') }}
+    <script src="http://yandex.st/highlightjs/8.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
 </body>
 </html>
