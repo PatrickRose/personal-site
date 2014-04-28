@@ -60,7 +60,7 @@ class DbTagRepository implements TagRepositoryInterface {
 
     public function all($paginate = true)
     {
-        $tags = Tag::orderBy("tag", "asc")->with('posts');
+        $tags = Tag::has('posts')->orderBy("tag", "asc")->with('posts');
         return $paginate ? $tags->paginate(6) : $tags->get();
     }
 }

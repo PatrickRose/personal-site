@@ -67,3 +67,11 @@ Feature: Tags
     Given I create a blog post and tag it "foo, Bar"
     Then I should see the tag "foo"
     And I should see the tag "bar"
+
+  Scenario: When tags have no posts, we can't see them
+    Given there is a blog post with tag "foo"
+    And I go to the edit page
+    And I tag it "bar"
+    When I am on "/tag"
+    Then I should not see "foo"
+    And I should see "bar"

@@ -25,7 +25,6 @@ class TagsController extends \BaseController
     {
         $tags = $this->tagRepo->all();
         $allTags = $this->tagRepo->all(false);
-//        dd($tags->toArray());
         return View::make("tags.index", compact('tags', 'allTags'));
     }
 
