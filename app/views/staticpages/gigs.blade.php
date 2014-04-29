@@ -46,6 +46,34 @@
         </tr>
         <tr>
             <td>
+                3rd May
+            </td>
+            <td>
+                5:00pm
+            </td>
+            <td>
+                Sheffield University
+            </td>
+            <td>
+                Sheffield University Beer Festival
+            </td>
+        </tr>
+        <tr>
+            <td>
+                3rd May
+            </td>
+            <td>
+                6:30pm
+            </td>
+            <td>
+                Sheffield University
+            </td>
+            <td>
+                Sheffield University Beer Festival (as part of CeilidhSoc scratch band)
+            </td>
+        </tr>
+        <tr>
+            <td>
                 5th July
             </td>
             <td>
