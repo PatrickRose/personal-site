@@ -13,7 +13,7 @@
                 </h2>
             </div>
             <div class="blog-content">
-                {{ $blog->present()->content($blog->content) }}
+                {{ $blog->present()->compile() }}
             </div>
         </div>
         <div class="col-md-4">

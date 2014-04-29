@@ -26,11 +26,6 @@ class Blog extends Eloquent {
         return $slug;
     }
 
-    public function getFirstParagraph() {
-        $content = $this->present()->content($this->content);
-        return substr($content, 0, strpos($content, "\n")) ? : $content;
-    }
-
     public function tags() {
         return $this->belongsToMany("Tag");
     }

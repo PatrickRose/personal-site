@@ -13,9 +13,14 @@ use Michelf\MarkdownExtra;
 
 class BlogPresenter extends Presenter {
 
-    public function content($content)
+    public function compile()
     {
-        return MarkdownExtra::defaultTransform($content);
+        return MarkdownExtra::defaultTransform($this->content);
+    }
+
+    public function getFirstParagraph() {
+        $content = $this->compile();
+        return substr($content, 0, strpos($content, "\n")) ? : $content;
     }
 
 } 
