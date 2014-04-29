@@ -18,7 +18,7 @@
         font-size: 30px;
         color: #000000;
       }
-      email {
+      .email {
         @extend small;
       }
     }
@@ -30,8 +30,11 @@
     background-position: 70%, 30%;
     .header {
       h1 {
-        email {
-          font-size: 20px;
+        .email {
+          visibility: hidden;
+          .mobile-email {
+            visibility: visible;
+          }
         }
       }
     }
