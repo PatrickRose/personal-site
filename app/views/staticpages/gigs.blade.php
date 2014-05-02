@@ -30,90 +30,22 @@
         </tr>
         </thead>
         <tbody>
-        <tr>
-            <td>
-                1st May
-            </td>
-            <td>
-                8:30pm
-            </td>
-            <td>
-                Princess Royal
-            </td>
-            <td>
-                Crookes Folk Club guest night
-            </td>
-        </tr>
-        <tr>
-            <td>
-                3rd May
-            </td>
-            <td>
-                5:00pm
-            </td>
-            <td>
-                Sheffield University
-            </td>
-            <td>
-                Sheffield University Beer Festival
-            </td>
-        </tr>
-        <tr>
-            <td>
-                3rd May
-            </td>
-            <td>
-                6:30pm
-            </td>
-            <td>
-                Sheffield University
-            </td>
-            <td>
-                Sheffield University Beer Festival (as part of CeilidhSoc scratch band)
-            </td>
-        </tr>
-        <tr>
-            <td>
-                5th July
-            </td>
-            <td>
-                TBC
-            </td>
-            <td>
-                Wincobank Hill
-            </td>
-            <td>
-                Tour De France community event
-            </td>
-        </tr>
-        <tr>
-            <td>
-                12th July
-            </td>
-            <td>
-                PRIVATE
-            </td>
-            <td>
-                Private Party
-            </td>
-            <td>
-                Calling with Whiskey for Six
-            </td>
-        </tr>
-        <tr>
-            <td>
-                19th July
-            </td>
-            <td>
-                PRIVATE
-            </td>
-            <td>
-                Private Party
-            </td>
-            <td>
-                Calling gig at wedding party
-            </td>
-        </tr>
+        @foreach($gigs as $gig)
+            <tr>
+                <td>
+                    {{ $gig->date }}
+                </td>
+                <td>
+                    {{ $gig->time }}
+                </td>
+                <td>
+                    {{ $gig->location }}
+                </td>
+                <td>
+                    {{ $gig->about }}
+                </td>
+            </tr>
+        @endforeach
         </tbody>
     </table>
 </div>

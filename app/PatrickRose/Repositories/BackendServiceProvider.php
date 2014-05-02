@@ -16,6 +16,7 @@ class BackendServiceProvider extends ServiceProvider
     {
         $this->registerBlogRepository();
         $this->registerTagRepository();
+        $this->registerGigRepository();
     }
 
     public function registerBlogRepository()
@@ -29,6 +30,13 @@ class BackendServiceProvider extends ServiceProvider
     {
         $this->app->bind("PatrickRose\\Repositories\\TagRepositoryInterface", function () {
             return new DbTagRepository();
+        });
+    }
+
+    private function registerGigRepository()
+    {
+        $this->app->bind("PatrickRose\\Repositories\\GigRepositoryInterface", function() {
+           return new StaticGigRepository();
         });
     }
 }

@@ -1,5 +1,6 @@
 <?php
 use PatrickRose\Repositories\BlogRepositoryInterface;
+use PatrickRose\Repositories\GigRepositoryInterface;
 
 /**
  * Created by PhpStorm.
@@ -10,14 +11,16 @@ use PatrickRose\Repositories\BlogRepositoryInterface;
 
 class StaticPagesController extends Controller {
 
-
     /**
      * @var PatrickRose\Repositories\BlogRepositoryInterface
      */
     private $blogRepo;
 
-    function __construct(BlogRepositoryInterface $blogRepo) {
+    private $gigRepo;
+
+    function __construct(BlogRepositoryInterface $blogRepo, GigRepositoryInterface $gigRepo) {
         $this->blogRepo = $blogRepo;
+        $this->gigRepo = $gigRepo;
     }
 
     public function homePage() {
@@ -30,7 +33,8 @@ class StaticPagesController extends Controller {
     }
 
     public function gigPage() {
-        return View::make('staticpages.gigs');
+        $gigs = $this->gigRepo->all();
+        return View::make('staticpages.gigs', compact("gigs"));
     }
 
 } 
