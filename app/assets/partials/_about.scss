@@ -5,22 +5,16 @@
 }
 
 #about-singing {
-  @extend .jumbotron;
-  background-image: url("../img/singing.jpg");
-  background-position: 50%, 40%;
+  @include about-header("../img/singing.jpg", 50%, 40%);
 }
 
 #about-guitar {
-  @extend .jumbotron;
-  background-image: url("../img/guitar.jpg");
-  background-position: 75%, 0%;
+  @include about-header("../img/guitar.jpg", 75%, 0%);
 }
 
 #about-calling {
-  @extend .jumbotron;
+  @include about-header("../img/calling.jpg", 40%, 20%);
   background-size: 120%;
-  background-image: url("../img/calling.jpg");
-  background-position: 40%, 20%;
 }
 
 .about-header {

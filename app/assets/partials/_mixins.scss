@@ -5,3 +5,10 @@
     }
   }
 }
+
+@mixin about-header($imageURL, $backgroundX, $backgroundY) {
+  @extend .jumbotron;
+
+  background-image: url($imageURL);
+  background-position: $backgroundX, $backgroundY;
+}
