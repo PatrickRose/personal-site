@@ -17,19 +17,7 @@ class StaticGigRepository implements GigRepositoryInterface {
         $gigs = [];
 
         $gigs[] = new Gig([
-            "date" => "3rd May",
-            "time" => "5:00pm",
-            "location" => "Sheffield University",
-            "about" => "As part of Sheffield University's Beer Festival"
-        ]);
-        $gigs[] = new Gig([
-            "date" => "3rd May",
-            "time" => "6:30pm",
-            "location" => "Sheffield University",
-            "about" => "As part of Sheffield University's Beer Festival (with CeilidhSoc)"
-        ]);
-        $gigs[] = new Gig([
-            "date" => "5th June",
+            "date" => "6th June",
             "time" => "7:30pm",
             "location" => "Redhouse",
             "about" => "Slot at Thank Folk Its Friday"
