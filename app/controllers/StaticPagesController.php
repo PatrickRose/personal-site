@@ -37,4 +37,10 @@ class StaticPagesController extends Controller {
         return View::make('staticpages.gigs', compact("gigs"));
     }
 
+    public function feedPage() {
+        $blogs = $this->blogRepo->all();
+
+        return Response::view('staticpages.rss', compact("blogs"), 200)->header("Content-Type", "application/atom+xml; charset=UTF-8");
+    }
+
 } 

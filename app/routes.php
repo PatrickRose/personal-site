@@ -1,5 +1,8 @@
 <?php
 
+Route::get('blog/feed', [ "as" => "rss",
+                     "uses" => "StaticPagesController@feedPage"]);
+
 Route::resource('sessions', 'SessionsController', array("only" => array("create", "store")));
 Route::resource('blog', 'BlogsController');
 

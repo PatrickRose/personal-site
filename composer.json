@@ -30,7 +30,10 @@
         ],
         "psr-4": {
             "PatrickRose\\": "app/PatrickRose"
-        }
+        },
+        "files": [
+            "app/helpers.php"
+        ]
     },
     "scripts": {
         "post-install-cmd": [
