@@ -9,15 +9,21 @@
 namespace PatrickRose\Presenters;
 
 use Laracasts\Presenter\Presenter;
-use Michelf\MarkdownExtra;
+use MarkdownExtender;
 
 class BlogPresenter extends Presenter {
 
+    /**
+     * @return string The blog post when compiled
+     */
     public function compile()
     {
-        return MarkdownExtra::defaultTransform($this->content);
+        return MarkdownExtender::compile($this->content);
     }
 
+    /**
+     * @return string Get the first paragraph of the blog post
+     */
     public function getFirstParagraph() {
         $content = $this->compile();
         return substr($content, 0, strpos($content, "\n")) ? : $content;

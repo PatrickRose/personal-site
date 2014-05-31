@@ -108,7 +108,8 @@ return array(
         'Illuminate\View\ViewServiceProvider',
         'Illuminate\Workbench\WorkbenchServiceProvider',
         'Bootstrapper\BootstrapperServiceProvider',
-        'PatrickRose\Repositories\BackendServiceProvider'
+        'PatrickRose\Repositories\BackendServiceProvider',
+        'PatrickRose\MarkdownExtender\MarkdownExtenderServiceProvider'
     ),
 
     /*
@@ -195,6 +196,7 @@ return array(
         'Table'           => 'Bootstrapper\Table',
         'Thumbnail'       => 'Bootstrapper\Thumbnail',
         'Typography'      => 'Bootstrapper\Typography',
+        'MarkdownExtender'=> 'PatrickRose\MarkdownExtender\Facades\MarkdownExtender'
     ),
 
 );

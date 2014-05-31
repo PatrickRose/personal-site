@@ -4,8 +4,7 @@ default:
     extensions:
         Behat\MinkExtension\Extension:
             goutte: ~
-            base_url: http://localhost/personal-site/public/index.php/
-
+            base_url: http://personal.dev
     formatter:
         name:               pretty,html
         parameters:
