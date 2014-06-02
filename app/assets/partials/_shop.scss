@@ -1,0 +1,22 @@
+.shop-item {
+  @extend .col-md-4;
+}
+
+.shop-header {
+  @extend .page-header;
+}
+
+.shop-title {
+  width: 74%;
+  float: left;
+
+  font-size: 20px;
+}
+
+.shop-price {
+  width: 24%;
+  float: right;
+
+  font-size: 18px;
+  color: #808080;
+}

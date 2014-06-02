@@ -1,0 +1,915 @@
+Feature: Blog
+  
+  In order to practice writing
+  As the site owner
+  I can write blog posts
+
+  Background: There is a user # app/tests/acceptance/Blog.feature:7
+    Given there is a user     # FeatureContext::thereIsAUser()
+
+  Scenario: Nobody except the site owner can create a blog post         # app/tests/acceptance/Blog.feature:10
+    Given I am on "blog/create"                                         # FeatureContext::visit()
+    Then I should be on "/login"                                        # FeatureContext::assertPageAddress()
+    And I should see a flash message "You're not authorised to do that" # FeatureContext::iShouldSeeAFlashMessage()
+
+  Scenario: Site owner creates a blog post                                      # app/tests/acceptance/Blog.feature:15
+    Given I am logged in                                                        # FeatureContext::iAmLoggedIn()
+      exception 'InvalidArgumentException' with message 'Expecting a DOMNodeList or DOMNode instance, an array, a string, or null, but got "boolean".' in vendor/symfony/dom-crawler/Symfony/Component/DomCrawler/Crawler.php:88
+      Stack trace:
+      #0 vendor/symfony/dom-crawler/Symfony/Component/DomCrawler/Crawler.php(832): Symfony\Component\DomCrawler\Crawler->add(false)
+      #1 vendor/symfony/dom-crawler/Symfony/Component/DomCrawler/Crawler.php(619): Symfony\Component\DomCrawler\Crawler->filterRelativeXPath('descendant-or-s...')
+      #2 vendor/behat/mink-browserkit-driver/src/Behat/Mink/Driver/BrowserKitDriver.php(317): Symfony\Component\DomCrawler\Crawler->filterXPath('//html/.//*[sel...')
+      #3 vendor/behat/mink/src/Behat/Mink/Element/Element.php(91): Behat\Mink\Driver\BrowserKitDriver->find('//html/.//*[sel...')
+      #4 vendor/behat/mink/src/Behat/Mink/Element/Element.php(67): Behat\Mink\Element\Element->findAll('named', Array)
+      #5 vendor/behat/mink/src/Behat/Mink/Element/TraversableElement.php(167): Behat\Mink\Element\Element->find('named', Array)
+      #6 vendor/behat/mink/src/Behat/Mink/Element/TraversableElement.php(180): Behat\Mink\Element\TraversableElement->findField('username')
+      #7 vendor/behat/mink-extension/src/Behat/MinkExtension/Context/MinkContext.php(111): Behat\Mink\Element\TraversableElement->fillField('username', 'test')
+      #8 app/tests/acceptance/bootstrap/FeatureContext.php(54): Behat\MinkExtension\Context\MinkContext->fillField('username', 'test')
+      #9 [internal function]: FeatureContext->iAmLoggedIn()
+      #10 vendor/behat/behat/src/Behat/Behat/Definition/Annotation/Definition.php(155): call_user_func_array(Array, Array)
+      #11 vendor/behat/behat/src/Behat/Behat/Tester/StepTester.php(157): Behat\Behat\Definition\Annotation\Definition->run(Object(FeatureContext))
+      #12 vendor/behat/behat/src/Behat/Behat/Tester/StepTester.php(126): Behat\Behat\Tester\StepTester->executeStepDefinition(Object(Behat\Gherkin\Node\StepNode), Object(Behat\Behat\Definition\Annotation\Given))
+      #13 vendor/behat/behat/src/Behat/Behat/Tester/StepTester.php(95): Behat\Behat\Tester\StepTester->executeStep(Object(Behat\Gherkin\Node\StepNode))
+      #14 vendor/behat/gherkin/src/Behat/Gherkin/Node/AbstractNode.php(42): Behat\Behat\Tester\StepTester->visit(Object(Behat\Gherkin\Node\StepNode))
+      #15 vendor/behat/behat/src/Behat/Behat/Tester/ScenarioTester.php(148): Behat\Gherkin\Node\AbstractNode->accept(Object(Behat\Behat\Tester\StepTester))
+      #16 vendor/behat/behat/src/Behat/Behat/Tester/ScenarioTester.php(87): Behat\Behat\Tester\ScenarioTester->visitStep(Object(Behat\Gherkin\Node\StepNode), Object(Behat\Gherkin\Node\ScenarioNode), Object(FeatureContext), Array, false)
+      #17 vendor/behat/gherkin/src/Behat/Gherkin/Node/AbstractNode.php(42): Behat\Behat\Tester\ScenarioTester->visit(Object(Behat\Gherkin\Node\ScenarioNode))
+      #18 vendor/behat/behat/src/Behat/Behat/Tester/FeatureTester.php(88): Behat\Gherkin\Node\AbstractNode->accept(Object(Behat\Behat\Tester\ScenarioTester))
+      #19 vendor/behat/gherkin/src/Behat/Gherkin/Node/AbstractNode.php(42): Behat\Behat\Tester\FeatureTester->visit(Object(Behat\Gherkin\Node\FeatureNode))
+      #20 vendor/behat/behat/src/Behat/Behat/Console/Command/BehatCommand.php(150): Behat\Gherkin\Node\AbstractNode->accept(Object(Behat\Behat\Tester\FeatureTester))
+      #21 vendor/behat/behat/src/Behat/Behat/Console/Command/BehatCommand.php(128): Behat\Behat\Console\Command\BehatCommand->runFeatures(Object(Behat\Gherkin\Gherkin))
+      #22 vendor/symfony/console/Symfony/Component/Console/Command/Command.php(241): Behat\Behat\Console\Command\BehatCommand->execute(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+      #23 vendor/symfony/console/Symfony/Component/Console/Application.php(885): Symfony\Component\Console\Command\Command->run(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+      #24 vendor/symfony/console/Symfony/Component/Console/Application.php(191): Symfony\Component\Console\Application->doRunCommand(Object(Behat\Behat\Console\Command\BehatCommand), Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+      #25 vendor/behat/behat/src/Behat/Behat/Console/BehatApplication.php(68): Symfony\Component\Console\Application->doRun(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+      #26 vendor/symfony/console/Symfony/Component/Console/Application.php(121): Behat\Behat\Console\BehatApplication->doRun(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+      #27 vendor/behat/behat/bin/behat(32): Symfony\Component\Console\Application->run()
+      #28 {main}
+    And I am on "blog/create"                                                   # FeatureContext::visit()
+    When I create a blog post with title "Foo" and content "Baring all the baz" # FeatureContext::iCreateABlogPostWithTitleAndContent()
+    Then I should see a flash message "Blog post created!"                      # FeatureContext::iShouldSeeAFlashMessage()
+    And I should see "Baring all the baz"                                       # FeatureContext::assertPageContainsText()
+    And I should see "Foo"                                                      # FeatureContext::assertPageContainsText()
+
+  Scenario: Site owner cannot create an invalid blog post                       # app/tests/acceptance/Blog.feature:23
+    Given I am logged in                                                        # FeatureContext::iAmLoggedIn()
+      exception 'InvalidArgumentException' with message 'Expecting a DOMNodeList or DOMNode instance, an array, a string, or null, but got "boolean".' in vendor/symfony/dom-crawler/Symfony/Component/DomCrawler/Crawler.php:88
+      Stack trace:
+      #0 vendor/symfony/dom-crawler/Symfony/Component/DomCrawler/Crawler.php(832): Symfony\Component\DomCrawler\Crawler->add(false)
+      #1 vendor/symfony/dom-crawler/Symfony/Component/DomCrawler/Crawler.php(619): Symfony\Component\DomCrawler\Crawler->filterRelativeXPath('descendant-or-s...')
+      #2 vendor/behat/mink-browserkit-driver/src/Behat/Mink/Driver/BrowserKitDriver.php(317): Symfony\Component\DomCrawler\Crawler->filterXPath('//html/.//*[sel...')
+      #3 vendor/behat/mink/src/Behat/Mink/Element/Element.php(91): Behat\Mink\Driver\BrowserKitDriver->find('//html/.//*[sel...')
+      #4 vendor/behat/mink/src/Behat/Mink/Element/Element.php(67): Behat\Mink\Element\Element->findAll('named', Array)
+      #5 vendor/behat/mink/src/Behat/Mink/Element/TraversableElement.php(167): Behat\Mink\Element\Element->find('named', Array)
+      #6 vendor/behat/mink/src/Behat/Mink/Element/TraversableElement.php(180): Behat\Mink\Element\TraversableElement->findField('username')
+      #7 vendor/behat/mink-extension/src/Behat/MinkExtension/Context/MinkContext.php(111): Behat\Mink\Element\TraversableElement->fillField('username', 'test')
+      #8 app/tests/acceptance/bootstrap/FeatureContext.php(54): Behat\MinkExtension\Context\MinkContext->fillField('username', 'test')
+      #9 [internal function]: FeatureContext->iAmLoggedIn()
+      #10 vendor/behat/behat/src/Behat/Behat/Definition/Annotation/Definition.php(155): call_user_func_array(Array, Array)
+      #11 vendor/behat/behat/src/Behat/Behat/Tester/StepTester.php(157): Behat\Behat\Definition\Annotation\Definition->run(Object(FeatureContext))
+      #12 vendor/behat/behat/src/Behat/Behat/Tester/StepTester.php(126): Behat\Behat\Tester\StepTester->executeStepDefinition(Object(Behat\Gherkin\Node\StepNode), Object(Behat\Behat\Definition\Annotation\Given))
+      #13 vendor/behat/behat/src/Behat/Behat/Tester/StepTester.php(95): Behat\Behat\Tester\StepTester->executeStep(Object(Behat\Gherkin\Node\StepNode))
+      #14 vendor/behat/gherkin/src/Behat/Gherkin/Node/AbstractNode.php(42): Behat\Behat\Tester\StepTester->visit(Object(Behat\Gherkin\Node\StepNode))
+      #15 vendor/behat/behat/src/Behat/Behat/Tester/ScenarioTester.php(148): Behat\Gherkin\Node\AbstractNode->accept(Object(Behat\Behat\Tester\StepTester))
+      #16 vendor/behat/behat/src/Behat/Behat/Tester/ScenarioTester.php(87): Behat\Behat\Tester\ScenarioTester->visitStep(Object(Behat\Gherkin\Node\StepNode), Object(Behat\Gherkin\Node\ScenarioNode), Object(FeatureContext), Array, false)
+      #17 vendor/behat/gherkin/src/Behat/Gherkin/Node/AbstractNode.php(42): Behat\Behat\Tester\ScenarioTester->visit(Object(Behat\Gherkin\Node\ScenarioNode))
+      #18 vendor/behat/behat/src/Behat/Behat/Tester/FeatureTester.php(88): Behat\Gherkin\Node\AbstractNode->accept(Object(Behat\Behat\Tester\ScenarioTester))
+      #19 vendor/behat/gherkin/src/Behat/Gherkin/Node/AbstractNode.php(42): Behat\Behat\Tester\FeatureTester->visit(Object(Behat\Gherkin\Node\FeatureNode))
+      #20 vendor/behat/behat/src/Behat/Behat/Console/Command/BehatCommand.php(150): Behat\Gherkin\Node\AbstractNode->accept(Object(Behat\Behat\Tester\FeatureTester))
+      #21 vendor/behat/behat/src/Behat/Behat/Console/Command/BehatCommand.php(128): Behat\Behat\Console\Command\BehatCommand->runFeatures(Object(Behat\Gherkin\Gherkin))
+      #22 vendor/symfony/console/Symfony/Component/Console/Command/Command.php(241): Behat\Behat\Console\Command\BehatCommand->execute(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+      #23 vendor/symfony/console/Symfony/Component/Console/Application.php(885): Symfony\Component\Console\Command\Command->run(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+      #24 vendor/symfony/console/Symfony/Component/Console/Application.php(191): Symfony\Component\Console\Application->doRunCommand(Object(Behat\Behat\Console\Command\BehatCommand), Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+      #25 vendor/behat/behat/src/Behat/Behat/Console/BehatApplication.php(68): Symfony\Component\Console\Application->doRun(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+      #26 vendor/symfony/console/Symfony/Component/Console/Application.php(121): Behat\Behat\Console\BehatApplication->doRun(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+      #27 vendor/behat/behat/bin/behat(32): Symfony\Component\Console\Application->run()
+      #28 {main}
+    And I am on "blog/create"                                                   # FeatureContext::visit()
+    And I fill in the blog form with invalid data                               # FeatureContext::iFillInTheBlogFormWithInvalidData()
+    Then I should see a flash message "That's not a valid blog post"            # FeatureContext::iShouldSeeAFlashMessage()
+    And I should be on "/blog/create"                                           # FeatureContext::assertPageAddress()
+
+  Scenario: A blog post that has the same title is a new slug                   # app/tests/acceptance/Blog.feature:30
+    Given I am logged in                                                        # FeatureContext::iAmLoggedIn()
+      exception 'InvalidArgumentException' with message 'Expecting a DOMNodeList or DOMNode instance, an array, a string, or null, but got "boolean".' in vendor/symfony/dom-crawler/Symfony/Component/DomCrawler/Crawler.php:88
+      Stack trace:
+      #0 vendor/symfony/dom-crawler/Symfony/Component/DomCrawler/Crawler.php(832): Symfony\Component\DomCrawler\Crawler->add(false)
+      #1 vendor/symfony/dom-crawler/Symfony/Component/DomCrawler/Crawler.php(619): Symfony\Component\DomCrawler\Crawler->filterRelativeXPath('descendant-or-s...')
+      #2 vendor/behat/mink-browserkit-driver/src/Behat/Mink/Driver/BrowserKitDriver.php(317): Symfony\Component\DomCrawler\Crawler->filterXPath('//html/.//*[sel...')
+      #3 vendor/behat/mink/src/Behat/Mink/Element/Element.php(91): Behat\Mink\Driver\BrowserKitDriver->find('//html/.//*[sel...')
+      #4 vendor/behat/mink/src/Behat/Mink/Element/Element.php(67): Behat\Mink\Element\Element->findAll('named', Array)
+      #5 vendor/behat/mink/src/Behat/Mink/Element/TraversableElement.php(167): Behat\Mink\Element\Element->find('named', Array)
+      #6 vendor/behat/mink/src/Behat/Mink/Element/TraversableElement.php(180): Behat\Mink\Element\TraversableElement->findField('username')
+      #7 vendor/behat/mink-extension/src/Behat/MinkExtension/Context/MinkContext.php(111): Behat\Mink\Element\TraversableElement->fillField('username', 'test')
+      #8 app/tests/acceptance/bootstrap/FeatureContext.php(54): Behat\MinkExtension\Context\MinkContext->fillField('username', 'test')
+      #9 [internal function]: FeatureContext->iAmLoggedIn()
+      #10 vendor/behat/behat/src/Behat/Behat/Definition/Annotation/Definition.php(155): call_user_func_array(Array, Array)
+      #11 vendor/behat/behat/src/Behat/Behat/Tester/StepTester.php(157): Behat\Behat\Definition\Annotation\Definition->run(Object(FeatureContext))
+      #12 vendor/behat/behat/src/Behat/Behat/Tester/StepTester.php(126): Behat\Behat\Tester\StepTester->executeStepDefinition(Object(Behat\Gherkin\Node\StepNode), Object(Behat\Behat\Definition\Annotation\Given))
+      #13 vendor/behat/behat/src/Behat/Behat/Tester/StepTester.php(95): Behat\Behat\Tester\StepTester->executeStep(Object(Behat\Gherkin\Node\StepNode))
+      #14 vendor/behat/gherkin/src/Behat/Gherkin/Node/AbstractNode.php(42): Behat\Behat\Tester\StepTester->visit(Object(Behat\Gherkin\Node\StepNode))
+      #15 vendor/behat/behat/src/Behat/Behat/Tester/ScenarioTester.php(148): Behat\Gherkin\Node\AbstractNode->accept(Object(Behat\Behat\Tester\StepTester))
+      #16 vendor/behat/behat/src/Behat/Behat/Tester/ScenarioTester.php(87): Behat\Behat\Tester\ScenarioTester->visitStep(Object(Behat\Gherkin\Node\StepNode), Object(Behat\Gherkin\Node\ScenarioNode), Object(FeatureContext), Array, false)
+      #17 vendor/behat/gherkin/src/Behat/Gherkin/Node/AbstractNode.php(42): Behat\Behat\Tester\ScenarioTester->visit(Object(Behat\Gherkin\Node\ScenarioNode))
+      #18 vendor/behat/behat/src/Behat/Behat/Tester/FeatureTester.php(88): Behat\Gherkin\Node\AbstractNode->accept(Object(Behat\Behat\Tester\ScenarioTester))
+      #19 vendor/behat/gherkin/src/Behat/Gherkin/Node/AbstractNode.php(42): Behat\Behat\Tester\FeatureTester->visit(Object(Behat\Gherkin\Node\FeatureNode))
+      #20 vendor/behat/behat/src/Behat/Behat/Console/Command/BehatCommand.php(150): Behat\Gherkin\Node\AbstractNode->accept(Object(Behat\Behat\Tester\FeatureTester))
+      #21 vendor/behat/behat/src/Behat/Behat/Console/Command/BehatCommand.php(128): Behat\Behat\Console\Command\BehatCommand->runFeatures(Object(Behat\Gherkin\Gherkin))
+      #22 vendor/symfony/console/Symfony/Component/Console/Command/Command.php(241): Behat\Behat\Console\Command\BehatCommand->execute(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+      #23 vendor/symfony/console/Symfony/Component/Console/Application.php(885): Symfony\Component\Console\Command\Command->run(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+      #24 vendor/symfony/console/Symfony/Component/Console/Application.php(191): Symfony\Component\Console\Application->doRunCommand(Object(Behat\Behat\Console\Command\BehatCommand), Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+      #25 vendor/behat/behat/src/Behat/Behat/Console/BehatApplication.php(68): Symfony\Component\Console\Application->doRun(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+      #26 vendor/symfony/console/Symfony/Component/Console/Application.php(121): Behat\Behat\Console\BehatApplication->doRun(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+      #27 vendor/behat/behat/bin/behat(32): Symfony\Component\Console\Application->run()
+      #28 {main}
+    And I create a blog post with title "evening" and content "content"         # FeatureContext::iCreateABlogPostWithTitleAndContent()
+    And I create a blog post with title "evening" and content "different"       # FeatureContext::iCreateABlogPostWithTitleAndContent()
+    Then I should be on "/blog/evening-2"                                       # FeatureContext::assertPageAddress()
+    And I should see "different"                                                # FeatureContext::assertPageContainsText()
+    And I should not see "content"                                              # FeatureContext::assertPageNotContainsText()
+
+  Scenario: I can see all the blog posts                                                # app/tests/acceptance/Blog.feature:38
+    Given there is a blog post with title "First Post" and content "first post content" # FeatureContext::thereIsABlogPostWithTitleAndContent()
+    And there is a blog post with title "Second Post" and content "second post content" # FeatureContext::thereIsABlogPostWithTitleAndContent()
+    When I am on "/blog"                                                                # FeatureContext::visit()
+    Then I should see all blogs                                                         # FeatureContext::iShouldSeeAllBlogs()
+
+  Scenario: When I see posts, the titles are capitalised                                # app/tests/acceptance/Blog.feature:44
+    Given I am logged in                                                                # FeatureContext::iAmLoggedIn()
+      exception 'InvalidArgumentException' with message 'Expecting a DOMNodeList or DOMNode instance, an array, a string, or null, but got "boolean".' in vendor/symfony/dom-crawler/Symfony/Component/DomCrawler/Crawler.php:88
+      Stack trace:
+      #0 vendor/symfony/dom-crawler/Symfony/Component/DomCrawler/Crawler.php(832): Symfony\Component\DomCrawler\Crawler->add(false)
+      #1 vendor/symfony/dom-crawler/Symfony/Component/DomCrawler/Crawler.php(619): Symfony\Component\DomCrawler\Crawler->filterRelativeXPath('descendant-or-s...')
+      #2 vendor/behat/mink-browserkit-driver/src/Behat/Mink/Driver/BrowserKitDriver.php(317): Symfony\Component\DomCrawler\Crawler->filterXPath('//html/.//*[sel...')
+      #3 vendor/behat/mink/src/Behat/Mink/Element/Element.php(91): Behat\Mink\Driver\BrowserKitDriver->find('//html/.//*[sel...')
+      #4 vendor/behat/mink/src/Behat/Mink/Element/Element.php(67): Behat\Mink\Element\Element->findAll('named', Array)
+      #5 vendor/behat/mink/src/Behat/Mink/Element/TraversableElement.php(167): Behat\Mink\Element\Element->find('named', Array)
+      #6 vendor/behat/mink/src/Behat/Mink/Element/TraversableElement.php(180): Behat\Mink\Element\TraversableElement->findField('username')
+      #7 vendor/behat/mink-extension/src/Behat/MinkExtension/Context/MinkContext.php(111): Behat\Mink\Element\TraversableElement->fillField('username', 'test')
+      #8 app/tests/acceptance/bootstrap/FeatureContext.php(54): Behat\MinkExtension\Context\MinkContext->fillField('username', 'test')
+      #9 [internal function]: FeatureContext->iAmLoggedIn()
+      #10 vendor/behat/behat/src/Behat/Behat/Definition/Annotation/Definition.php(155): call_user_func_array(Array, Array)
+      #11 vendor/behat/behat/src/Behat/Behat/Tester/StepTester.php(157): Behat\Behat\Definition\Annotation\Definition->run(Object(FeatureContext))
+      #12 vendor/behat/behat/src/Behat/Behat/Tester/StepTester.php(126): Behat\Behat\Tester\StepTester->executeStepDefinition(Object(Behat\Gherkin\Node\StepNode), Object(Behat\Behat\Definition\Annotation\Given))
+      #13 vendor/behat/behat/src/Behat/Behat/Tester/StepTester.php(95): Behat\Behat\Tester\StepTester->executeStep(Object(Behat\Gherkin\Node\StepNode))
+      #14 vendor/behat/gherkin/src/Behat/Gherkin/Node/AbstractNode.php(42): Behat\Behat\Tester\StepTester->visit(Object(Behat\Gherkin\Node\StepNode))
+      #15 vendor/behat/behat/src/Behat/Behat/Tester/ScenarioTester.php(148): Behat\Gherkin\Node\AbstractNode->accept(Object(Behat\Behat\Tester\StepTester))
+      #16 vendor/behat/behat/src/Behat/Behat/Tester/ScenarioTester.php(87): Behat\Behat\Tester\ScenarioTester->visitStep(Object(Behat\Gherkin\Node\StepNode), Object(Behat\Gherkin\Node\ScenarioNode), Object(FeatureContext), Array, false)
+      #17 vendor/behat/gherkin/src/Behat/Gherkin/Node/AbstractNode.php(42): Behat\Behat\Tester\ScenarioTester->visit(Object(Behat\Gherkin\Node\ScenarioNode))
+      #18 vendor/behat/behat/src/Behat/Behat/Tester/FeatureTester.php(88): Behat\Gherkin\Node\AbstractNode->accept(Object(Behat\Behat\Tester\ScenarioTester))
+      #19 vendor/behat/gherkin/src/Behat/Gherkin/Node/AbstractNode.php(42): Behat\Behat\Tester\FeatureTester->visit(Object(Behat\Gherkin\Node\FeatureNode))
+      #20 vendor/behat/behat/src/Behat/Behat/Console/Command/BehatCommand.php(150): Behat\Gherkin\Node\AbstractNode->accept(Object(Behat\Behat\Tester\FeatureTester))
+      #21 vendor/behat/behat/src/Behat/Behat/Console/Command/BehatCommand.php(128): Behat\Behat\Console\Command\BehatCommand->runFeatures(Object(Behat\Gherkin\Gherkin))
+      #22 vendor/symfony/console/Symfony/Component/Console/Command/Command.php(241): Behat\Behat\Console\Command\BehatCommand->execute(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+      #23 vendor/symfony/console/Symfony/Component/Console/Application.php(885): Symfony\Component\Console\Command\Command->run(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+      #24 vendor/symfony/console/Symfony/Component/Console/Application.php(191): Symfony\Component\Console\Application->doRunCommand(Object(Behat\Behat\Console\Command\BehatCommand), Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+      #25 vendor/behat/behat/src/Behat/Behat/Console/BehatApplication.php(68): Symfony\Component\Console\Application->doRun(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+      #26 vendor/symfony/console/Symfony/Component/Console/Application.php(121): Behat\Behat\Console\BehatApplication->doRun(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+      #27 vendor/behat/behat/bin/behat(32): Symfony\Component\Console\Application->run()
+      #28 {main}
+    And I create a blog post with title "no capitals" and content "first post content"  # FeatureContext::iCreateABlogPostWithTitleAndContent()
+    Then the title should be "No Capitals"                                              # FeatureContext::theTitleShouldBe()
+    And when I go to "/blog" I should see the title "No Capitals"                       # FeatureContext::whenIGoToIShouldSeeTheTitle()
+
+  Scenario: I can use markdown to create posts                                          # app/tests/acceptance/Blog.feature:50
+    Given I am logged in                                                                # FeatureContext::iAmLoggedIn()
+      exception 'InvalidArgumentException' with message 'Expecting a DOMNodeList or DOMNode instance, an array, a string, or null, but got "boolean".' in vendor/symfony/dom-crawler/Symfony/Component/DomCrawler/Crawler.php:88
+      Stack trace:
+      #0 vendor/symfony/dom-crawler/Symfony/Component/DomCrawler/Crawler.php(832): Symfony\Component\DomCrawler\Crawler->add(false)
+      #1 vendor/symfony/dom-crawler/Symfony/Component/DomCrawler/Crawler.php(619): Symfony\Component\DomCrawler\Crawler->filterRelativeXPath('descendant-or-s...')
+      #2 vendor/behat/mink-browserkit-driver/src/Behat/Mink/Driver/BrowserKitDriver.php(317): Symfony\Component\DomCrawler\Crawler->filterXPath('//html/.//*[sel...')
+      #3 vendor/behat/mink/src/Behat/Mink/Element/Element.php(91): Behat\Mink\Driver\BrowserKitDriver->find('//html/.//*[sel...')
+      #4 vendor/behat/mink/src/Behat/Mink/Element/Element.php(67): Behat\Mink\Element\Element->findAll('named', Array)
+      #5 vendor/behat/mink/src/Behat/Mink/Element/TraversableElement.php(167): Behat\Mink\Element\Element->find('named', Array)
+      #6 vendor/behat/mink/src/Behat/Mink/Element/TraversableElement.php(180): Behat\Mink\Element\TraversableElement->findField('username')
+      #7 vendor/behat/mink-extension/src/Behat/MinkExtension/Context/MinkContext.php(111): Behat\Mink\Element\TraversableElement->fillField('username', 'test')
+      #8 app/tests/acceptance/bootstrap/FeatureContext.php(54): Behat\MinkExtension\Context\MinkContext->fillField('username', 'test')
+      #9 [internal function]: FeatureContext->iAmLoggedIn()
+      #10 vendor/behat/behat/src/Behat/Behat/Definition/Annotation/Definition.php(155): call_user_func_array(Array, Array)
+      #11 vendor/behat/behat/src/Behat/Behat/Tester/StepTester.php(157): Behat\Behat\Definition\Annotation\Definition->run(Object(FeatureContext))
+      #12 vendor/behat/behat/src/Behat/Behat/Tester/StepTester.php(126): Behat\Behat\Tester\StepTester->executeStepDefinition(Object(Behat\Gherkin\Node\StepNode), Object(Behat\Behat\Definition\Annotation\Given))
+      #13 vendor/behat/behat/src/Behat/Behat/Tester/StepTester.php(95): Behat\Behat\Tester\StepTester->executeStep(Object(Behat\Gherkin\Node\StepNode))
+      #14 vendor/behat/gherkin/src/Behat/Gherkin/Node/AbstractNode.php(42): Behat\Behat\Tester\StepTester->visit(Object(Behat\Gherkin\Node\StepNode))
+      #15 vendor/behat/behat/src/Behat/Behat/Tester/ScenarioTester.php(148): Behat\Gherkin\Node\AbstractNode->accept(Object(Behat\Behat\Tester\StepTester))
+      #16 vendor/behat/behat/src/Behat/Behat/Tester/ScenarioTester.php(87): Behat\Behat\Tester\ScenarioTester->visitStep(Object(Behat\Gherkin\Node\StepNode), Object(Behat\Gherkin\Node\ScenarioNode), Object(FeatureContext), Array, false)
+      #17 vendor/behat/gherkin/src/Behat/Gherkin/Node/AbstractNode.php(42): Behat\Behat\Tester\ScenarioTester->visit(Object(Behat\Gherkin\Node\ScenarioNode))
+      #18 vendor/behat/behat/src/Behat/Behat/Tester/FeatureTester.php(88): Behat\Gherkin\Node\AbstractNode->accept(Object(Behat\Behat\Tester\ScenarioTester))
+      #19 vendor/behat/gherkin/src/Behat/Gherkin/Node/AbstractNode.php(42): Behat\Behat\Tester\FeatureTester->visit(Object(Behat\Gherkin\Node\FeatureNode))
+      #20 vendor/behat/behat/src/Behat/Behat/Console/Command/BehatCommand.php(150): Behat\Gherkin\Node\AbstractNode->accept(Object(Behat\Behat\Tester\FeatureTester))
+      #21 vendor/behat/behat/src/Behat/Behat/Console/Command/BehatCommand.php(128): Behat\Behat\Console\Command\BehatCommand->runFeatures(Object(Behat\Gherkin\Gherkin))
+      #22 vendor/symfony/console/Symfony/Component/Console/Command/Command.php(241): Behat\Behat\Console\Command\BehatCommand->execute(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+      #23 vendor/symfony/console/Symfony/Component/Console/Application.php(885): Symfony\Component\Console\Command\Command->run(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+      #24 vendor/symfony/console/Symfony/Component/Console/Application.php(191): Symfony\Component\Console\Application->doRunCommand(Object(Behat\Behat\Console\Command\BehatCommand), Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+      #25 vendor/behat/behat/src/Behat/Behat/Console/BehatApplication.php(68): Symfony\Component\Console\Application->doRun(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+      #26 vendor/symfony/console/Symfony/Component/Console/Application.php(121): Behat\Behat\Console\BehatApplication->doRun(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+      #27 vendor/behat/behat/bin/behat(32): Symfony\Component\Console\Application->run()
+      #28 {main}
+    And I create a blog post with the title "Markdown Test" and content:                # FeatureContext::iCreateABlogPostWithTheTitleAndContent()
+      """
+      # Heading 1
+      
+      ## Heading 2
+      
+      *emphasis*
+      
+      **strong**
+      
+      1. First ordered item
+      2. Second ordered item
+      
+      * First unordered item
+      * Second unordered item
+      
+      [link](http://foo.bar.com)
+      
+      Test we can create `inline code`
+      
+      Test that we an also add paragraphs
+      
+      Hey look, more paragraphs!
+      """
+    Then I should see the compiled markdown                                             # FeatureContext::iShouldSeeTheCompiledMarkdown()
+
+  Scenario: The index page only shows the first paragraph of each post                  # app/tests/acceptance/Blog.feature:78
+    And there is a blog post with the title "Paragraph Test" and content:               # FeatureContext::thereIsABlogPostWithTheTitleAndContent()
+      """
+      This is a nice paragraph
+      
+      Oh goodness, so is this!
+      
+      I shouldn't be able to see this
+      """
+    When I am on "/blog"                                                                # FeatureContext::visit()
+    Then I should see "This is a nice paragraph"                                        # FeatureContext::assertPageContainsText()
+    And I shouldn't see "Oh goodness, so is this!"                                      # FeatureContext::iShouldntSee()
+    And I shouldn't see "I shouldn't be able to see this"                               # FeatureContext::iShouldntSee()
+    And I should see a button saying "Continue Reading..."                              # FeatureContext::iShouldSeeAButtonSaying()
+
+  Scenario: We get a graceful fail when a blog post isn't found                         # app/tests/acceptance/Blog.feature:93
+    Given there are no blog posts                                                       # FeatureContext::thereAreNoBlogPosts()
+    When I am on "/blog/foo"                                                            # FeatureContext::visit()
+    Then I should see a flash message "Blog post not found"                             # FeatureContext::iShouldSeeAFlashMessage()
+    And I should be on "/blog"                                                          # FeatureContext::assertPageAddress()
+
+  Scenario: We can edit blog posts                                                      # app/tests/acceptance/Blog.feature:99
+    Given there is a blog post with title "Editing Test" and content "I made a boo boo" # FeatureContext::thereIsABlogPostWithTitleAndContent()
+    When I am logged in                                                                 # FeatureContext::iAmLoggedIn()
+      exception 'InvalidArgumentException' with message 'Expecting a DOMNodeList or DOMNode instance, an array, a string, or null, but got "boolean".' in vendor/symfony/dom-crawler/Symfony/Component/DomCrawler/Crawler.php:88
+      Stack trace:
+      #0 vendor/symfony/dom-crawler/Symfony/Component/DomCrawler/Crawler.php(832): Symfony\Component\DomCrawler\Crawler->add(false)
+      #1 vendor/symfony/dom-crawler/Symfony/Component/DomCrawler/Crawler.php(619): Symfony\Component\DomCrawler\Crawler->filterRelativeXPath('descendant-or-s...')
+      #2 vendor/behat/mink-browserkit-driver/src/Behat/Mink/Driver/BrowserKitDriver.php(317): Symfony\Component\DomCrawler\Crawler->filterXPath('//html/.//*[sel...')
+      #3 vendor/behat/mink/src/Behat/Mink/Element/Element.php(91): Behat\Mink\Driver\BrowserKitDriver->find('//html/.//*[sel...')
+      #4 vendor/behat/mink/src/Behat/Mink/Element/Element.php(67): Behat\Mink\Element\Element->findAll('named', Array)
+      #5 vendor/behat/mink/src/Behat/Mink/Element/TraversableElement.php(167): Behat\Mink\Element\Element->find('named', Array)
+      #6 vendor/behat/mink/src/Behat/Mink/Element/TraversableElement.php(180): Behat\Mink\Element\TraversableElement->findField('username')
+      #7 vendor/behat/mink-extension/src/Behat/MinkExtension/Context/MinkContext.php(111): Behat\Mink\Element\TraversableElement->fillField('username', 'test')
+      #8 app/tests/acceptance/bootstrap/FeatureContext.php(54): Behat\MinkExtension\Context\MinkContext->fillField('username', 'test')
+      #9 [internal function]: FeatureContext->iAmLoggedIn()
+      #10 vendor/behat/behat/src/Behat/Behat/Definition/Annotation/Definition.php(155): call_user_func_array(Array, Array)
+      #11 vendor/behat/behat/src/Behat/Behat/Tester/StepTester.php(157): Behat\Behat\Definition\Annotation\Definition->run(Object(FeatureContext))
+      #12 vendor/behat/behat/src/Behat/Behat/Tester/StepTester.php(126): Behat\Behat\Tester\StepTester->executeStepDefinition(Object(Behat\Gherkin\Node\StepNode), Object(Behat\Behat\Definition\Annotation\Given))
+      #13 vendor/behat/behat/src/Behat/Behat/Tester/StepTester.php(95): Behat\Behat\Tester\StepTester->executeStep(Object(Behat\Gherkin\Node\StepNode))
+      #14 vendor/behat/gherkin/src/Behat/Gherkin/Node/AbstractNode.php(42): Behat\Behat\Tester\StepTester->visit(Object(Behat\Gherkin\Node\StepNode))
+      #15 vendor/behat/behat/src/Behat/Behat/Tester/ScenarioTester.php(148): Behat\Gherkin\Node\AbstractNode->accept(Object(Behat\Behat\Tester\StepTester))
+      #16 vendor/behat/behat/src/Behat/Behat/Tester/ScenarioTester.php(87): Behat\Behat\Tester\ScenarioTester->visitStep(Object(Behat\Gherkin\Node\StepNode), Object(Behat\Gherkin\Node\ScenarioNode), Object(FeatureContext), Array, false)
+      #17 vendor/behat/gherkin/src/Behat/Gherkin/Node/AbstractNode.php(42): Behat\Behat\Tester\ScenarioTester->visit(Object(Behat\Gherkin\Node\ScenarioNode))
+      #18 vendor/behat/behat/src/Behat/Behat/Tester/FeatureTester.php(88): Behat\Gherkin\Node\AbstractNode->accept(Object(Behat\Behat\Tester\ScenarioTester))
+      #19 vendor/behat/gherkin/src/Behat/Gherkin/Node/AbstractNode.php(42): Behat\Behat\Tester\FeatureTester->visit(Object(Behat\Gherkin\Node\FeatureNode))
+      #20 vendor/behat/behat/src/Behat/Behat/Console/Command/BehatCommand.php(150): Behat\Gherkin\Node\AbstractNode->accept(Object(Behat\Behat\Tester\FeatureTester))
+      #21 vendor/behat/behat/src/Behat/Behat/Console/Command/BehatCommand.php(128): Behat\Behat\Console\Command\BehatCommand->runFeatures(Object(Behat\Gherkin\Gherkin))
+      #22 vendor/symfony/console/Symfony/Component/Console/Command/Command.php(241): Behat\Behat\Console\Command\BehatCommand->execute(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+      #23 vendor/symfony/console/Symfony/Component/Console/Application.php(885): Symfony\Component\Console\Command\Command->run(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+      #24 vendor/symfony/console/Symfony/Component/Console/Application.php(191): Symfony\Component\Console\Application->doRunCommand(Object(Behat\Behat\Console\Command\BehatCommand), Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+      #25 vendor/behat/behat/src/Behat/Behat/Console/BehatApplication.php(68): Symfony\Component\Console\Application->doRun(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+      #26 vendor/symfony/console/Symfony/Component/Console/Application.php(121): Behat\Behat\Console\BehatApplication->doRun(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+      #27 vendor/behat/behat/bin/behat(32): Symfony\Component\Console\Application->run()
+      #28 {main}
+    And I am on "blog/editing-test/edit"                                                # FeatureContext::visit()
+    Then I should be able to edit the post                                              # FeatureContext::iShouldBeAbleToEditThePost()
+    And I should see the edited content                                                 # FeatureContext::iShouldSeeTheEditedContent()
+
+  Scenario: We can only edit posts if you're logged in                                  # app/tests/acceptance/Blog.feature:106
+    Given there is a blog post with title "Editing Test" and content "I made a boo boo" # FeatureContext::thereIsABlogPostWithTitleAndContent()
+    When I am on "blog/editing-test/edit"                                               # FeatureContext::visit()
+    Then I should be on "/login"                                                        # FeatureContext::assertPageAddress()
+    And I should see a flash message "You're not authorised to do that"                 # FeatureContext::iShouldSeeAFlashMessage()
+
+  Scenario: We can only edit posts that are real                                        # app/tests/acceptance/Blog.feature:112
+    Given I am logged in                                                                # FeatureContext::iAmLoggedIn()
+      exception 'InvalidArgumentException' with message 'Expecting a DOMNodeList or DOMNode instance, an array, a string, or null, but got "boolean".' in vendor/symfony/dom-crawler/Symfony/Component/DomCrawler/Crawler.php:88
+      Stack trace:
+      #0 vendor/symfony/dom-crawler/Symfony/Component/DomCrawler/Crawler.php(832): Symfony\Component\DomCrawler\Crawler->add(false)
+      #1 vendor/symfony/dom-crawler/Symfony/Component/DomCrawler/Crawler.php(619): Symfony\Component\DomCrawler\Crawler->filterRelativeXPath('descendant-or-s...')
+      #2 vendor/behat/mink-browserkit-driver/src/Behat/Mink/Driver/BrowserKitDriver.php(317): Symfony\Component\DomCrawler\Crawler->filterXPath('//html/.//*[sel...')
+      #3 vendor/behat/mink/src/Behat/Mink/Element/Element.php(91): Behat\Mink\Driver\BrowserKitDriver->find('//html/.//*[sel...')
+      #4 vendor/behat/mink/src/Behat/Mink/Element/Element.php(67): Behat\Mink\Element\Element->findAll('named', Array)
+      #5 vendor/behat/mink/src/Behat/Mink/Element/TraversableElement.php(167): Behat\Mink\Element\Element->find('named', Array)
+      #6 vendor/behat/mink/src/Behat/Mink/Element/TraversableElement.php(180): Behat\Mink\Element\TraversableElement->findField('username')
+      #7 vendor/behat/mink-extension/src/Behat/MinkExtension/Context/MinkContext.php(111): Behat\Mink\Element\TraversableElement->fillField('username', 'test')
+      #8 app/tests/acceptance/bootstrap/FeatureContext.php(54): Behat\MinkExtension\Context\MinkContext->fillField('username', 'test')
+      #9 [internal function]: FeatureContext->iAmLoggedIn()
+      #10 vendor/behat/behat/src/Behat/Behat/Definition/Annotation/Definition.php(155): call_user_func_array(Array, Array)
+      #11 vendor/behat/behat/src/Behat/Behat/Tester/StepTester.php(157): Behat\Behat\Definition\Annotation\Definition->run(Object(FeatureContext))
+      #12 vendor/behat/behat/src/Behat/Behat/Tester/StepTester.php(126): Behat\Behat\Tester\StepTester->executeStepDefinition(Object(Behat\Gherkin\Node\StepNode), Object(Behat\Behat\Definition\Annotation\Given))
+      #13 vendor/behat/behat/src/Behat/Behat/Tester/StepTester.php(95): Behat\Behat\Tester\StepTester->executeStep(Object(Behat\Gherkin\Node\StepNode))
+      #14 vendor/behat/gherkin/src/Behat/Gherkin/Node/AbstractNode.php(42): Behat\Behat\Tester\StepTester->visit(Object(Behat\Gherkin\Node\StepNode))
+      #15 vendor/behat/behat/src/Behat/Behat/Tester/ScenarioTester.php(148): Behat\Gherkin\Node\AbstractNode->accept(Object(Behat\Behat\Tester\StepTester))
+      #16 vendor/behat/behat/src/Behat/Behat/Tester/ScenarioTester.php(87): Behat\Behat\Tester\ScenarioTester->visitStep(Object(Behat\Gherkin\Node\StepNode), Object(Behat\Gherkin\Node\ScenarioNode), Object(FeatureContext), Array, false)
+      #17 vendor/behat/gherkin/src/Behat/Gherkin/Node/AbstractNode.php(42): Behat\Behat\Tester\ScenarioTester->visit(Object(Behat\Gherkin\Node\ScenarioNode))
+      #18 vendor/behat/behat/src/Behat/Behat/Tester/FeatureTester.php(88): Behat\Gherkin\Node\AbstractNode->accept(Object(Behat\Behat\Tester\ScenarioTester))
+      #19 vendor/behat/gherkin/src/Behat/Gherkin/Node/AbstractNode.php(42): Behat\Behat\Tester\FeatureTester->visit(Object(Behat\Gherkin\Node\FeatureNode))
+      #20 vendor/behat/behat/src/Behat/Behat/Console/Command/BehatCommand.php(150): Behat\Gherkin\Node\AbstractNode->accept(Object(Behat\Behat\Tester\FeatureTester))
+      #21 vendor/behat/behat/src/Behat/Behat/Console/Command/BehatCommand.php(128): Behat\Behat\Console\Command\BehatCommand->runFeatures(Object(Behat\Gherkin\Gherkin))
+      #22 vendor/symfony/console/Symfony/Component/Console/Command/Command.php(241): Behat\Behat\Console\Command\BehatCommand->execute(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+      #23 vendor/symfony/console/Symfony/Component/Console/Application.php(885): Symfony\Component\Console\Command\Command->run(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+      #24 vendor/symfony/console/Symfony/Component/Console/Application.php(191): Symfony\Component\Console\Application->doRunCommand(Object(Behat\Behat\Console\Command\BehatCommand), Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+      #25 vendor/behat/behat/src/Behat/Behat/Console/BehatApplication.php(68): Symfony\Component\Console\Application->doRun(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+      #26 vendor/symfony/console/Symfony/Component/Console/Application.php(121): Behat\Behat\Console\BehatApplication->doRun(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+      #27 vendor/behat/behat/bin/behat(32): Symfony\Component\Console\Application->run()
+      #28 {main}
+    And there are no blog posts                                                         # FeatureContext::thereAreNoBlogPosts()
+    When I am on "blog/editing-test/edit"                                               # FeatureContext::visit()
+    Then I should be on "/blog"                                                         # FeatureContext::assertPageAddress()
+    And I should see a flash message "Blog post not found"                              # FeatureContext::iShouldSeeAFlashMessage()
+
+  Scenario: We can only edit posts so they are valid                                    # app/tests/acceptance/Blog.feature:119
+    Given I am logged in                                                                # FeatureContext::iAmLoggedIn()
+      exception 'InvalidArgumentException' with message 'Expecting a DOMNodeList or DOMNode instance, an array, a string, or null, but got "boolean".' in vendor/symfony/dom-crawler/Symfony/Component/DomCrawler/Crawler.php:88
+      Stack trace:
+      #0 vendor/symfony/dom-crawler/Symfony/Component/DomCrawler/Crawler.php(832): Symfony\Component\DomCrawler\Crawler->add(false)
+      #1 vendor/symfony/dom-crawler/Symfony/Component/DomCrawler/Crawler.php(619): Symfony\Component\DomCrawler\Crawler->filterRelativeXPath('descendant-or-s...')
+      #2 vendor/behat/mink-browserkit-driver/src/Behat/Mink/Driver/BrowserKitDriver.php(317): Symfony\Component\DomCrawler\Crawler->filterXPath('//html/.//*[sel...')
+      #3 vendor/behat/mink/src/Behat/Mink/Element/Element.php(91): Behat\Mink\Driver\BrowserKitDriver->find('//html/.//*[sel...')
+      #4 vendor/behat/mink/src/Behat/Mink/Element/Element.php(67): Behat\Mink\Element\Element->findAll('named', Array)
+      #5 vendor/behat/mink/src/Behat/Mink/Element/TraversableElement.php(167): Behat\Mink\Element\Element->find('named', Array)
+      #6 vendor/behat/mink/src/Behat/Mink/Element/TraversableElement.php(180): Behat\Mink\Element\TraversableElement->findField('username')
+      #7 vendor/behat/mink-extension/src/Behat/MinkExtension/Context/MinkContext.php(111): Behat\Mink\Element\TraversableElement->fillField('username', 'test')
+      #8 app/tests/acceptance/bootstrap/FeatureContext.php(54): Behat\MinkExtension\Context\MinkContext->fillField('username', 'test')
+      #9 [internal function]: FeatureContext->iAmLoggedIn()
+      #10 vendor/behat/behat/src/Behat/Behat/Definition/Annotation/Definition.php(155): call_user_func_array(Array, Array)
+      #11 vendor/behat/behat/src/Behat/Behat/Tester/StepTester.php(157): Behat\Behat\Definition\Annotation\Definition->run(Object(FeatureContext))
+      #12 vendor/behat/behat/src/Behat/Behat/Tester/StepTester.php(126): Behat\Behat\Tester\StepTester->executeStepDefinition(Object(Behat\Gherkin\Node\StepNode), Object(Behat\Behat\Definition\Annotation\Given))
+      #13 vendor/behat/behat/src/Behat/Behat/Tester/StepTester.php(95): Behat\Behat\Tester\StepTester->executeStep(Object(Behat\Gherkin\Node\StepNode))
+      #14 vendor/behat/gherkin/src/Behat/Gherkin/Node/AbstractNode.php(42): Behat\Behat\Tester\StepTester->visit(Object(Behat\Gherkin\Node\StepNode))
+      #15 vendor/behat/behat/src/Behat/Behat/Tester/ScenarioTester.php(148): Behat\Gherkin\Node\AbstractNode->accept(Object(Behat\Behat\Tester\StepTester))
+      #16 vendor/behat/behat/src/Behat/Behat/Tester/ScenarioTester.php(87): Behat\Behat\Tester\ScenarioTester->visitStep(Object(Behat\Gherkin\Node\StepNode), Object(Behat\Gherkin\Node\ScenarioNode), Object(FeatureContext), Array, false)
+      #17 vendor/behat/gherkin/src/Behat/Gherkin/Node/AbstractNode.php(42): Behat\Behat\Tester\ScenarioTester->visit(Object(Behat\Gherkin\Node\ScenarioNode))
+      #18 vendor/behat/behat/src/Behat/Behat/Tester/FeatureTester.php(88): Behat\Gherkin\Node\AbstractNode->accept(Object(Behat\Behat\Tester\ScenarioTester))
+      #19 vendor/behat/gherkin/src/Behat/Gherkin/Node/AbstractNode.php(42): Behat\Behat\Tester\FeatureTester->visit(Object(Behat\Gherkin\Node\FeatureNode))
+      #20 vendor/behat/behat/src/Behat/Behat/Console/Command/BehatCommand.php(150): Behat\Gherkin\Node\AbstractNode->accept(Object(Behat\Behat\Tester\FeatureTester))
+      #21 vendor/behat/behat/src/Behat/Behat/Console/Command/BehatCommand.php(128): Behat\Behat\Console\Command\BehatCommand->runFeatures(Object(Behat\Gherkin\Gherkin))
+      #22 vendor/symfony/console/Symfony/Component/Console/Command/Command.php(241): Behat\Behat\Console\Command\BehatCommand->execute(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+      #23 vendor/symfony/console/Symfony/Component/Console/Application.php(885): Symfony\Component\Console\Command\Command->run(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+      #24 vendor/symfony/console/Symfony/Component/Console/Application.php(191): Symfony\Component\Console\Application->doRunCommand(Object(Behat\Behat\Console\Command\BehatCommand), Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+      #25 vendor/behat/behat/src/Behat/Behat/Console/BehatApplication.php(68): Symfony\Component\Console\Application->doRun(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+      #26 vendor/symfony/console/Symfony/Component/Console/Application.php(121): Behat\Behat\Console\BehatApplication->doRun(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+      #27 vendor/behat/behat/bin/behat(32): Symfony\Component\Console\Application->run()
+      #28 {main}
+    And I create a blog post with title "Editing Test" and content "I made a boo boo"   # FeatureContext::iCreateABlogPostWithTitleAndContent()
+    And I am on "blog/editing-test/edit"                                                # FeatureContext::visit()
+    When I input invalid blog data                                                      # FeatureContext::iInputInvalidBlogData()
+    Then I should see a flash message "That's not a valid blog post"                    # FeatureContext::iShouldSeeAFlashMessage()
+    And I should be on "blog/editing-test/edit"                                         # FeatureContext::assertPageAddress()
+
+  Scenario: We can see the edit button if we're logged in                               # app/tests/acceptance/Blog.feature:127
+    Given I am logged in                                                                # FeatureContext::iAmLoggedIn()
+      exception 'InvalidArgumentException' with message 'Expecting a DOMNodeList or DOMNode instance, an array, a string, or null, but got "boolean".' in vendor/symfony/dom-crawler/Symfony/Component/DomCrawler/Crawler.php:88
+      Stack trace:
+      #0 vendor/symfony/dom-crawler/Symfony/Component/DomCrawler/Crawler.php(832): Symfony\Component\DomCrawler\Crawler->add(false)
+      #1 vendor/symfony/dom-crawler/Symfony/Component/DomCrawler/Crawler.php(619): Symfony\Component\DomCrawler\Crawler->filterRelativeXPath('descendant-or-s...')
+      #2 vendor/behat/mink-browserkit-driver/src/Behat/Mink/Driver/BrowserKitDriver.php(317): Symfony\Component\DomCrawler\Crawler->filterXPath('//html/.//*[sel...')
+      #3 vendor/behat/mink/src/Behat/Mink/Element/Element.php(91): Behat\Mink\Driver\BrowserKitDriver->find('//html/.//*[sel...')
+      #4 vendor/behat/mink/src/Behat/Mink/Element/Element.php(67): Behat\Mink\Element\Element->findAll('named', Array)
+      #5 vendor/behat/mink/src/Behat/Mink/Element/TraversableElement.php(167): Behat\Mink\Element\Element->find('named', Array)
+      #6 vendor/behat/mink/src/Behat/Mink/Element/TraversableElement.php(180): Behat\Mink\Element\TraversableElement->findField('username')
+      #7 vendor/behat/mink-extension/src/Behat/MinkExtension/Context/MinkContext.php(111): Behat\Mink\Element\TraversableElement->fillField('username', 'test')
+      #8 app/tests/acceptance/bootstrap/FeatureContext.php(54): Behat\MinkExtension\Context\MinkContext->fillField('username', 'test')
+      #9 [internal function]: FeatureContext->iAmLoggedIn()
+      #10 vendor/behat/behat/src/Behat/Behat/Definition/Annotation/Definition.php(155): call_user_func_array(Array, Array)
+      #11 vendor/behat/behat/src/Behat/Behat/Tester/StepTester.php(157): Behat\Behat\Definition\Annotation\Definition->run(Object(FeatureContext))
+      #12 vendor/behat/behat/src/Behat/Behat/Tester/StepTester.php(126): Behat\Behat\Tester\StepTester->executeStepDefinition(Object(Behat\Gherkin\Node\StepNode), Object(Behat\Behat\Definition\Annotation\Given))
+      #13 vendor/behat/behat/src/Behat/Behat/Tester/StepTester.php(95): Behat\Behat\Tester\StepTester->executeStep(Object(Behat\Gherkin\Node\StepNode))
+      #14 vendor/behat/gherkin/src/Behat/Gherkin/Node/AbstractNode.php(42): Behat\Behat\Tester\StepTester->visit(Object(Behat\Gherkin\Node\StepNode))
+      #15 vendor/behat/behat/src/Behat/Behat/Tester/ScenarioTester.php(148): Behat\Gherkin\Node\AbstractNode->accept(Object(Behat\Behat\Tester\StepTester))
+      #16 vendor/behat/behat/src/Behat/Behat/Tester/ScenarioTester.php(87): Behat\Behat\Tester\ScenarioTester->visitStep(Object(Behat\Gherkin\Node\StepNode), Object(Behat\Gherkin\Node\ScenarioNode), Object(FeatureContext), Array, false)
+      #17 vendor/behat/gherkin/src/Behat/Gherkin/Node/AbstractNode.php(42): Behat\Behat\Tester\ScenarioTester->visit(Object(Behat\Gherkin\Node\ScenarioNode))
+      #18 vendor/behat/behat/src/Behat/Behat/Tester/FeatureTester.php(88): Behat\Gherkin\Node\AbstractNode->accept(Object(Behat\Behat\Tester\ScenarioTester))
+      #19 vendor/behat/gherkin/src/Behat/Gherkin/Node/AbstractNode.php(42): Behat\Behat\Tester\FeatureTester->visit(Object(Behat\Gherkin\Node\FeatureNode))
+      #20 vendor/behat/behat/src/Behat/Behat/Console/Command/BehatCommand.php(150): Behat\Gherkin\Node\AbstractNode->accept(Object(Behat\Behat\Tester\FeatureTester))
+      #21 vendor/behat/behat/src/Behat/Behat/Console/Command/BehatCommand.php(128): Behat\Behat\Console\Command\BehatCommand->runFeatures(Object(Behat\Gherkin\Gherkin))
+      #22 vendor/symfony/console/Symfony/Component/Console/Command/Command.php(241): Behat\Behat\Console\Command\BehatCommand->execute(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+      #23 vendor/symfony/console/Symfony/Component/Console/Application.php(885): Symfony\Component\Console\Command\Command->run(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+      #24 vendor/symfony/console/Symfony/Component/Console/Application.php(191): Symfony\Component\Console\Application->doRunCommand(Object(Behat\Behat\Console\Command\BehatCommand), Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+      #25 vendor/behat/behat/src/Behat/Behat/Console/BehatApplication.php(68): Symfony\Component\Console\Application->doRun(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+      #26 vendor/symfony/console/Symfony/Component/Console/Application.php(121): Behat\Behat\Console\BehatApplication->doRun(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+      #27 vendor/behat/behat/bin/behat(32): Symfony\Component\Console\Application->run()
+      #28 {main}
+    And there is a blog post with title "Editing Test" and content "I made a boo boo"   # FeatureContext::thereIsABlogPostWithTitleAndContent()
+    When I am on "blog/editing-test"                                                    # FeatureContext::visit()
+    Then I should see "Edit Post"                                                       # FeatureContext::assertPageContainsText()
+
+  Scenario: We can't see the edit button if we're not logged in                         # app/tests/acceptance/Blog.feature:133
+    Given there is a blog post with title "Editing Test" and content "I made a boo boo" # FeatureContext::thereIsABlogPostWithTitleAndContent()
+    When I am on "blog/editing-test"                                                    # FeatureContext::visit()
+    Then I should not see "Edit Post"                                                   # FeatureContext::assertPageNotContainsText()
+
+  Scenario: When we see blog posts, they are paginated                                  # app/tests/acceptance/Blog.feature:138
+    Given there are 15 blog posts                                                       # FeatureContext::thereAreBlogPosts()
+    When I am on "/blog"                                                                # FeatureContext::visit()
+    Then I should see "«"                                                               # FeatureContext::assertPageContainsText()
+    And I should see "»"                                                                # FeatureContext::assertPageContainsText()
+    And I should see 6 copies of ".blog-title"                                          # FeatureContext::iShouldSee()
+
+Feature: Login
+  
+  As a user
+  I can log in
+  To update the site
+
+  Background: There is a user                                                           # app/tests/acceptance/Login.feature:7
+    Given there is a user                                                               # FeatureContext::thereIsAUser()
+
+  Scenario: I can log in with valid information                                         # app/tests/acceptance/Login.feature:10
+    Given I am on "/login"                                                              # FeatureContext::visit()
+    And I fill in my login details                                                      # FeatureContext::iFillInMyLoginDetails()
+      exception 'InvalidArgumentException' with message 'Expecting a DOMNodeList or DOMNode instance, an array, a string, or null, but got "boolean".' in vendor/symfony/dom-crawler/Symfony/Component/DomCrawler/Crawler.php:88
+      Stack trace:
+      #0 vendor/symfony/dom-crawler/Symfony/Component/DomCrawler/Crawler.php(832): Symfony\Component\DomCrawler\Crawler->add(false)
+      #1 vendor/symfony/dom-crawler/Symfony/Component/DomCrawler/Crawler.php(619): Symfony\Component\DomCrawler\Crawler->filterRelativeXPath('descendant-or-s...')
+      #2 vendor/behat/mink-browserkit-driver/src/Behat/Mink/Driver/BrowserKitDriver.php(317): Symfony\Component\DomCrawler\Crawler->filterXPath('//html/.//*[sel...')
+      #3 vendor/behat/mink/src/Behat/Mink/Element/Element.php(91): Behat\Mink\Driver\BrowserKitDriver->find('//html/.//*[sel...')
+      #4 vendor/behat/mink/src/Behat/Mink/Element/Element.php(67): Behat\Mink\Element\Element->findAll('named', Array)
+      #5 vendor/behat/mink/src/Behat/Mink/Element/TraversableElement.php(167): Behat\Mink\Element\Element->find('named', Array)
+      #6 vendor/behat/mink/src/Behat/Mink/Element/TraversableElement.php(180): Behat\Mink\Element\TraversableElement->findField('username')
+      #7 vendor/behat/mink-extension/src/Behat/MinkExtension/Context/MinkContext.php(111): Behat\Mink\Element\TraversableElement->fillField('username', 'test')
+      #8 app/tests/acceptance/bootstrap/FeatureContext.php(81): Behat\MinkExtension\Context\MinkContext->fillField('username', 'test')
+      #9 [internal function]: FeatureContext->iFillInMyLoginDetails()
+      #10 vendor/behat/behat/src/Behat/Behat/Definition/Annotation/Definition.php(155): call_user_func_array(Array, Array)
+      #11 vendor/behat/behat/src/Behat/Behat/Tester/StepTester.php(157): Behat\Behat\Definition\Annotation\Definition->run(Object(FeatureContext))
+      #12 vendor/behat/behat/src/Behat/Behat/Tester/StepTester.php(126): Behat\Behat\Tester\StepTester->executeStepDefinition(Object(Behat\Gherkin\Node\StepNode), Object(Behat\Behat\Definition\Annotation\Given))
+      #13 vendor/behat/behat/src/Behat/Behat/Tester/StepTester.php(95): Behat\Behat\Tester\StepTester->executeStep(Object(Behat\Gherkin\Node\StepNode))
+      #14 vendor/behat/gherkin/src/Behat/Gherkin/Node/AbstractNode.php(42): Behat\Behat\Tester\StepTester->visit(Object(Behat\Gherkin\Node\StepNode))
+      #15 vendor/behat/behat/src/Behat/Behat/Tester/ScenarioTester.php(148): Behat\Gherkin\Node\AbstractNode->accept(Object(Behat\Behat\Tester\StepTester))
+      #16 vendor/behat/behat/src/Behat/Behat/Tester/ScenarioTester.php(87): Behat\Behat\Tester\ScenarioTester->visitStep(Object(Behat\Gherkin\Node\StepNode), Object(Behat\Gherkin\Node\ScenarioNode), Object(FeatureContext), Array, false)
+      #17 vendor/behat/gherkin/src/Behat/Gherkin/Node/AbstractNode.php(42): Behat\Behat\Tester\ScenarioTester->visit(Object(Behat\Gherkin\Node\ScenarioNode))
+      #18 vendor/behat/behat/src/Behat/Behat/Tester/FeatureTester.php(88): Behat\Gherkin\Node\AbstractNode->accept(Object(Behat\Behat\Tester\ScenarioTester))
+      #19 vendor/behat/gherkin/src/Behat/Gherkin/Node/AbstractNode.php(42): Behat\Behat\Tester\FeatureTester->visit(Object(Behat\Gherkin\Node\FeatureNode))
+      #20 vendor/behat/behat/src/Behat/Behat/Console/Command/BehatCommand.php(150): Behat\Gherkin\Node\AbstractNode->accept(Object(Behat\Behat\Tester\FeatureTester))
+      #21 vendor/behat/behat/src/Behat/Behat/Console/Command/BehatCommand.php(128): Behat\Behat\Console\Command\BehatCommand->runFeatures(Object(Behat\Gherkin\Gherkin))
+      #22 vendor/symfony/console/Symfony/Component/Console/Command/Command.php(241): Behat\Behat\Console\Command\BehatCommand->execute(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+      #23 vendor/symfony/console/Symfony/Component/Console/Application.php(885): Symfony\Component\Console\Command\Command->run(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+      #24 vendor/symfony/console/Symfony/Component/Console/Application.php(191): Symfony\Component\Console\Application->doRunCommand(Object(Behat\Behat\Console\Command\BehatCommand), Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+      #25 vendor/behat/behat/src/Behat/Behat/Console/BehatApplication.php(68): Symfony\Component\Console\Application->doRun(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+      #26 vendor/symfony/console/Symfony/Component/Console/Application.php(121): Behat\Behat\Console\BehatApplication->doRun(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+      #27 vendor/behat/behat/bin/behat(32): Symfony\Component\Console\Application->run()
+      #28 {main}
+    Then I should see a flash message "Login successful!"                               # FeatureContext::iShouldSeeAFlashMessage()
+    And I should be logged in                                                           # FeatureContext::iShouldBeLoggedIn()
+
+  Scenario: I can't log in without valid information                                    # app/tests/acceptance/Login.feature:16
+    Given I am on "/login"                                                              # FeatureContext::visit()
+    And I fill in invalid login details                                                 # FeatureContext::iFillInInvalidLoginDetails()
+      exception 'InvalidArgumentException' with message 'Expecting a DOMNodeList or DOMNode instance, an array, a string, or null, but got "boolean".' in vendor/symfony/dom-crawler/Symfony/Component/DomCrawler/Crawler.php:88
+      Stack trace:
+      #0 vendor/symfony/dom-crawler/Symfony/Component/DomCrawler/Crawler.php(832): Symfony\Component\DomCrawler\Crawler->add(false)
+      #1 vendor/symfony/dom-crawler/Symfony/Component/DomCrawler/Crawler.php(619): Symfony\Component\DomCrawler\Crawler->filterRelativeXPath('descendant-or-s...')
+      #2 vendor/behat/mink-browserkit-driver/src/Behat/Mink/Driver/BrowserKitDriver.php(317): Symfony\Component\DomCrawler\Crawler->filterXPath('//html/.//*[sel...')
+      #3 vendor/behat/mink/src/Behat/Mink/Element/Element.php(91): Behat\Mink\Driver\BrowserKitDriver->find('//html/.//*[sel...')
+      #4 vendor/behat/mink/src/Behat/Mink/Element/Element.php(67): Behat\Mink\Element\Element->findAll('named', Array)
+      #5 vendor/behat/mink/src/Behat/Mink/Element/TraversableElement.php(167): Behat\Mink\Element\Element->find('named', Array)
+      #6 vendor/behat/mink/src/Behat/Mink/Element/TraversableElement.php(180): Behat\Mink\Element\TraversableElement->findField('username')
+      #7 vendor/behat/mink-extension/src/Behat/MinkExtension/Context/MinkContext.php(111): Behat\Mink\Element\TraversableElement->fillField('username', 'test')
+      #8 app/tests/acceptance/bootstrap/FeatureContext.php(100): Behat\MinkExtension\Context\MinkContext->fillField('username', 'test')
+      #9 [internal function]: FeatureContext->iFillInInvalidLoginDetails()
+      #10 vendor/behat/behat/src/Behat/Behat/Definition/Annotation/Definition.php(155): call_user_func_array(Array, Array)
+      #11 vendor/behat/behat/src/Behat/Behat/Tester/StepTester.php(157): Behat\Behat\Definition\Annotation\Definition->run(Object(FeatureContext))
+      #12 vendor/behat/behat/src/Behat/Behat/Tester/StepTester.php(126): Behat\Behat\Tester\StepTester->executeStepDefinition(Object(Behat\Gherkin\Node\StepNode), Object(Behat\Behat\Definition\Annotation\Given))
+      #13 vendor/behat/behat/src/Behat/Behat/Tester/StepTester.php(95): Behat\Behat\Tester\StepTester->executeStep(Object(Behat\Gherkin\Node\StepNode))
+      #14 vendor/behat/gherkin/src/Behat/Gherkin/Node/AbstractNode.php(42): Behat\Behat\Tester\StepTester->visit(Object(Behat\Gherkin\Node\StepNode))
+      #15 vendor/behat/behat/src/Behat/Behat/Tester/ScenarioTester.php(148): Behat\Gherkin\Node\AbstractNode->accept(Object(Behat\Behat\Tester\StepTester))
+      #16 vendor/behat/behat/src/Behat/Behat/Tester/ScenarioTester.php(87): Behat\Behat\Tester\ScenarioTester->visitStep(Object(Behat\Gherkin\Node\StepNode), Object(Behat\Gherkin\Node\ScenarioNode), Object(FeatureContext), Array, false)
+      #17 vendor/behat/gherkin/src/Behat/Gherkin/Node/AbstractNode.php(42): Behat\Behat\Tester\ScenarioTester->visit(Object(Behat\Gherkin\Node\ScenarioNode))
+      #18 vendor/behat/behat/src/Behat/Behat/Tester/FeatureTester.php(88): Behat\Gherkin\Node\AbstractNode->accept(Object(Behat\Behat\Tester\ScenarioTester))
+      #19 vendor/behat/gherkin/src/Behat/Gherkin/Node/AbstractNode.php(42): Behat\Behat\Tester\FeatureTester->visit(Object(Behat\Gherkin\Node\FeatureNode))
+      #20 vendor/behat/behat/src/Behat/Behat/Console/Command/BehatCommand.php(150): Behat\Gherkin\Node\AbstractNode->accept(Object(Behat\Behat\Tester\FeatureTester))
+      #21 vendor/behat/behat/src/Behat/Behat/Console/Command/BehatCommand.php(128): Behat\Behat\Console\Command\BehatCommand->runFeatures(Object(Behat\Gherkin\Gherkin))
+      #22 vendor/symfony/console/Symfony/Component/Console/Command/Command.php(241): Behat\Behat\Console\Command\BehatCommand->execute(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+      #23 vendor/symfony/console/Symfony/Component/Console/Application.php(885): Symfony\Component\Console\Command\Command->run(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+      #24 vendor/symfony/console/Symfony/Component/Console/Application.php(191): Symfony\Component\Console\Application->doRunCommand(Object(Behat\Behat\Console\Command\BehatCommand), Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+      #25 vendor/behat/behat/src/Behat/Behat/Console/BehatApplication.php(68): Symfony\Component\Console\Application->doRun(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+      #26 vendor/symfony/console/Symfony/Component/Console/Application.php(121): Behat\Behat\Console\BehatApplication->doRun(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+      #27 vendor/behat/behat/bin/behat(32): Symfony\Component\Console\Application->run()
+      #28 {main}
+    Then I should not be logged in                                                      # FeatureContext::iShouldNotBeLoggedIn()
+    And I should be on "/login"                                                         # FeatureContext::assertPageAddress()
+    And I should see a flash message "Incorrect username/password"                      # FeatureContext::iShouldSeeAFlashMessage()
+
+  Scenario: I can log out                                                               # app/tests/acceptance/Login.feature:23
+    Given I am logged in                                                                # FeatureContext::iAmLoggedIn()
+      exception 'InvalidArgumentException' with message 'Expecting a DOMNodeList or DOMNode instance, an array, a string, or null, but got "boolean".' in vendor/symfony/dom-crawler/Symfony/Component/DomCrawler/Crawler.php:88
+      Stack trace:
+      #0 vendor/symfony/dom-crawler/Symfony/Component/DomCrawler/Crawler.php(832): Symfony\Component\DomCrawler\Crawler->add(false)
+      #1 vendor/symfony/dom-crawler/Symfony/Component/DomCrawler/Crawler.php(619): Symfony\Component\DomCrawler\Crawler->filterRelativeXPath('descendant-or-s...')
+      #2 vendor/behat/mink-browserkit-driver/src/Behat/Mink/Driver/BrowserKitDriver.php(317): Symfony\Component\DomCrawler\Crawler->filterXPath('//html/.//*[sel...')
+      #3 vendor/behat/mink/src/Behat/Mink/Element/Element.php(91): Behat\Mink\Driver\BrowserKitDriver->find('//html/.//*[sel...')
+      #4 vendor/behat/mink/src/Behat/Mink/Element/Element.php(67): Behat\Mink\Element\Element->findAll('named', Array)
+      #5 vendor/behat/mink/src/Behat/Mink/Element/TraversableElement.php(167): Behat\Mink\Element\Element->find('named', Array)
+      #6 vendor/behat/mink/src/Behat/Mink/Element/TraversableElement.php(180): Behat\Mink\Element\TraversableElement->findField('username')
+      #7 vendor/behat/mink-extension/src/Behat/MinkExtension/Context/MinkContext.php(111): Behat\Mink\Element\TraversableElement->fillField('username', 'test')
+      #8 app/tests/acceptance/bootstrap/FeatureContext.php(54): Behat\MinkExtension\Context\MinkContext->fillField('username', 'test')
+      #9 [internal function]: FeatureContext->iAmLoggedIn()
+      #10 vendor/behat/behat/src/Behat/Behat/Definition/Annotation/Definition.php(155): call_user_func_array(Array, Array)
+      #11 vendor/behat/behat/src/Behat/Behat/Tester/StepTester.php(157): Behat\Behat\Definition\Annotation\Definition->run(Object(FeatureContext))
+      #12 vendor/behat/behat/src/Behat/Behat/Tester/StepTester.php(126): Behat\Behat\Tester\StepTester->executeStepDefinition(Object(Behat\Gherkin\Node\StepNode), Object(Behat\Behat\Definition\Annotation\Given))
+      #13 vendor/behat/behat/src/Behat/Behat/Tester/StepTester.php(95): Behat\Behat\Tester\StepTester->executeStep(Object(Behat\Gherkin\Node\StepNode))
+      #14 vendor/behat/gherkin/src/Behat/Gherkin/Node/AbstractNode.php(42): Behat\Behat\Tester\StepTester->visit(Object(Behat\Gherkin\Node\StepNode))
+      #15 vendor/behat/behat/src/Behat/Behat/Tester/ScenarioTester.php(148): Behat\Gherkin\Node\AbstractNode->accept(Object(Behat\Behat\Tester\StepTester))
+      #16 vendor/behat/behat/src/Behat/Behat/Tester/ScenarioTester.php(87): Behat\Behat\Tester\ScenarioTester->visitStep(Object(Behat\Gherkin\Node\StepNode), Object(Behat\Gherkin\Node\ScenarioNode), Object(FeatureContext), Array, false)
+      #17 vendor/behat/gherkin/src/Behat/Gherkin/Node/AbstractNode.php(42): Behat\Behat\Tester\ScenarioTester->visit(Object(Behat\Gherkin\Node\ScenarioNode))
+      #18 vendor/behat/behat/src/Behat/Behat/Tester/FeatureTester.php(88): Behat\Gherkin\Node\AbstractNode->accept(Object(Behat\Behat\Tester\ScenarioTester))
+      #19 vendor/behat/gherkin/src/Behat/Gherkin/Node/AbstractNode.php(42): Behat\Behat\Tester\FeatureTester->visit(Object(Behat\Gherkin\Node\FeatureNode))
+      #20 vendor/behat/behat/src/Behat/Behat/Console/Command/BehatCommand.php(150): Behat\Gherkin\Node\AbstractNode->accept(Object(Behat\Behat\Tester\FeatureTester))
+      #21 vendor/behat/behat/src/Behat/Behat/Console/Command/BehatCommand.php(128): Behat\Behat\Console\Command\BehatCommand->runFeatures(Object(Behat\Gherkin\Gherkin))
+      #22 vendor/symfony/console/Symfony/Component/Console/Command/Command.php(241): Behat\Behat\Console\Command\BehatCommand->execute(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+      #23 vendor/symfony/console/Symfony/Component/Console/Application.php(885): Symfony\Component\Console\Command\Command->run(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+      #24 vendor/symfony/console/Symfony/Component/Console/Application.php(191): Symfony\Component\Console\Application->doRunCommand(Object(Behat\Behat\Console\Command\BehatCommand), Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+      #25 vendor/behat/behat/src/Behat/Behat/Console/BehatApplication.php(68): Symfony\Component\Console\Application->doRun(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+      #26 vendor/symfony/console/Symfony/Component/Console/Application.php(121): Behat\Behat\Console\BehatApplication->doRun(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+      #27 vendor/behat/behat/bin/behat(32): Symfony\Component\Console\Application->run()
+      #28 {main}
+    And I am on "/logout"                                                               # FeatureContext::visit()
+    Then I should not be logged in                                                      # FeatureContext::iShouldNotBeLoggedIn()
+    And I should see a flash message "You are now logged out"                           # FeatureContext::iShouldSeeAFlashMessage()
+
+Feature: Navigation
+  
+  As a user
+  I can use the navbar
+  So I can navigate the site
+
+  Background: I start on the home page                                                  # app/tests/acceptance/Navigation.feature:7
+    Given I am on "/"                                                                   # FeatureContext::visit()
+
+  Scenario: I can log in using the navbar                                               # app/tests/acceptance/Navigation.feature:10
+    And I click "Login"                                                                 # FeatureContext::iClick()
+      exception 'InvalidArgumentException' with message 'Expecting a DOMNodeList or DOMNode instance, an array, a string, or null, but got "boolean".' in vendor/symfony/dom-crawler/Symfony/Component/DomCrawler/Crawler.php:88
+      Stack trace:
+      #0 vendor/symfony/dom-crawler/Symfony/Component/DomCrawler/Crawler.php(832): Symfony\Component\DomCrawler\Crawler->add(false)
+      #1 vendor/symfony/dom-crawler/Symfony/Component/DomCrawler/Crawler.php(619): Symfony\Component\DomCrawler\Crawler->filterRelativeXPath('descendant-or-s...')
+      #2 vendor/behat/mink-browserkit-driver/src/Behat/Mink/Driver/BrowserKitDriver.php(317): Symfony\Component\DomCrawler\Crawler->filterXPath('//html/.//a[./@...')
+      #3 vendor/behat/mink/src/Behat/Mink/Element/Element.php(91): Behat\Mink\Driver\BrowserKitDriver->find('//html/.//a[./@...')
+      #4 vendor/behat/mink/src/Behat/Mink/Element/Element.php(67): Behat\Mink\Element\Element->findAll('named', Array)
+      #5 vendor/behat/mink/src/Behat/Mink/Element/TraversableElement.php(59): Behat\Mink\Element\Element->find('named', Array)
+      #6 vendor/behat/mink/src/Behat/Mink/Element/TraversableElement.php(71): Behat\Mink\Element\TraversableElement->findLink('Login')
+      #7 vendor/behat/mink-extension/src/Behat/MinkExtension/Context/MinkContext.php(97): Behat\Mink\Element\TraversableElement->clickLink('Login')
+      #8 app/tests/acceptance/bootstrap/FeatureContext.php(306): Behat\MinkExtension\Context\MinkContext->clickLink('Login')
+      #9 [internal function]: FeatureContext->iClick('Login')
+      #10 vendor/behat/behat/src/Behat/Behat/Definition/Annotation/Definition.php(155): call_user_func_array(Array, Array)
+      #11 vendor/behat/behat/src/Behat/Behat/Tester/StepTester.php(157): Behat\Behat\Definition\Annotation\Definition->run(Object(FeatureContext))
+      #12 vendor/behat/behat/src/Behat/Behat/Tester/StepTester.php(126): Behat\Behat\Tester\StepTester->executeStepDefinition(Object(Behat\Gherkin\Node\StepNode), Object(Behat\Behat\Definition\Annotation\Given))
+      #13 vendor/behat/behat/src/Behat/Behat/Tester/StepTester.php(95): Behat\Behat\Tester\StepTester->executeStep(Object(Behat\Gherkin\Node\StepNode))
+      #14 vendor/behat/gherkin/src/Behat/Gherkin/Node/AbstractNode.php(42): Behat\Behat\Tester\StepTester->visit(Object(Behat\Gherkin\Node\StepNode))
+      #15 vendor/behat/behat/src/Behat/Behat/Tester/ScenarioTester.php(148): Behat\Gherkin\Node\AbstractNode->accept(Object(Behat\Behat\Tester\StepTester))
+      #16 vendor/behat/behat/src/Behat/Behat/Tester/ScenarioTester.php(87): Behat\Behat\Tester\ScenarioTester->visitStep(Object(Behat\Gherkin\Node\StepNode), Object(Behat\Gherkin\Node\ScenarioNode), Object(FeatureContext), Array, false)
+      #17 vendor/behat/gherkin/src/Behat/Gherkin/Node/AbstractNode.php(42): Behat\Behat\Tester\ScenarioTester->visit(Object(Behat\Gherkin\Node\ScenarioNode))
+      #18 vendor/behat/behat/src/Behat/Behat/Tester/FeatureTester.php(88): Behat\Gherkin\Node\AbstractNode->accept(Object(Behat\Behat\Tester\ScenarioTester))
+      #19 vendor/behat/gherkin/src/Behat/Gherkin/Node/AbstractNode.php(42): Behat\Behat\Tester\FeatureTester->visit(Object(Behat\Gherkin\Node\FeatureNode))
+      #20 vendor/behat/behat/src/Behat/Behat/Console/Command/BehatCommand.php(150): Behat\Gherkin\Node\AbstractNode->accept(Object(Behat\Behat\Tester\FeatureTester))
+      #21 vendor/behat/behat/src/Behat/Behat/Console/Command/BehatCommand.php(128): Behat\Behat\Console\Command\BehatCommand->runFeatures(Object(Behat\Gherkin\Gherkin))
+      #22 vendor/symfony/console/Symfony/Component/Console/Command/Command.php(241): Behat\Behat\Console\Command\BehatCommand->execute(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+      #23 vendor/symfony/console/Symfony/Component/Console/Application.php(885): Symfony\Component\Console\Command\Command->run(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+      #24 vendor/symfony/console/Symfony/Component/Console/Application.php(191): Symfony\Component\Console\Application->doRunCommand(Object(Behat\Behat\Console\Command\BehatCommand), Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+      #25 vendor/behat/behat/src/Behat/Behat/Console/BehatApplication.php(68): Symfony\Component\Console\Application->doRun(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+      #26 vendor/symfony/console/Symfony/Component/Console/Application.php(121): Behat\Behat\Console\BehatApplication->doRun(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+      #27 vendor/behat/behat/bin/behat(32): Symfony\Component\Console\Application->run()
+      #28 {main}
+    Then I should be on "/login"                                                        # FeatureContext::assertPageAddress()
+
+  Scenario: I can log out using the navbar                                              # app/tests/acceptance/Navigation.feature:14
+    Given there is a user                                                               # FeatureContext::thereIsAUser()
+    And I am logged in                                                                  # FeatureContext::iAmLoggedIn()
+      exception 'InvalidArgumentException' with message 'Expecting a DOMNodeList or DOMNode instance, an array, a string, or null, but got "boolean".' in vendor/symfony/dom-crawler/Symfony/Component/DomCrawler/Crawler.php:88
+      Stack trace:
+      #0 vendor/symfony/dom-crawler/Symfony/Component/DomCrawler/Crawler.php(832): Symfony\Component\DomCrawler\Crawler->add(false)
+      #1 vendor/symfony/dom-crawler/Symfony/Component/DomCrawler/Crawler.php(619): Symfony\Component\DomCrawler\Crawler->filterRelativeXPath('descendant-or-s...')
+      #2 vendor/behat/mink-browserkit-driver/src/Behat/Mink/Driver/BrowserKitDriver.php(317): Symfony\Component\DomCrawler\Crawler->filterXPath('//html/.//*[sel...')
+      #3 vendor/behat/mink/src/Behat/Mink/Element/Element.php(91): Behat\Mink\Driver\BrowserKitDriver->find('//html/.//*[sel...')
+      #4 vendor/behat/mink/src/Behat/Mink/Element/Element.php(67): Behat\Mink\Element\Element->findAll('named', Array)
+      #5 vendor/behat/mink/src/Behat/Mink/Element/TraversableElement.php(167): Behat\Mink\Element\Element->find('named', Array)
+      #6 vendor/behat/mink/src/Behat/Mink/Element/TraversableElement.php(180): Behat\Mink\Element\TraversableElement->findField('username')
+      #7 vendor/behat/mink-extension/src/Behat/MinkExtension/Context/MinkContext.php(111): Behat\Mink\Element\TraversableElement->fillField('username', 'test')
+      #8 app/tests/acceptance/bootstrap/FeatureContext.php(54): Behat\MinkExtension\Context\MinkContext->fillField('username', 'test')
+      #9 [internal function]: FeatureContext->iAmLoggedIn()
+      #10 vendor/behat/behat/src/Behat/Behat/Definition/Annotation/Definition.php(155): call_user_func_array(Array, Array)
+      #11 vendor/behat/behat/src/Behat/Behat/Tester/StepTester.php(157): Behat\Behat\Definition\Annotation\Definition->run(Object(FeatureContext))
+      #12 vendor/behat/behat/src/Behat/Behat/Tester/StepTester.php(126): Behat\Behat\Tester\StepTester->executeStepDefinition(Object(Behat\Gherkin\Node\StepNode), Object(Behat\Behat\Definition\Annotation\Given))
+      #13 vendor/behat/behat/src/Behat/Behat/Tester/StepTester.php(95): Behat\Behat\Tester\StepTester->executeStep(Object(Behat\Gherkin\Node\StepNode))
+      #14 vendor/behat/gherkin/src/Behat/Gherkin/Node/AbstractNode.php(42): Behat\Behat\Tester\StepTester->visit(Object(Behat\Gherkin\Node\StepNode))
+      #15 vendor/behat/behat/src/Behat/Behat/Tester/ScenarioTester.php(148): Behat\Gherkin\Node\AbstractNode->accept(Object(Behat\Behat\Tester\StepTester))
+      #16 vendor/behat/behat/src/Behat/Behat/Tester/ScenarioTester.php(87): Behat\Behat\Tester\ScenarioTester->visitStep(Object(Behat\Gherkin\Node\StepNode), Object(Behat\Gherkin\Node\ScenarioNode), Object(FeatureContext), Array, false)
+      #17 vendor/behat/gherkin/src/Behat/Gherkin/Node/AbstractNode.php(42): Behat\Behat\Tester\ScenarioTester->visit(Object(Behat\Gherkin\Node\ScenarioNode))
+      #18 vendor/behat/behat/src/Behat/Behat/Tester/FeatureTester.php(88): Behat\Gherkin\Node\AbstractNode->accept(Object(Behat\Behat\Tester\ScenarioTester))
+      #19 vendor/behat/gherkin/src/Behat/Gherkin/Node/AbstractNode.php(42): Behat\Behat\Tester\FeatureTester->visit(Object(Behat\Gherkin\Node\FeatureNode))
+      #20 vendor/behat/behat/src/Behat/Behat/Console/Command/BehatCommand.php(150): Behat\Gherkin\Node\AbstractNode->accept(Object(Behat\Behat\Tester\FeatureTester))
+      #21 vendor/behat/behat/src/Behat/Behat/Console/Command/BehatCommand.php(128): Behat\Behat\Console\Command\BehatCommand->runFeatures(Object(Behat\Gherkin\Gherkin))
+      #22 vendor/symfony/console/Symfony/Component/Console/Command/Command.php(241): Behat\Behat\Console\Command\BehatCommand->execute(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+      #23 vendor/symfony/console/Symfony/Component/Console/Application.php(885): Symfony\Component\Console\Command\Command->run(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+      #24 vendor/symfony/console/Symfony/Component/Console/Application.php(191): Symfony\Component\Console\Application->doRunCommand(Object(Behat\Behat\Console\Command\BehatCommand), Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+      #25 vendor/behat/behat/src/Behat/Behat/Console/BehatApplication.php(68): Symfony\Component\Console\Application->doRun(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+      #26 vendor/symfony/console/Symfony/Component/Console/Application.php(121): Behat\Behat\Console\BehatApplication->doRun(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+      #27 vendor/behat/behat/bin/behat(32): Symfony\Component\Console\Application->run()
+      #28 {main}
+    And I click "Logout"                                                                # FeatureContext::iClick()
+    Then I should not be logged in                                                      # FeatureContext::iShouldNotBeLoggedIn()
+
+  Scenario: I can visit the home page                                                   # app/tests/acceptance/Navigation.feature:20
+    Given I am on "/login"                                                              # FeatureContext::visit()
+    When I click "Home"                                                                 # FeatureContext::iClick()
+      exception 'InvalidArgumentException' with message 'Expecting a DOMNodeList or DOMNode instance, an array, a string, or null, but got "boolean".' in vendor/symfony/dom-crawler/Symfony/Component/DomCrawler/Crawler.php:88
+      Stack trace:
+      #0 vendor/symfony/dom-crawler/Symfony/Component/DomCrawler/Crawler.php(832): Symfony\Component\DomCrawler\Crawler->add(false)
+      #1 vendor/symfony/dom-crawler/Symfony/Component/DomCrawler/Crawler.php(619): Symfony\Component\DomCrawler\Crawler->filterRelativeXPath('descendant-or-s...')
+      #2 vendor/behat/mink-browserkit-driver/src/Behat/Mink/Driver/BrowserKitDriver.php(317): Symfony\Component\DomCrawler\Crawler->filterXPath('//html/.//a[./@...')
+      #3 vendor/behat/mink/src/Behat/Mink/Element/Element.php(91): Behat\Mink\Driver\BrowserKitDriver->find('//html/.//a[./@...')
+      #4 vendor/behat/mink/src/Behat/Mink/Element/Element.php(67): Behat\Mink\Element\Element->findAll('named', Array)
+      #5 vendor/behat/mink/src/Behat/Mink/Element/TraversableElement.php(59): Behat\Mink\Element\Element->find('named', Array)
+      #6 vendor/behat/mink/src/Behat/Mink/Element/TraversableElement.php(71): Behat\Mink\Element\TraversableElement->findLink('Home')
+      #7 vendor/behat/mink-extension/src/Behat/MinkExtension/Context/MinkContext.php(97): Behat\Mink\Element\TraversableElement->clickLink('Home')
+      #8 app/tests/acceptance/bootstrap/FeatureContext.php(306): Behat\MinkExtension\Context\MinkContext->clickLink('Home')
+      #9 [internal function]: FeatureContext->iClick('Home')
+      #10 vendor/behat/behat/src/Behat/Behat/Definition/Annotation/Definition.php(155): call_user_func_array(Array, Array)
+      #11 vendor/behat/behat/src/Behat/Behat/Tester/StepTester.php(157): Behat\Behat\Definition\Annotation\Definition->run(Object(FeatureContext))
+      #12 vendor/behat/behat/src/Behat/Behat/Tester/StepTester.php(126): Behat\Behat\Tester\StepTester->executeStepDefinition(Object(Behat\Gherkin\Node\StepNode), Object(Behat\Behat\Definition\Annotation\Given))
+      #13 vendor/behat/behat/src/Behat/Behat/Tester/StepTester.php(95): Behat\Behat\Tester\StepTester->executeStep(Object(Behat\Gherkin\Node\StepNode))
+      #14 vendor/behat/gherkin/src/Behat/Gherkin/Node/AbstractNode.php(42): Behat\Behat\Tester\StepTester->visit(Object(Behat\Gherkin\Node\StepNode))
+      #15 vendor/behat/behat/src/Behat/Behat/Tester/ScenarioTester.php(148): Behat\Gherkin\Node\AbstractNode->accept(Object(Behat\Behat\Tester\StepTester))
+      #16 vendor/behat/behat/src/Behat/Behat/Tester/ScenarioTester.php(87): Behat\Behat\Tester\ScenarioTester->visitStep(Object(Behat\Gherkin\Node\StepNode), Object(Behat\Gherkin\Node\ScenarioNode), Object(FeatureContext), Array, false)
+      #17 vendor/behat/gherkin/src/Behat/Gherkin/Node/AbstractNode.php(42): Behat\Behat\Tester\ScenarioTester->visit(Object(Behat\Gherkin\Node\ScenarioNode))
+      #18 vendor/behat/behat/src/Behat/Behat/Tester/FeatureTester.php(88): Behat\Gherkin\Node\AbstractNode->accept(Object(Behat\Behat\Tester\ScenarioTester))
+      #19 vendor/behat/gherkin/src/Behat/Gherkin/Node/AbstractNode.php(42): Behat\Behat\Tester\FeatureTester->visit(Object(Behat\Gherkin\Node\FeatureNode))
+      #20 vendor/behat/behat/src/Behat/Behat/Console/Command/BehatCommand.php(150): Behat\Gherkin\Node\AbstractNode->accept(Object(Behat\Behat\Tester\FeatureTester))
+      #21 vendor/behat/behat/src/Behat/Behat/Console/Command/BehatCommand.php(128): Behat\Behat\Console\Command\BehatCommand->runFeatures(Object(Behat\Gherkin\Gherkin))
+      #22 vendor/symfony/console/Symfony/Component/Console/Command/Command.php(241): Behat\Behat\Console\Command\BehatCommand->execute(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+      #23 vendor/symfony/console/Symfony/Component/Console/Application.php(885): Symfony\Component\Console\Command\Command->run(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+      #24 vendor/symfony/console/Symfony/Component/Console/Application.php(191): Symfony\Component\Console\Application->doRunCommand(Object(Behat\Behat\Console\Command\BehatCommand), Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+      #25 vendor/behat/behat/src/Behat/Behat/Console/BehatApplication.php(68): Symfony\Component\Console\Application->doRun(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+      #26 vendor/symfony/console/Symfony/Component/Console/Application.php(121): Behat\Behat\Console\BehatApplication->doRun(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+      #27 vendor/behat/behat/bin/behat(32): Symfony\Component\Console\Application->run()
+      #28 {main}
+    Then I should be on the home page                                                   # FeatureContext::iShouldBeOnTheHomePage()
+
+  Scenario: I can visit the blog page                                                   # app/tests/acceptance/Navigation.feature:25
+    When I click "Blog"                                                                 # FeatureContext::iClick()
+      exception 'InvalidArgumentException' with message 'Expecting a DOMNodeList or DOMNode instance, an array, a string, or null, but got "boolean".' in vendor/symfony/dom-crawler/Symfony/Component/DomCrawler/Crawler.php:88
+      Stack trace:
+      #0 vendor/symfony/dom-crawler/Symfony/Component/DomCrawler/Crawler.php(832): Symfony\Component\DomCrawler\Crawler->add(false)
+      #1 vendor/symfony/dom-crawler/Symfony/Component/DomCrawler/Crawler.php(619): Symfony\Component\DomCrawler\Crawler->filterRelativeXPath('descendant-or-s...')
+      #2 vendor/behat/mink-browserkit-driver/src/Behat/Mink/Driver/BrowserKitDriver.php(317): Symfony\Component\DomCrawler\Crawler->filterXPath('//html/.//a[./@...')
+      #3 vendor/behat/mink/src/Behat/Mink/Element/Element.php(91): Behat\Mink\Driver\BrowserKitDriver->find('//html/.//a[./@...')
+      #4 vendor/behat/mink/src/Behat/Mink/Element/Element.php(67): Behat\Mink\Element\Element->findAll('named', Array)
+      #5 vendor/behat/mink/src/Behat/Mink/Element/TraversableElement.php(59): Behat\Mink\Element\Element->find('named', Array)
+      #6 vendor/behat/mink/src/Behat/Mink/Element/TraversableElement.php(71): Behat\Mink\Element\TraversableElement->findLink('Blog')
+      #7 vendor/behat/mink-extension/src/Behat/MinkExtension/Context/MinkContext.php(97): Behat\Mink\Element\TraversableElement->clickLink('Blog')
+      #8 app/tests/acceptance/bootstrap/FeatureContext.php(306): Behat\MinkExtension\Context\MinkContext->clickLink('Blog')
+      #9 [internal function]: FeatureContext->iClick('Blog')
+      #10 vendor/behat/behat/src/Behat/Behat/Definition/Annotation/Definition.php(155): call_user_func_array(Array, Array)
+      #11 vendor/behat/behat/src/Behat/Behat/Tester/StepTester.php(157): Behat\Behat\Definition\Annotation\Definition->run(Object(FeatureContext))
+      #12 vendor/behat/behat/src/Behat/Behat/Tester/StepTester.php(126): Behat\Behat\Tester\StepTester->executeStepDefinition(Object(Behat\Gherkin\Node\StepNode), Object(Behat\Behat\Definition\Annotation\Given))
+      #13 vendor/behat/behat/src/Behat/Behat/Tester/StepTester.php(95): Behat\Behat\Tester\StepTester->executeStep(Object(Behat\Gherkin\Node\StepNode))
+      #14 vendor/behat/gherkin/src/Behat/Gherkin/Node/AbstractNode.php(42): Behat\Behat\Tester\StepTester->visit(Object(Behat\Gherkin\Node\StepNode))
+      #15 vendor/behat/behat/src/Behat/Behat/Tester/ScenarioTester.php(148): Behat\Gherkin\Node\AbstractNode->accept(Object(Behat\Behat\Tester\StepTester))
+      #16 vendor/behat/behat/src/Behat/Behat/Tester/ScenarioTester.php(87): Behat\Behat\Tester\ScenarioTester->visitStep(Object(Behat\Gherkin\Node\StepNode), Object(Behat\Gherkin\Node\ScenarioNode), Object(FeatureContext), Array, false)
+      #17 vendor/behat/gherkin/src/Behat/Gherkin/Node/AbstractNode.php(42): Behat\Behat\Tester\ScenarioTester->visit(Object(Behat\Gherkin\Node\ScenarioNode))
+      #18 vendor/behat/behat/src/Behat/Behat/Tester/FeatureTester.php(88): Behat\Gherkin\Node\AbstractNode->accept(Object(Behat\Behat\Tester\ScenarioTester))
+      #19 vendor/behat/gherkin/src/Behat/Gherkin/Node/AbstractNode.php(42): Behat\Behat\Tester\FeatureTester->visit(Object(Behat\Gherkin\Node\FeatureNode))
+      #20 vendor/behat/behat/src/Behat/Behat/Console/Command/BehatCommand.php(150): Behat\Gherkin\Node\AbstractNode->accept(Object(Behat\Behat\Tester\FeatureTester))
+      #21 vendor/behat/behat/src/Behat/Behat/Console/Command/BehatCommand.php(128): Behat\Behat\Console\Command\BehatCommand->runFeatures(Object(Behat\Gherkin\Gherkin))
+      #22 vendor/symfony/console/Symfony/Component/Console/Command/Command.php(241): Behat\Behat\Console\Command\BehatCommand->execute(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+      #23 vendor/symfony/console/Symfony/Component/Console/Application.php(885): Symfony\Component\Console\Command\Command->run(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+      #24 vendor/symfony/console/Symfony/Component/Console/Application.php(191): Symfony\Component\Console\Application->doRunCommand(Object(Behat\Behat\Console\Command\BehatCommand), Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+      #25 vendor/behat/behat/src/Behat/Behat/Console/BehatApplication.php(68): Symfony\Component\Console\Application->doRun(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+      #26 vendor/symfony/console/Symfony/Component/Console/Application.php(121): Behat\Behat\Console\BehatApplication->doRun(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+      #27 vendor/behat/behat/bin/behat(32): Symfony\Component\Console\Application->run()
+      #28 {main}
+    Then I should be on "/blog"                                                         # FeatureContext::assertPageAddress()
+
+  Scenario: I can visit the gig page                                                    # app/tests/acceptance/Navigation.feature:29
+    When I click "Gigs"                                                                 # FeatureContext::iClick()
+      exception 'InvalidArgumentException' with message 'Expecting a DOMNodeList or DOMNode instance, an array, a string, or null, but got "boolean".' in vendor/symfony/dom-crawler/Symfony/Component/DomCrawler/Crawler.php:88
+      Stack trace:
+      #0 vendor/symfony/dom-crawler/Symfony/Component/DomCrawler/Crawler.php(832): Symfony\Component\DomCrawler\Crawler->add(false)
+      #1 vendor/symfony/dom-crawler/Symfony/Component/DomCrawler/Crawler.php(619): Symfony\Component\DomCrawler\Crawler->filterRelativeXPath('descendant-or-s...')
+      #2 vendor/behat/mink-browserkit-driver/src/Behat/Mink/Driver/BrowserKitDriver.php(317): Symfony\Component\DomCrawler\Crawler->filterXPath('//html/.//a[./@...')
+      #3 vendor/behat/mink/src/Behat/Mink/Element/Element.php(91): Behat\Mink\Driver\BrowserKitDriver->find('//html/.//a[./@...')
+      #4 vendor/behat/mink/src/Behat/Mink/Element/Element.php(67): Behat\Mink\Element\Element->findAll('named', Array)
+      #5 vendor/behat/mink/src/Behat/Mink/Element/TraversableElement.php(59): Behat\Mink\Element\Element->find('named', Array)
+      #6 vendor/behat/mink/src/Behat/Mink/Element/TraversableElement.php(71): Behat\Mink\Element\TraversableElement->findLink('Gigs')
+      #7 vendor/behat/mink-extension/src/Behat/MinkExtension/Context/MinkContext.php(97): Behat\Mink\Element\TraversableElement->clickLink('Gigs')
+      #8 app/tests/acceptance/bootstrap/FeatureContext.php(306): Behat\MinkExtension\Context\MinkContext->clickLink('Gigs')
+      #9 [internal function]: FeatureContext->iClick('Gigs')
+      #10 vendor/behat/behat/src/Behat/Behat/Definition/Annotation/Definition.php(155): call_user_func_array(Array, Array)
+      #11 vendor/behat/behat/src/Behat/Behat/Tester/StepTester.php(157): Behat\Behat\Definition\Annotation\Definition->run(Object(FeatureContext))
+      #12 vendor/behat/behat/src/Behat/Behat/Tester/StepTester.php(126): Behat\Behat\Tester\StepTester->executeStepDefinition(Object(Behat\Gherkin\Node\StepNode), Object(Behat\Behat\Definition\Annotation\Given))
+      #13 vendor/behat/behat/src/Behat/Behat/Tester/StepTester.php(95): Behat\Behat\Tester\StepTester->executeStep(Object(Behat\Gherkin\Node\StepNode))
+      #14 vendor/behat/gherkin/src/Behat/Gherkin/Node/AbstractNode.php(42): Behat\Behat\Tester\StepTester->visit(Object(Behat\Gherkin\Node\StepNode))
+      #15 vendor/behat/behat/src/Behat/Behat/Tester/ScenarioTester.php(148): Behat\Gherkin\Node\AbstractNode->accept(Object(Behat\Behat\Tester\StepTester))
+      #16 vendor/behat/behat/src/Behat/Behat/Tester/ScenarioTester.php(87): Behat\Behat\Tester\ScenarioTester->visitStep(Object(Behat\Gherkin\Node\StepNode), Object(Behat\Gherkin\Node\ScenarioNode), Object(FeatureContext), Array, false)
+      #17 vendor/behat/gherkin/src/Behat/Gherkin/Node/AbstractNode.php(42): Behat\Behat\Tester\ScenarioTester->visit(Object(Behat\Gherkin\Node\ScenarioNode))
+      #18 vendor/behat/behat/src/Behat/Behat/Tester/FeatureTester.php(88): Behat\Gherkin\Node\AbstractNode->accept(Object(Behat\Behat\Tester\ScenarioTester))
+      #19 vendor/behat/gherkin/src/Behat/Gherkin/Node/AbstractNode.php(42): Behat\Behat\Tester\FeatureTester->visit(Object(Behat\Gherkin\Node\FeatureNode))
+      #20 vendor/behat/behat/src/Behat/Behat/Console/Command/BehatCommand.php(150): Behat\Gherkin\Node\AbstractNode->accept(Object(Behat\Behat\Tester\FeatureTester))
+      #21 vendor/behat/behat/src/Behat/Behat/Console/Command/BehatCommand.php(128): Behat\Behat\Console\Command\BehatCommand->runFeatures(Object(Behat\Gherkin\Gherkin))
+      #22 vendor/symfony/console/Symfony/Component/Console/Command/Command.php(241): Behat\Behat\Console\Command\BehatCommand->execute(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+      #23 vendor/symfony/console/Symfony/Component/Console/Application.php(885): Symfony\Component\Console\Command\Command->run(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+      #24 vendor/symfony/console/Symfony/Component/Console/Application.php(191): Symfony\Component\Console\Application->doRunCommand(Object(Behat\Behat\Console\Command\BehatCommand), Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+      #25 vendor/behat/behat/src/Behat/Behat/Console/BehatApplication.php(68): Symfony\Component\Console\Application->doRun(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+      #26 vendor/symfony/console/Symfony/Component/Console/Application.php(121): Behat\Behat\Console\BehatApplication->doRun(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+      #27 vendor/behat/behat/bin/behat(32): Symfony\Component\Console\Application->run()
+      #28 {main}
+    Then I should be on "/gigs"                                                         # FeatureContext::assertPageAddress()
+
+  Scenario: I can visit the about page                                                  # app/tests/acceptance/Navigation.feature:33
+    When I click "About"                                                                # FeatureContext::iClick()
+      exception 'InvalidArgumentException' with message 'Expecting a DOMNodeList or DOMNode instance, an array, a string, or null, but got "boolean".' in vendor/symfony/dom-crawler/Symfony/Component/DomCrawler/Crawler.php:88
+      Stack trace:
+      #0 vendor/symfony/dom-crawler/Symfony/Component/DomCrawler/Crawler.php(832): Symfony\Component\DomCrawler\Crawler->add(false)
+      #1 vendor/symfony/dom-crawler/Symfony/Component/DomCrawler/Crawler.php(619): Symfony\Component\DomCrawler\Crawler->filterRelativeXPath('descendant-or-s...')
+      #2 vendor/behat/mink-browserkit-driver/src/Behat/Mink/Driver/BrowserKitDriver.php(317): Symfony\Component\DomCrawler\Crawler->filterXPath('//html/.//a[./@...')
+      #3 vendor/behat/mink/src/Behat/Mink/Element/Element.php(91): Behat\Mink\Driver\BrowserKitDriver->find('//html/.//a[./@...')
+      #4 vendor/behat/mink/src/Behat/Mink/Element/Element.php(67): Behat\Mink\Element\Element->findAll('named', Array)
+      #5 vendor/behat/mink/src/Behat/Mink/Element/TraversableElement.php(59): Behat\Mink\Element\Element->find('named', Array)
+      #6 vendor/behat/mink/src/Behat/Mink/Element/TraversableElement.php(71): Behat\Mink\Element\TraversableElement->findLink('About')
+      #7 vendor/behat/mink-extension/src/Behat/MinkExtension/Context/MinkContext.php(97): Behat\Mink\Element\TraversableElement->clickLink('About')
+      #8 app/tests/acceptance/bootstrap/FeatureContext.php(306): Behat\MinkExtension\Context\MinkContext->clickLink('About')
+      #9 [internal function]: FeatureContext->iClick('About')
+      #10 vendor/behat/behat/src/Behat/Behat/Definition/Annotation/Definition.php(155): call_user_func_array(Array, Array)
+      #11 vendor/behat/behat/src/Behat/Behat/Tester/StepTester.php(157): Behat\Behat\Definition\Annotation\Definition->run(Object(FeatureContext))
+      #12 vendor/behat/behat/src/Behat/Behat/Tester/StepTester.php(126): Behat\Behat\Tester\StepTester->executeStepDefinition(Object(Behat\Gherkin\Node\StepNode), Object(Behat\Behat\Definition\Annotation\Given))
+      #13 vendor/behat/behat/src/Behat/Behat/Tester/StepTester.php(95): Behat\Behat\Tester\StepTester->executeStep(Object(Behat\Gherkin\Node\StepNode))
+      #14 vendor/behat/gherkin/src/Behat/Gherkin/Node/AbstractNode.php(42): Behat\Behat\Tester\StepTester->visit(Object(Behat\Gherkin\Node\StepNode))
+      #15 vendor/behat/behat/src/Behat/Behat/Tester/ScenarioTester.php(148): Behat\Gherkin\Node\AbstractNode->accept(Object(Behat\Behat\Tester\StepTester))
+      #16 vendor/behat/behat/src/Behat/Behat/Tester/ScenarioTester.php(87): Behat\Behat\Tester\ScenarioTester->visitStep(Object(Behat\Gherkin\Node\StepNode), Object(Behat\Gherkin\Node\ScenarioNode), Object(FeatureContext), Array, false)
+      #17 vendor/behat/gherkin/src/Behat/Gherkin/Node/AbstractNode.php(42): Behat\Behat\Tester\ScenarioTester->visit(Object(Behat\Gherkin\Node\ScenarioNode))
+      #18 vendor/behat/behat/src/Behat/Behat/Tester/FeatureTester.php(88): Behat\Gherkin\Node\AbstractNode->accept(Object(Behat\Behat\Tester\ScenarioTester))
+      #19 vendor/behat/gherkin/src/Behat/Gherkin/Node/AbstractNode.php(42): Behat\Behat\Tester\FeatureTester->visit(Object(Behat\Gherkin\Node\FeatureNode))
+      #20 vendor/behat/behat/src/Behat/Behat/Console/Command/BehatCommand.php(150): Behat\Gherkin\Node\AbstractNode->accept(Object(Behat\Behat\Tester\FeatureTester))
+      #21 vendor/behat/behat/src/Behat/Behat/Console/Command/BehatCommand.php(128): Behat\Behat\Console\Command\BehatCommand->runFeatures(Object(Behat\Gherkin\Gherkin))
+      #22 vendor/symfony/console/Symfony/Component/Console/Command/Command.php(241): Behat\Behat\Console\Command\BehatCommand->execute(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+      #23 vendor/symfony/console/Symfony/Component/Console/Application.php(885): Symfony\Component\Console\Command\Command->run(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+      #24 vendor/symfony/console/Symfony/Component/Console/Application.php(191): Symfony\Component\Console\Application->doRunCommand(Object(Behat\Behat\Console\Command\BehatCommand), Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+      #25 vendor/behat/behat/src/Behat/Behat/Console/BehatApplication.php(68): Symfony\Component\Console\Application->doRun(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+      #26 vendor/symfony/console/Symfony/Component/Console/Application.php(121): Behat\Behat\Console\BehatApplication->doRun(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+      #27 vendor/behat/behat/bin/behat(32): Symfony\Component\Console\Application->run()
+      #28 {main}
+    Then I should be on "/about"                                                        # FeatureContext::assertPageAddress()
+
+  Scenario: I can visit the tags pages                                                  # app/tests/acceptance/Navigation.feature:37
+    When I click "Tags"                                                                 # FeatureContext::iClick()
+      exception 'InvalidArgumentException' with message 'Expecting a DOMNodeList or DOMNode instance, an array, a string, or null, but got "boolean".' in vendor/symfony/dom-crawler/Symfony/Component/DomCrawler/Crawler.php:88
+      Stack trace:
+      #0 vendor/symfony/dom-crawler/Symfony/Component/DomCrawler/Crawler.php(832): Symfony\Component\DomCrawler\Crawler->add(false)
+      #1 vendor/symfony/dom-crawler/Symfony/Component/DomCrawler/Crawler.php(619): Symfony\Component\DomCrawler\Crawler->filterRelativeXPath('descendant-or-s...')
+      #2 vendor/behat/mink-browserkit-driver/src/Behat/Mink/Driver/BrowserKitDriver.php(317): Symfony\Component\DomCrawler\Crawler->filterXPath('//html/.//a[./@...')
+      #3 vendor/behat/mink/src/Behat/Mink/Element/Element.php(91): Behat\Mink\Driver\BrowserKitDriver->find('//html/.//a[./@...')
+      #4 vendor/behat/mink/src/Behat/Mink/Element/Element.php(67): Behat\Mink\Element\Element->findAll('named', Array)
+      #5 vendor/behat/mink/src/Behat/Mink/Element/TraversableElement.php(59): Behat\Mink\Element\Element->find('named', Array)
+      #6 vendor/behat/mink/src/Behat/Mink/Element/TraversableElement.php(71): Behat\Mink\Element\TraversableElement->findLink('Tags')
+      #7 vendor/behat/mink-extension/src/Behat/MinkExtension/Context/MinkContext.php(97): Behat\Mink\Element\TraversableElement->clickLink('Tags')
+      #8 app/tests/acceptance/bootstrap/FeatureContext.php(306): Behat\MinkExtension\Context\MinkContext->clickLink('Tags')
+      #9 [internal function]: FeatureContext->iClick('Tags')
+      #10 vendor/behat/behat/src/Behat/Behat/Definition/Annotation/Definition.php(155): call_user_func_array(Array, Array)
+      #11 vendor/behat/behat/src/Behat/Behat/Tester/StepTester.php(157): Behat\Behat\Definition\Annotation\Definition->run(Object(FeatureContext))
+      #12 vendor/behat/behat/src/Behat/Behat/Tester/StepTester.php(126): Behat\Behat\Tester\StepTester->executeStepDefinition(Object(Behat\Gherkin\Node\StepNode), Object(Behat\Behat\Definition\Annotation\Given))
+      #13 vendor/behat/behat/src/Behat/Behat/Tester/StepTester.php(95): Behat\Behat\Tester\StepTester->executeStep(Object(Behat\Gherkin\Node\StepNode))
+      #14 vendor/behat/gherkin/src/Behat/Gherkin/Node/AbstractNode.php(42): Behat\Behat\Tester\StepTester->visit(Object(Behat\Gherkin\Node\StepNode))
+      #15 vendor/behat/behat/src/Behat/Behat/Tester/ScenarioTester.php(148): Behat\Gherkin\Node\AbstractNode->accept(Object(Behat\Behat\Tester\StepTester))
+      #16 vendor/behat/behat/src/Behat/Behat/Tester/ScenarioTester.php(87): Behat\Behat\Tester\ScenarioTester->visitStep(Object(Behat\Gherkin\Node\StepNode), Object(Behat\Gherkin\Node\ScenarioNode), Object(FeatureContext), Array, false)
+      #17 vendor/behat/gherkin/src/Behat/Gherkin/Node/AbstractNode.php(42): Behat\Behat\Tester\ScenarioTester->visit(Object(Behat\Gherkin\Node\ScenarioNode))
+      #18 vendor/behat/behat/src/Behat/Behat/Tester/FeatureTester.php(88): Behat\Gherkin\Node\AbstractNode->accept(Object(Behat\Behat\Tester\ScenarioTester))
+      #19 vendor/behat/gherkin/src/Behat/Gherkin/Node/AbstractNode.php(42): Behat\Behat\Tester\FeatureTester->visit(Object(Behat\Gherkin\Node\FeatureNode))
+      #20 vendor/behat/behat/src/Behat/Behat/Console/Command/BehatCommand.php(150): Behat\Gherkin\Node\AbstractNode->accept(Object(Behat\Behat\Tester\FeatureTester))
+      #21 vendor/behat/behat/src/Behat/Behat/Console/Command/BehatCommand.php(128): Behat\Behat\Console\Command\BehatCommand->runFeatures(Object(Behat\Gherkin\Gherkin))
+      #22 vendor/symfony/console/Symfony/Component/Console/Command/Command.php(241): Behat\Behat\Console\Command\BehatCommand->execute(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+      #23 vendor/symfony/console/Symfony/Component/Console/Application.php(885): Symfony\Component\Console\Command\Command->run(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+      #24 vendor/symfony/console/Symfony/Component/Console/Application.php(191): Symfony\Component\Console\Application->doRunCommand(Object(Behat\Behat\Console\Command\BehatCommand), Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+      #25 vendor/behat/behat/src/Behat/Behat/Console/BehatApplication.php(68): Symfony\Component\Console\Application->doRun(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+      #26 vendor/symfony/console/Symfony/Component/Console/Application.php(121): Behat\Behat\Console\BehatApplication->doRun(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+      #27 vendor/behat/behat/bin/behat(32): Symfony\Component\Console\Application->run()
+      #28 {main}
+    Then I should be on "/tag"                                                          # FeatureContext::assertPageAddress()
+
+Feature: Tags
+  
+  As an admin
+  I can tag posts
+  So that we can find similar posts
+
+  Background: I should have an empty site                                               # app/tests/acceptance/Tags.feature:7
+    Given there is a user                                                               # FeatureContext::thereIsAUser()
+    And I am logged in                                                                  # FeatureContext::iAmLoggedIn()
+      exception 'InvalidArgumentException' with message 'Expecting a DOMNodeList or DOMNode instance, an array, a string, or null, but got "boolean".' in vendor/symfony/dom-crawler/Symfony/Component/DomCrawler/Crawler.php:88
+      Stack trace:
+      #0 vendor/symfony/dom-crawler/Symfony/Component/DomCrawler/Crawler.php(832): Symfony\Component\DomCrawler\Crawler->add(false)
+      #1 vendor/symfony/dom-crawler/Symfony/Component/DomCrawler/Crawler.php(619): Symfony\Component\DomCrawler\Crawler->filterRelativeXPath('descendant-or-s...')
+      #2 vendor/behat/mink-browserkit-driver/src/Behat/Mink/Driver/BrowserKitDriver.php(317): Symfony\Component\DomCrawler\Crawler->filterXPath('//html/.//*[sel...')
+      #3 vendor/behat/mink/src/Behat/Mink/Element/Element.php(91): Behat\Mink\Driver\BrowserKitDriver->find('//html/.//*[sel...')
+      #4 vendor/behat/mink/src/Behat/Mink/Element/Element.php(67): Behat\Mink\Element\Element->findAll('named', Array)
+      #5 vendor/behat/mink/src/Behat/Mink/Element/TraversableElement.php(167): Behat\Mink\Element\Element->find('named', Array)
+      #6 vendor/behat/mink/src/Behat/Mink/Element/TraversableElement.php(180): Behat\Mink\Element\TraversableElement->findField('username')
+      #7 vendor/behat/mink-extension/src/Behat/MinkExtension/Context/MinkContext.php(111): Behat\Mink\Element\TraversableElement->fillField('username', 'test')
+      #8 app/tests/acceptance/bootstrap/FeatureContext.php(54): Behat\MinkExtension\Context\MinkContext->fillField('username', 'test')
+      #9 [internal function]: FeatureContext->iAmLoggedIn()
+      #10 vendor/behat/behat/src/Behat/Behat/Definition/Annotation/Definition.php(155): call_user_func_array(Array, Array)
+      #11 vendor/behat/behat/src/Behat/Behat/Tester/StepTester.php(157): Behat\Behat\Definition\Annotation\Definition->run(Object(FeatureContext))
+      #12 vendor/behat/behat/src/Behat/Behat/Tester/StepTester.php(126): Behat\Behat\Tester\StepTester->executeStepDefinition(Object(Behat\Gherkin\Node\StepNode), Object(Behat\Behat\Definition\Annotation\Given))
+      #13 vendor/behat/behat/src/Behat/Behat/Tester/StepTester.php(95): Behat\Behat\Tester\StepTester->executeStep(Object(Behat\Gherkin\Node\StepNode))
+      #14 vendor/behat/gherkin/src/Behat/Gherkin/Node/AbstractNode.php(42): Behat\Behat\Tester\StepTester->visit(Object(Behat\Gherkin\Node\StepNode))
+      #15 vendor/behat/behat/src/Behat/Behat/Tester/BackgroundTester.php(97): Behat\Gherkin\Node\AbstractNode->accept(Object(Behat\Behat\Tester\StepTester))
+      #16 vendor/behat/gherkin/src/Behat/Gherkin/Node/AbstractNode.php(42): Behat\Behat\Tester\BackgroundTester->visit(Object(Behat\Gherkin\Node\BackgroundNode))
+      #17 vendor/behat/behat/src/Behat/Behat/Tester/ScenarioTester.php(120): Behat\Gherkin\Node\AbstractNode->accept(Object(Behat\Behat\Tester\BackgroundTester))
+      #18 vendor/behat/behat/src/Behat/Behat/Tester/ScenarioTester.php(78): Behat\Behat\Tester\ScenarioTester->visitBackground(Object(Behat\Gherkin\Node\BackgroundNode), Object(Behat\Gherkin\Node\ScenarioNode), Object(FeatureContext))
+      #19 vendor/behat/gherkin/src/Behat/Gherkin/Node/AbstractNode.php(42): Behat\Behat\Tester\ScenarioTester->visit(Object(Behat\Gherkin\Node\ScenarioNode))
+      #20 vendor/behat/behat/src/Behat/Behat/Tester/FeatureTester.php(88): Behat\Gherkin\Node\AbstractNode->accept(Object(Behat\Behat\Tester\ScenarioTester))
+      #21 vendor/behat/gherkin/src/Behat/Gherkin/Node/AbstractNode.php(42): Behat\Behat\Tester\FeatureTester->visit(Object(Behat\Gherkin\Node\FeatureNode))
+      #22 vendor/behat/behat/src/Behat/Behat/Console/Command/BehatCommand.php(150): Behat\Gherkin\Node\AbstractNode->accept(Object(Behat\Behat\Tester\FeatureTester))
+      #23 vendor/behat/behat/src/Behat/Behat/Console/Command/BehatCommand.php(128): Behat\Behat\Console\Command\BehatCommand->runFeatures(Object(Behat\Gherkin\Gherkin))
+      #24 vendor/symfony/console/Symfony/Component/Console/Command/Command.php(241): Behat\Behat\Console\Command\BehatCommand->execute(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+      #25 vendor/symfony/console/Symfony/Component/Console/Application.php(885): Symfony\Component\Console\Command\Command->run(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+      #26 vendor/symfony/console/Symfony/Component/Console/Application.php(191): Symfony\Component\Console\Application->doRunCommand(Object(Behat\Behat\Console\Command\BehatCommand), Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+      #27 vendor/behat/behat/src/Behat/Behat/Console/BehatApplication.php(68): Symfony\Component\Console\Application->doRun(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+      #28 vendor/symfony/console/Symfony/Component/Console/Application.php(121): Behat\Behat\Console\BehatApplication->doRun(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+      #29 vendor/behat/behat/bin/behat(32): Symfony\Component\Console\Application->run()
+      #30 {main}
+
+  Scenario: I can tag a post                                                            # app/tests/acceptance/Tags.feature:11
+    When I create a blog post and tag it "testing"                                      # FeatureContext::iCreateABlogPostAndTagIt()
+    Then I should see the tag "testing"                                                 # FeatureContext::iShouldSeeTheTag()
+
+  Scenario: I can tag a post with multiple tags                                         # app/tests/acceptance/Tags.feature:15
+    When I create a blog post and tag it "testing, test1, test2"                        # FeatureContext::iCreateABlogPostAndTagIt()
+    Then I should see the tag "testing"                                                 # FeatureContext::iShouldSeeTheTag()
+    And I should see the tag "test1"                                                    # FeatureContext::iShouldSeeTheTag()
+    And I should see the tag "test"                                                     # FeatureContext::iShouldSeeTheTag()
+    And I shouldn't see ","                                                             # FeatureContext::iShouldntSee()
+
+  Scenario: I can search by a tag                                                       # app/tests/acceptance/Tags.feature:22
+    Given there are 9 blog posts with the tag "foo"                                     # FeatureContext::thereAreBlogPostsWithTheTag()
+    And there are 3 blog posts with the tag "bar"                                       # FeatureContext::thereAreBlogPostsWithTheTag()
+    When I am on "/tag/foo"                                                             # FeatureContext::visit()
+    Then I should see 6 copies of ".blog-title"                                         # FeatureContext::iShouldSee()
+
+  Scenario: I can see all tags                                                          # app/tests/acceptance/Tags.feature:28
+    Given there are 4 blog posts with the tag "foo"                                     # FeatureContext::thereAreBlogPostsWithTheTag()
+    And there are 4 blog posts with the tag "bar"                                       # FeatureContext::thereAreBlogPostsWithTheTag()
+    And there are 4 blog posts with the tag "baz"                                       # FeatureContext::thereAreBlogPostsWithTheTag()
+    And there are 4 blog posts with the tag "bau"                                       # FeatureContext::thereAreBlogPostsWithTheTag()
+    And there are 4 blog posts with the tag "baa"                                       # FeatureContext::thereAreBlogPostsWithTheTag()
+    And there are 4 blog posts with the tag "bab"                                       # FeatureContext::thereAreBlogPostsWithTheTag()
+    And there are 4 blog posts with the tag "bac"                                       # FeatureContext::thereAreBlogPostsWithTheTag()
+    When I am on "/tag"                                                                 # FeatureContext::visit()
+    Then I should see "foo"                                                             # FeatureContext::assertPageContainsText()
+    And I should see "bar"                                                              # FeatureContext::assertPageContainsText()
+    And I should see "baz"                                                              # FeatureContext::assertPageContainsText()
+    And I should see 18 copies of ".tagged-post"                                        # FeatureContext::iShouldSee()
+
+  Scenario: We get a graceful fail when a tag isn't found                               # app/tests/acceptance/Tags.feature:42
+    Given there are no tags                                                             # FeatureContext::thereAreNoTags()
+    When I am on "/tag/foo"                                                             # FeatureContext::visit()
+    Then I should see a flash message "Tag not found"                                   # FeatureContext::iShouldSeeAFlashMessage()
+    And I should be on "/tag"                                                           # FeatureContext::assertPageAddress()
+
+  Scenario: I can tag a post after editing it                                           # app/tests/acceptance/Tags.feature:48
+    Given there is a blog post with title "Editing Test" and content "I made a boo boo" # FeatureContext::thereIsABlogPostWithTitleAndContent()
+    When I am on "/blog/editing-test/edit"                                              # FeatureContext::visit()
+    And I tag it "testing"                                                              # FeatureContext::iTagIt()
+    Then I should see the tag "testing"                                                 # FeatureContext::iShouldSeeTheTag()
+
+  Scenario: When I edit a post the previous tags are there                              # app/tests/acceptance/Tags.feature:54
+    Given there is a blog post with tags "foo, bar"                                     # FeatureContext::thereIsABlogPostWithTags()
+    When I go to the edit page                                                          # FeatureContext::iGoToTheEditPage()
+    Then I should see it tagged "foo, bar"                                              # FeatureContext::iShouldSeeItTagged()
+
+  Scenario: I can change the tags of a post while editing it                            # app/tests/acceptance/Tags.feature:59
+    Given there is a blog post with tag "foo"                                           # FeatureContext::thereIsABlogPostWithTag()
+    When I go to the edit page                                                          # FeatureContext::iGoToTheEditPage()
+    And I tag it "bar"                                                                  # FeatureContext::iTagIt()
+    Then I should see the tag "bar"                                                     # FeatureContext::iShouldSeeTheTag()
+    And I should not see the tag "foo"                                                  # FeatureContext::iShouldNotSeeTheTag()
+
+  Scenario: All tags are lower case                                                     # app/tests/acceptance/Tags.feature:66
+    Given I create a blog post and tag it "foo, Bar"                                    # FeatureContext::iCreateABlogPostAndTagIt()
+    Then I should see the tag "foo"                                                     # FeatureContext::iShouldSeeTheTag()
+    And I should see the tag "bar"                                                      # FeatureContext::iShouldSeeTheTag()
+
+  Scenario: When tags have no posts, we can't see them                                  # app/tests/acceptance/Tags.feature:71
+    Given there is a blog post with tag "foo"                                           # FeatureContext::thereIsABlogPostWithTag()
+    And I go to the edit page                                                           # FeatureContext::iGoToTheEditPage()
+    And I tag it "bar"                                                                  # FeatureContext::iTagIt()
+    When I am on "/tag"                                                                 # FeatureContext::visit()
+    Then I should not see "foo"                                                         # FeatureContext::assertPageNotContainsText()
+    And I should see "bar"                                                              # FeatureContext::assertPageContainsText()
+
+36 scenarios (7 passed, 29 failed)
+197 steps (70 passed, 98 skipped, 29 failed)
+0m12.473s
