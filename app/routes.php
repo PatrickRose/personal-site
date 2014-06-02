@@ -5,6 +5,7 @@ Route::get('blog/feed', [ "as" => "rss",
 
 Route::resource('sessions', 'SessionsController', array("only" => array("create", "store")));
 Route::resource('blog', 'BlogsController');
+Route::resource('shop', 'ShopController');
 
 Route::get('tag/{tag}', array(
     'uses' => 'BlogsController@tagged',

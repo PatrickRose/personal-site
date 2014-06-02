@@ -9,6 +9,7 @@ use Behat\Behat\Exception\PendingException;
 use Behat\Gherkin\Node\PyStringNode;
 use Behat\Mink\Exception\ResponseTextException;
 use Behat\MinkExtension\Context\MinkContext;
+use Illuminate\Database\QueryException;
 
 /**
  * Features context.
@@ -43,7 +44,12 @@ class FeatureContext extends MinkContext
      */
     public static function before(ScenarioEvent $event)
     {
-        Artisan::call('migrate:refresh', array("seed"));
+        try {
+            Artisan::call('migrate:refresh', array("seed"));
+        } catch (QueryException $e) {
+            Artisan::call("migrate");
+            Artisan::call("db:seed");
+        }
     }
     /**
      * @Given /^I am logged in$/
@@ -520,5 +526,51 @@ class FeatureContext extends MinkContext
             $blog->slug = $blog->makeSlug();
             $blog->save();
         }
+    }
+
+    /**
+     * @When /^I create a new item to buy$/
+     */
+    public function iCreateANewItemToBuy()
+    {
+        $this->visit("shop/create");
+
+        $this->fillField("title", "Test item");
+        $this->fillField("description", "This is test item");
+        $this->fillField("price", "100");
+
+        $this->pressButton("Create item");
+    }
+
+    /**
+     * @Then /^I can see the item in the list$/
+     */
+    public function iCanSeeTheItemInTheList()
+    {
+        $this->clickLink("Shop");
+
+        $this->assertPageContainsText("Test item");
+    }
+
+    /**
+     * @Given /^there are (\d+) items in the shop$/
+     */
+    public function thereAreItemsInTheShop($number)
+    {
+        $factory = Faker\Factory::create();
+        for($i = 0; $i<$number; $i++) {
+            $title = implode(" ", $factory->words(5));
+            $description = $factory->paragraph();
+            $price = $factory->numberBetween(100, 1000);
+            Shop::create(compact('title','description','price'));
+        }
+    }
+
+    /**
+     * @When /^I visit the shop$/
+     */
+    public function iVisitTheShop()
+    {
+        $this->clickLink("Shop");
     }
 }
