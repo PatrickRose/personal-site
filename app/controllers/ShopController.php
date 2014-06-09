@@ -130,12 +130,9 @@ class ShopController extends BaseController {
     {
         $items = Session::get("basket", array());
 
-        $basket = [];
-        foreach($items as $item) {
-            if($item != $id) {
-                $basket[] = $item;
-            }
-        }
+        $basket = array_filter($items, function($var) use ($id) {
+                return $var != $id;
+            });
         Session::put("basket", $basket);
 
         return Redirect::back()->with('flash_message', "Item removed");
