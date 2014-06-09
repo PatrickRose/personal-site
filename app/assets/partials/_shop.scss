@@ -20,3 +20,8 @@
   font-size: 18px;
   color: #808080;
 }
+
+.btn-basket {
+  @extend .btn-danger;
+  width: 49%;
+}

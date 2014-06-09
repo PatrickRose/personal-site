@@ -12,4 +12,7 @@
     <div class="shop-description">
         {{ $item->description }}
     </div>
+    <div class="shop-buy">
+        {{ link_to_route('shop.buy', 'Buy Item', $item->id, ['class'=>"btn btn-shop"]) }}
+    </div>
 </div>

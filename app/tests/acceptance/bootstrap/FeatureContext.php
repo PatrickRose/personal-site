@@ -573,4 +573,95 @@ class FeatureContext extends MinkContext
     {
         $this->clickLink("Shop");
     }
+
+    /**
+     * @Given /^there is an item in the shop$/
+     */
+    public function thereIsAnItemInTheShop()
+    {
+        $factory = Faker\Factory::create();
+
+        $title = "Test item";
+        $description = $factory->paragraph();
+        $price = 1234;
+        Shop::create(compact('title','description','price'));
+    }
+
+    /**
+     * @Then /^I should see the item in my basket$/
+     */
+    public function iShouldSeeTheItemInMyBasket()
+    {
+        $this->clickLink("Basket");
+
+        $this->assertPageContainsText("Test Item");
+        $session = $this->getMink()->getSession();
+
+    }
+
+    /**
+     * @Given /^there are (\d+) item in the shop$/
+     */
+    public function thereIsAreItemInTheShop($n)
+    {
+        $factory = \Faker\Factory::create();
+
+        for($i = 0; $i<$n; $i++) {
+            $title = $factory->sentence();
+            $description = $factory->paragraph();
+            $price = 100;
+            Shop::create(compact('title','description','price'));
+        }
+    }
+
+    /**
+     * @Given /^I buy (\d+) items$/
+     */
+    public function iBuyItems($number)
+    {
+        for($i = 1; $i<=$number; $i++) {
+            $this->visit("shop/{$i}/buy/");
+        }
+    }
+
+    /**
+     * @Then /^I should see the total in my basket$/
+     */
+    public function iShouldSeeTheTotalInMyBasket()
+    {
+        $this->clickLink("Basket");
+
+        $this->assertPageContainsText("£5.00");
+    }
+
+    /**
+     * @When /^I empty my basket$/
+     */
+    public function iEmptyMyBasket()
+    {
+        $this->clickLink("Basket");
+
+        $this->clickLink("Empty Basket");
+    }
+
+    /**
+     * @Then /^I should have an empty basket$/
+     */
+    public function iHaveAnEmptyBasket()
+    {
+        $this->clickLink("Basket");
+
+        $this->assertPageContainsText("Your basket is empty");
+        $this->assertPageNotContainsText("£1.00");
+    }
+
+    /**
+     * @When /^I remove the item from my basket$/
+     */
+    public function iRemoveTheItemFromMyBasket()
+    {
+        $this->clickLink("Basket");
+
+        $this->clickLink("Remove");
+    }
 }

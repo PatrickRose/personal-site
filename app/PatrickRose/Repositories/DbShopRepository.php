@@ -15,4 +15,9 @@ class DbShopRepository implements ShopRepositoryInterface {
     {
         return Shop::paginate($paginate);
     }
+
+    public function getOnly($ids)
+    {
+        return Shop::findMany($ids);
+    }
 }

@@ -10,7 +10,11 @@
             array('Gigs', route('gigs')),
             array('Blog', route('blog.index')),
             array('Tags', route('tag.index')),
-            array('Shop', route('shop.index'))
+            array('Shop', '#', false, false,
+                  array(
+                      array('Browse', route('shop.index')),
+                      array('Basket ' . Badge::normal(count(Session::get('basket'))), route('shop.basket'),null,null,null,null,null,false)
+                  ))
         )
     ))
     ->with_menus(

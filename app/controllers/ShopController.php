@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Session\Store;
 use PatrickRose\Repositories\ShopRepositoryInterface;
 
 class ShopController extends BaseController {
@@ -98,5 +99,46 @@ class ShopController extends BaseController {
 	{
 		//
 	}
+
+    public function buy($id)
+    {
+        Session::push("basket", $id);
+
+        return Redirect::route("shop.index")->with('flash_message', 'Item added to basket');
+    }
+
+    public function basket()
+    {
+        $basket = Session::get("basket", array());
+        $items = $this->repo->getOnly($basket);
+        $totalPrice = 0;
+        foreach($items as $item) {
+            $totalPrice += $item->price;
+        }
+        $total = new Shop(["title" => "Total", "price" => $totalPrice]);
+        return View::make('shop.basket', compact('items', 'total'));
+    }
+
+    public function emptyBasket()
+    {
+        Session::remove("basket");
+
+        return Redirect::back()->with('flash_message', "Basket emptied");;
+    }
+
+    public function removeItem($id)
+    {
+        $items = Session::get("basket", array());
+
+        $basket = [];
+        foreach($items as $item) {
+            if($item != $id) {
+                $basket[] = $item;
+            }
+        }
+        Session::put("basket", $basket);
+
+        return Redirect::back()->with('flash_message', "Item removed");
+    }
 
 }

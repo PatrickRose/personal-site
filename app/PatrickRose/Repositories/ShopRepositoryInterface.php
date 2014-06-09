@@ -15,4 +15,6 @@ interface ShopRepositoryInterface {
 
     public function all($paginate = 18);
 
+    public function getOnly($ids);
+
 } 
