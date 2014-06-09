@@ -109,7 +109,8 @@ return array(
         'Illuminate\Workbench\WorkbenchServiceProvider',
         'Bootstrapper\BootstrapperServiceProvider',
         'PatrickRose\Repositories\BackendServiceProvider',
-        'PatrickRose\MarkdownExtender\MarkdownExtenderServiceProvider'
+        'PatrickRose\MarkdownExtender\MarkdownExtenderServiceProvider',
+        'PatrickRose\Services\ServicesServiceProvider'
     ),
 
     /*

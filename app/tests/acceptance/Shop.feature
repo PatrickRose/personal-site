@@ -47,3 +47,9 @@ Feature: Shop
     When I remove the item from my basket
     Then I should see a flash message "Item removed"
     And I should have an empty basket
+
+  Scenario: I can't add the same item to my basket multiple times
+    Given there are 10 items in the shop
+    And I buy 1 items
+    When I buy 1 items
+    Then I should see a flash message "Already in basket"

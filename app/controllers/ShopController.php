@@ -2,6 +2,8 @@
 
 use Illuminate\Session\Store;
 use PatrickRose\Repositories\ShopRepositoryInterface;
+use PatrickRose\Services\BasketException;
+use PatrickRose\Services\BasketService;
 
 class ShopController extends BaseController {
 
@@ -9,10 +11,15 @@ class ShopController extends BaseController {
      * @var PatrickRose\Repositories\ShopRepositoryInterface
      */
     private $repo;
+    /**
+     * @var PatrickRose\Services\BasketService
+     */
+    private $basketService;
 
-    function __construct(ShopRepositoryInterface $repo)
+    function __construct(ShopRepositoryInterface $repo, BasketService $basketService)
     {
         $this->repo = $repo;
+        $this->basketService = $basketService;
     }
 
     /**
@@ -102,14 +109,17 @@ class ShopController extends BaseController {
 
     public function buy($id)
     {
-        Session::push("basket", $id);
-
-        return Redirect::route("shop.index")->with('flash_message', 'Item added to basket');
+        try {
+            $this->basketService->add($id);
+            return Redirect::route("shop.index")->with('flash_message', 'Item added to basket');
+        } catch (BasketException $e) {
+            return Redirect::route("shop.index")->with('flash_message', 'Already in basket');
+        }
     }
 
     public function basket()
     {
-        $basket = Session::get("basket", array());
+        $basket = $this->basketService->contents();
         $items = $this->repo->getOnly($basket);
         $totalPrice = 0;
         foreach($items as $item) {
@@ -121,19 +131,14 @@ class ShopController extends BaseController {
 
     public function emptyBasket()
     {
-        Session::remove("basket");
+        $this->basketService->clear();
 
         return Redirect::back()->with('flash_message', "Basket emptied");;
     }
 
     public function removeItem($id)
     {
-        $items = Session::get("basket", array());
-
-        $basket = array_filter($items, function($var) use ($id) {
-                return $var != $id;
-            });
-        Session::put("basket", $basket);
+        $this->basketService->remove($id);
 
         return Redirect::back()->with('flash_message', "Item removed");
     }
