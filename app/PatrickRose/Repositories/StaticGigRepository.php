@@ -17,28 +17,10 @@ class StaticGigRepository implements GigRepositoryInterface {
         $gigs = [];
 
         $gigs[] = new Gig([
-            "date" => "6th June",
-            "time" => "7:30pm",
-            "location" => "Redhouse",
-            "about" => "Slot at Thank Folk Its Friday"
-        ]);
-        $gigs[] = new Gig([
-            "date" => "5th July",
-            "time" => "TBC",
-            "location" => "Wincobank Hill",
-            "about" => "Tour De France community event"
-        ]);
-        $gigs[] = new Gig([
-            "date" => "12th July",
-            "time" => "PRIVATE",
-            "location" => "Private Party",
-            "about" => "Calling with Whiskey for Six"
-        ]);
-        $gigs[] = new Gig([
-            "date" => "19th July",
-            "time" => "PRIVATE",
-            "location" => "Private Party",
-            "about" => "Calling gig at wedding party"
+            "date" => "3rd September",
+            "time" => "8:00pm (Doors at 7:30)",
+            "location" => "Shakespeare's",
+            "about" => "Support act for the <a href='https://www.facebook.com/theteacupsquartet'>Teacups</a>. <a href='http://www.wegottickets.com/event/276158'>Tickets £8/£7</a>"
         ]);
 
         $this->gigs = $gigs;
