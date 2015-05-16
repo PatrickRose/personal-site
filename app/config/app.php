@@ -13,7 +13,7 @@ return array(
   |
    */
 
-    'debug' => false,
+    'debug' => getenv('APP_DEBUG'),
 
     /*
   |--------------------------------------------------------------------------
@@ -109,7 +109,9 @@ return array(
         'Illuminate\Workbench\WorkbenchServiceProvider',
         'Bootstrapper\BootstrapperServiceProvider',
         'PatrickRose\Repositories\BackendServiceProvider',
-        'PatrickRose\MarkdownExtender\MarkdownExtenderServiceProvider'
+        'PatrickRose\MarkdownExtender\MarkdownExtenderServiceProvider',
+        'Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider',
+        'Way\Generators\GeneratorsServiceProvider',
     ),
 
     /*

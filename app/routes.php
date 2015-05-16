@@ -42,7 +42,4 @@ Route::get('about', array(
     'as' => 'about'
 ));
 
-Route::get('gigs', array(
-    'uses' => 'StaticPagesController@gigPage',
-    'as' => 'gigs'
-));
+Route::resource('gigs', 'GigsController');

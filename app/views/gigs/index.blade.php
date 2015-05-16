@@ -27,6 +27,12 @@
             <th>
                 About
             </th>
+            <th>
+                Cost
+            </th>
+            <th>
+                Ticket Link
+            </th>
         </tr>
         </thead>
         <tbody>
@@ -44,9 +50,25 @@
                 <td>
                     {{ $gig->about }}
                 </td>
+                <td>
+                    {{ $gig->cost }}
+                </td>
+                <td>
+                    <a href="{{ $gig->ticketlink }}">
+                        Ticket Link
+                    </a>
+                </td>
             </tr>
         @endforeach
         </tbody>
     </table>
+
+    @if($gigs->isEmpty())
+        <div class="alert alert-info">
+            No bookings, check back soon!
+        </div>
+    @endif
+
+    {{ $gigs->links() }}
 </div>
 @stop

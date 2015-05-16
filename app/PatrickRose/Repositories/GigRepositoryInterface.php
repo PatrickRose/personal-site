@@ -13,4 +13,6 @@ interface GigRepositoryInterface {
 
     public function all();
 
+    public function create(array $input);
+
 } 

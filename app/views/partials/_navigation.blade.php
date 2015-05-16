@@ -7,7 +7,7 @@
         array(
             array('Home', route('home')),
             array('About', route('about')),
-            array('Gigs', route('gigs')),
+            array('Gigs', route('gigs.index')),
             array('Blog', route('blog.index')),
             array('Tags', route('tag.index')),
         )

@@ -30,4 +30,12 @@ class StaticGigRepository implements GigRepositoryInterface {
     {
         return $this->gigs;
     }
+
+    public function create(array $input)
+    {
+        $gig = new Gig($input);
+        $this->gigs[] = $gig;
+
+        return $gig;
+    }
 }

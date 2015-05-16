@@ -521,4 +521,89 @@ class FeatureContext extends MinkContext
             $blog->save();
         }
     }
+
+    /**
+     * @Given /^I am not logged in$/
+     */
+    public function iAmNotLoggedIn()
+    {
+        $this->visit("/logout");
+    }
+
+
+    /**
+     * @Given /^the database should contain (\d+) (\w+)s?$/
+     */
+    public function theDatabaseShouldContainXRowsInTableY($numRows, $table)
+    {
+        $table = str_plural($table);
+
+        $actualCount = DB::table($table)->count();
+        if ($actualCount != $numRows)
+        {
+            throw new \Behat\Behat\Exception\BehaviorException(
+                "Expected to find $numRows rows(s) in table '$table' but found $actualCount"
+            );
+        }
+    }
+
+    /**
+     * @Given /^there are (\d+) gigs$/
+     */
+    public function thereAreGigs($number)
+    {
+        $factory = \Faker\Factory::create();
+        foreach(range(1, $number) as $i)
+        {
+            Gig::create([
+                "date" => \Carbon\Carbon::create()->addYear(),
+                "time" => $factory->sentence(),
+                "location" => $factory->sentence(),
+                "about" => $factory->sentence(),
+                "cost" => '£' . $factory->randomNumber(),
+                'ticketlink' => 'http://www.' . $factory->word . '.com'
+            ]);
+        }
+    }
+
+    /**
+     * @Then /^I should see (\d+) gigs$/
+     */
+    public function iShouldSeeGigs($number)
+    {
+        $session = $this->getMink()->getSession();
+        $rows = $session->getPage()->findAll("css", "tr");
+        if ($number != (count($rows) - 1))
+        {
+            throw new ResponseTextException(
+                'Found ' . (count($rows) - 1) . ", instead of $number",
+                $session
+            );
+        }
+        if ($number > 0) {
+            $columns = $session->getPage()->findAll("css", "tr td");
+            if (6 * $number != count($columns)) {
+                throw new ResponseTextException(
+                    'Found ' . (count($columns) / $number) . " columns, instead of 6",
+                    $session
+                );
+            }
+        }
+    }
+
+    /**
+     * @Given /^there is a gig in the past$/
+     */
+    public function thereIsAGigInThePast()
+    {
+        $factory = \Faker\Factory::create();
+        Gig::create([
+            "date" => \Carbon\Carbon::create()->subYear(),
+            "time" => $factory->sentence(),
+            "location" => $factory->sentence(),
+            "about" => $factory->sentence(),
+            "cost" => '£' . $factory->randomNumber(),
+            'ticketlink' => 'http://www.' . $factory->word . '.com'
+        ]);
+    }
 }

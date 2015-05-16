@@ -36,7 +36,7 @@ class BackendServiceProvider extends ServiceProvider
     private function registerGigRepository()
     {
         $this->app->bind("PatrickRose\\Repositories\\GigRepositoryInterface", function() {
-           return new StaticGigRepository();
+           return new DbGigRepository();
         });
     }
 }

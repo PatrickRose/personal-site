@@ -7,11 +7,10 @@
  */
 
 
-// Won't use Eloquent just yet
 class Gig extends Eloquent {
 
     protected $fillable = [
-      "date", "time", "location", "about"
+        "date", "time", "location", "about", 'ticketlink', 'cost',
     ];
 
 } 
