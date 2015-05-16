@@ -3,7 +3,7 @@
 <head>
     <title>@yield("title") - Patrick Rose</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    {{ HTML::style("assets/css/main.min.css") }}
+    {{ HTML::style("css/main.css") }}
     <link rel="stylesheet" href="http://yandex.st/highlightjs/8.0/styles/default.min.css">
 </head>
 <body>

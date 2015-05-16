@@ -25,7 +25,7 @@
             Welcome to the website of the Sheffield based folk musician Patrick Rose
         </p>
 
-        <div class="row">
+        <div class="row same-height">
             <div class="col-md-4">
                 <div class="header">
                     <h4>

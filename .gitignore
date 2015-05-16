@@ -8,7 +8,7 @@ Thumbs.db
 /app/config/local/
 /.idea
 /.sass-cache
-/app/assets/bower/
+/resources/assets/bower/
 /node_modules/
 _ide_helper.php
 jm_behat_report.html
