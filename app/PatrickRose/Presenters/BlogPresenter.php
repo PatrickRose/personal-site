@@ -31,7 +31,7 @@ class BlogPresenter extends Presenter {
 
     public function getDate() 
     {
-        return date('d F, Y');
+        return $this->created_at->format('d F, Y');
     }
 
 } 
