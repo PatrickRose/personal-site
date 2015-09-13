@@ -5,18 +5,18 @@
 @stop
 
 @section('content')
-    <div class="row">
-        <div class="col-md-8">
-            <div class="blog-title">
-                <h2>
+    <div class="row topspace">
+        <article class="col-md-8 maincontent">
+            <header class="page-header">
+                <h2 class="page-title">
                     {{ ucwords($blog->title) }}
                 </h2>
-            </div>
+            </header>
             <div class="blog-content">
                 {{ $blog->present()->compile() }}
             </div>
-        </div>
-        <div class="col-md-4">
+        </article>
+        <aside class="col-md-4 sidebar sidebar-left">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h4>Tagged with</h4>
@@ -35,7 +35,7 @@
                 </div>
                 @if(Auth::user())
                     <div class="panel-body">
-                        {{ link_to_route('blog.edit', "Edit Post", $blog->slug, array('class'=>'btn btn-blog btn-block')) }}
+                        {{ link_to_route('blog.edit', "Edit Post", $blog->slug, array('class'=>'btn btn-action btn-block')) }}
                     </div>
                 @endif
                 <ul class="list-group">
@@ -46,6 +46,6 @@
                     @endforeach
                 </ul>
             </div>
-        </div>
+        </aside>
     </div>
 @stop

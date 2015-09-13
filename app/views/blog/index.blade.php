@@ -5,13 +5,13 @@
 @stop
 
 @section('content')
-   @foreach(array_chunk($blogs->all(), 3) as $row)
-       <div class="row">
-           @foreach($row as $blog)
-               @include('partials/_blog')
-           @endforeach
-       </div>
-   @endforeach
-
-   {{ $blogs->links() }}
+  <div class="row topspace">
+    <div class="col-sm-8 col-sm-offset-2">
+															
+      @foreach($blogs->all() as $blog)
+        @include('partials/_blog')
+      @endforeach
+      <center class="text-align">
+	{{ $blogs->links() }}
+      </p>
 @stop

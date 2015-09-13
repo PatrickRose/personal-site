@@ -29,4 +29,9 @@ class BlogPresenter extends Presenter {
         return substr($content, 0, strpos($content, "\n")) ? : $content;
     }
 
+    public function getDate() 
+    {
+        return date('d F, Y');
+    }
+
 } 
