@@ -54,7 +54,7 @@
                             {{ $gig->cost }}
                         </td>
                         <td>
-                            @if ($gig->ticketLink)
+                            @if ($gig->ticketlink)
                                 <a href="{{ $gig->ticketlink }}">
                                     Ticket Link
                                 </a>
