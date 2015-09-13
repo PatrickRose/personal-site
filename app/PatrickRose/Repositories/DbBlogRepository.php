@@ -55,7 +55,7 @@ class DbBlogRepository implements BlogRepositoryInterface {
 
     public function getOnly($number = 3)
     {
-        return Blog::orderBy('created_at', 'desc')->limit($number)->get(array("title", "slug"));
+        return Blog::orderBy('created_at', 'desc')->limit($number)->get();
     }
 
     public function tagged($tag)

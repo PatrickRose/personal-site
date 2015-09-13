@@ -16,9 +16,8 @@ class Navigation {
         } else {
             $link = array('Login', route("login"));
         }
-        return \Navigation::links(
-            array($link)
-        );
+
+        return array($link);
     }
 
 } 

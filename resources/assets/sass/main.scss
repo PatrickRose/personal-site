@@ -8,10 +8,6 @@
 @import "partials/gigs";
 @import "partials/tags";
 
-body {
-  padding-top: 60px;
-}
-
 .flash-message {
   @extend .alert;
   @extend .alert-info;
