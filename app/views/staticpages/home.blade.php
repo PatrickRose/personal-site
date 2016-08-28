@@ -9,7 +9,7 @@
     <div class="col-md-12">
       <p class="lead text-center text-muted">
         Welcome to the website of the Sheffield based folk musician Patrick Rose, 
-	winner of the John Birmingham Cup Song Writing Competition 2015
+	winner of the John Birmingham Cup Song Writing Competition 2015 and 2016
       </p>
     </div>
   </div>
