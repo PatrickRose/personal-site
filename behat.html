@@ -1,0 +1,2156 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns ="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <title>Behat Test Suite</title>
+    <style type="text/css">
+        body {
+            margin:0px;
+            padding:0px;
+            position:relative;
+            padding-top:75px;
+        }
+        #behat {
+            float:left;
+            font-family: Georgia, serif;
+            font-size:18px;
+            line-height:26px;
+            width:100%;
+        }
+        #behat .statistics {
+            float:left;
+            width:100%;
+            margin-bottom:15px;
+        }
+        #behat .statistics p {
+            text-align:right;
+            padding:5px 15px;
+            margin:0px;
+            border-right:10px solid #000;
+        }
+        #behat .statistics.failed p {
+            border-color:#C20000;
+        }
+        #behat .statistics.passed p {
+            border-color:#3D7700;
+        }
+        #behat .feature {
+            margin:15px;
+        }
+        #behat h2, #behat h3, #behat h4 {
+            margin:0px 0px 5px 0px;
+            padding:0px;
+            font-family:Georgia;
+        }
+        #behat h2 .title, #behat h3 .title, #behat h4 .title {
+            font-weight:normal;
+        }
+        #behat .path {
+            font-size:10px;
+            font-weight:normal;
+            font-family: 'Bitstream Vera Sans Mono', 'DejaVu Sans Mono', Monaco, Courier, monospace !important;
+            color:#999;
+            padding:0px 5px;
+            float:right;
+        }
+        #behat .path a:link,
+        #behat .path a:visited {
+            color:#999;
+        }
+        #behat .path a:hover,
+        #behat .path a:active {
+            background-color:#000;
+            color:#fff;
+        }
+        #behat h3 .path {
+            margin-right:4%;
+        }
+        #behat ul.tags {
+            font-size:14px;
+            font-weight:bold;
+            color:#246AC1;
+            list-style:none;
+            margin:0px;
+            padding:0px;
+        }
+        #behat ul.tags li {
+            display:inline;
+        }
+        #behat ul.tags li:after {
+            content:' ';
+        }
+        #behat ul.tags li:last-child:after {
+            content:'';
+        }
+        #behat .feature > p {
+            margin-top:0px;
+            margin-left:20px;
+        }
+        #behat .scenario {
+            margin-left:20px;
+            margin-bottom:20px;
+        }
+        #behat .scenario > ol,
+        #behat .scenario .examples > ol {
+            margin:0px;
+            list-style:none;
+            padding:0px;
+        }
+        #behat .scenario > ol {
+            margin-left:20px;
+        }
+        #behat .scenario > ol:after,
+        #behat .scenario .examples > ol:after {
+            content:'';
+            display:block;
+            clear:both;
+        }
+        #behat .scenario > ol li,
+        #behat .scenario .examples > ol li {
+            float:left;
+            width:95%;
+            padding-left:5px;
+            border-left:5px solid;
+            margin-bottom:4px;
+        }
+        #behat .scenario > ol li .argument,
+        #behat .scenario .examples > ol li .argument {
+            margin:10px 20px;
+            font-size:16px;
+            overflow:hidden;
+        }
+        #behat .scenario > ol li table.argument,
+        #behat .scenario .examples > ol li table.argument {
+            border:1px solid #d2d2d2;
+        }
+        #behat .scenario > ol li table.argument thead td,
+        #behat .scenario .examples > ol li table.argument thead td {
+            font-weight: bold;
+        }
+        #behat .scenario > ol li table.argument td,
+        #behat .scenario .examples > ol li table.argument td {
+            padding:5px 10px;
+            background:#f3f3f3;
+        }
+        #behat .scenario > ol li .keyword,
+        #behat .scenario .examples > ol li .keyword {
+            font-weight:bold;
+        }
+        #behat .scenario > ol li .path,
+        #behat .scenario .examples > ol li .path {
+            float:right;
+        }
+        #behat .scenario .examples {
+            margin-top:20px;
+            margin-left:40px;
+        }
+        #behat .scenario .examples h4 span {
+            font-weight:normal;
+            background:#f3f3f3;
+            color:#999;
+            padding:0 5px;
+            margin-left:10px;
+        }
+        #behat .scenario .examples table {
+            margin-left:20px;
+        }
+        #behat .scenario .examples table thead td {
+            font-weight:bold;
+            text-align:center;
+        }
+        #behat .scenario .examples table td {
+            padding:2px 10px;
+            font-size:16px;
+        }
+        #behat .scenario .examples table .failed.exception td {
+            border-left:5px solid #000;
+            border-color:#C20000 !important;
+            padding-left:0px;
+        }
+        pre {
+            font-family:monospace;
+        }
+        .snippet {
+            font-size:14px;
+            color:#000;
+            margin-left:20px;
+        }
+        .backtrace {
+            font-size:12px;
+            line-height:18px;
+            color:#000;
+            overflow:hidden;
+            margin-left:20px;
+            padding:15px;
+            border-left:2px solid #C20000;
+            background: #fff;
+            margin-right:15px;
+        }
+        #behat .passed {
+            background:#DBFFB4;
+            border-color:#65C400 !important;
+            color:#3D7700;
+        }
+        #behat .failed {
+            background:#FFFBD3;
+            border-color:#C20000 !important;
+            color:#C20000;
+        }
+        #behat .undefined, #behat .pending {
+            border-color:#FAF834 !important;
+            background:#FCFB98;
+            color:#000;
+        }
+        #behat .skipped {
+            background:lightCyan;
+            border-color:cyan !important;
+            color:#000;
+        }
+        #behat .summary {
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            width:100%;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            line-height: 18px;
+        }
+        #behat .summary .counters {
+            padding: 10px;
+            border-top: 0px;
+            border-bottom: 0px;
+            border-right: 0px;
+            border-left: 5px;
+            border-style: solid;
+            height: 52px;
+            overflow: hidden;
+        }
+        #behat .summary .switchers {
+            position: absolute;
+            right: 15px;
+            top: 25px;
+        }
+        #behat .summary .switcher {
+            text-decoration: underline;
+            cursor: pointer;
+        }
+        #behat .summary .switchers a {
+            margin-left: 10px;
+            color: #000;
+        }
+        #behat .summary .switchers a:hover {
+            text-decoration:none;
+        }
+        #behat .summary p {
+            margin:0px;
+        }
+        #behat .jq-toggle > .scenario,
+        #behat .jq-toggle > ol,
+        #behat .jq-toggle > .examples {
+            display:none;
+        }
+        #behat .jq-toggle-opened > .scenario,
+        #behat .jq-toggle-opened > ol,
+        #behat .jq-toggle-opened > .examples {
+            display:block;
+        }
+        #behat .jq-toggle > h2,
+        #behat .jq-toggle > h3 {
+            cursor:pointer;
+        }
+        #behat .jq-toggle > h2:after,
+        #behat .jq-toggle > h3:after {
+            content:' |+';
+            font-weight:bold;
+        }
+        #behat .jq-toggle-opened > h2:after,
+        #behat .jq-toggle-opened > h3:after {
+            content:' |-';
+            font-weight:bold;
+        }
+    </style>
+
+    <style type="text/css" media="print">
+        body {
+            padding:0px;
+        }
+
+        #behat {
+            font-size:11px;
+        }
+
+        #behat .jq-toggle > .scenario,
+        #behat .jq-toggle > .scenario .examples,
+        #behat .jq-toggle > ol {
+            display:block;
+        }
+
+        #behat .summary {
+            position:relative;
+        }
+
+        #behat .summary .counters {
+            border:none;
+        }
+
+        #behat .summary .switchers {
+            display:none;
+        }
+
+        #behat .step .path {
+            display:none;
+        }
+
+        #behat .jq-toggle > h2:after,
+        #behat .jq-toggle > h3:after {
+            content:'';
+            font-weight:bold;
+        }
+
+        #behat .jq-toggle-opened > h2:after,
+        #behat .jq-toggle-opened > h3:after {
+            content:'';
+            font-weight:bold;
+        }
+
+        #behat .scenario > ol li,
+        #behat .scenario .examples > ol li {
+            border-left:none;
+        }
+    </style>
+</head>
+<body>
+    <div id="behat">
+        
+<div class="feature">
+<h2>
+<span class="keyword">Feature: </span>
+<span class="title">Blog</span>
+</h2>
+<p>
+<br />
+In order to practice writing<br />
+As the site owner<br />
+I can write blog posts<br />
+</p>
+
+<div class="scenario background">
+<h3>
+<span class="keyword">Background: </span>
+<span class="title">There is a user</span>
+<span class="path">app/tests/acceptance/Blog.feature:7</span>
+</h3>
+<ol>
+<li class="passed">
+<div class="step">
+<span class="keyword">Given </span>
+<span class="text">there is a user</span>
+<span class="path">FeatureContext::thereIsAUser()</span>
+</div>
+</li>
+</ol>
+</div>
+<div class="scenario">
+<h3>
+<span class="keyword">Scenario: </span>
+<span class="title">Nobody except the site owner can create a blog post</span>
+<span class="path">app/tests/acceptance/Blog.feature:10</span>
+</h3>
+<ol>
+<li class="passed">
+<div class="step">
+<span class="keyword">Given </span>
+<span class="text">I am on "<strong class="passed_param">blog/create</strong>"</span>
+<span class="path">FeatureContext::visit()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">Then </span>
+<span class="text">I should be on "<strong class="passed_param">/login</strong>"</span>
+<span class="path">FeatureContext::assertPageAddress()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">And </span>
+<span class="text">I should see a flash message "<strong class="passed_param">You're not authorised to do that</strong>"</span>
+<span class="path">FeatureContext::iShouldSeeAFlashMessage()</span>
+</div>
+</li>
+</ol>
+</div>
+<div class="scenario">
+<h3>
+<span class="keyword">Scenario: </span>
+<span class="title">Site owner creates a blog post</span>
+<span class="path">app/tests/acceptance/Blog.feature:15</span>
+</h3>
+<ol>
+<li class="passed">
+<div class="step">
+<span class="keyword">Given </span>
+<span class="text">I am logged in</span>
+<span class="path">FeatureContext::iAmLoggedIn()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">And </span>
+<span class="text">I am on "<strong class="passed_param">blog/create</strong>"</span>
+<span class="path">FeatureContext::visit()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">When </span>
+<span class="text">I create a blog post with title "<strong class="passed_param">Foo</strong>" and content "<strong class="passed_param">Baring all the baz</strong>"</span>
+<span class="path">FeatureContext::iCreateABlogPostWithTitleAndContent()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">Then </span>
+<span class="text">I should see a flash message "<strong class="passed_param">Blog post created!</strong>"</span>
+<span class="path">FeatureContext::iShouldSeeAFlashMessage()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">And </span>
+<span class="text">I should see "<strong class="passed_param">Baring all the baz</strong>"</span>
+<span class="path">FeatureContext::assertPageContainsText()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">And </span>
+<span class="text">I should see "<strong class="passed_param">Foo</strong>"</span>
+<span class="path">FeatureContext::assertPageContainsText()</span>
+</div>
+</li>
+</ol>
+</div>
+<div class="scenario">
+<h3>
+<span class="keyword">Scenario: </span>
+<span class="title">Site owner cannot create an invalid blog post</span>
+<span class="path">app/tests/acceptance/Blog.feature:23</span>
+</h3>
+<ol>
+<li class="passed">
+<div class="step">
+<span class="keyword">Given </span>
+<span class="text">I am logged in</span>
+<span class="path">FeatureContext::iAmLoggedIn()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">And </span>
+<span class="text">I am on "<strong class="passed_param">blog/create</strong>"</span>
+<span class="path">FeatureContext::visit()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">And </span>
+<span class="text">I fill in the blog form with invalid data</span>
+<span class="path">FeatureContext::iFillInTheBlogFormWithInvalidData()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">Then </span>
+<span class="text">I should see a flash message "<strong class="passed_param">That's not a valid blog post</strong>"</span>
+<span class="path">FeatureContext::iShouldSeeAFlashMessage()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">And </span>
+<span class="text">I should be on "<strong class="passed_param">/blog/create</strong>"</span>
+<span class="path">FeatureContext::assertPageAddress()</span>
+</div>
+</li>
+</ol>
+</div>
+<div class="scenario">
+<h3>
+<span class="keyword">Scenario: </span>
+<span class="title">A blog post that has the same title is a new slug</span>
+<span class="path">app/tests/acceptance/Blog.feature:30</span>
+</h3>
+<ol>
+<li class="passed">
+<div class="step">
+<span class="keyword">Given </span>
+<span class="text">I am logged in</span>
+<span class="path">FeatureContext::iAmLoggedIn()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">And </span>
+<span class="text">I create a blog post with title "<strong class="passed_param">evening</strong>" and content "<strong class="passed_param">content</strong>"</span>
+<span class="path">FeatureContext::iCreateABlogPostWithTitleAndContent()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">And </span>
+<span class="text">I create a blog post with title "<strong class="passed_param">evening</strong>" and content "<strong class="passed_param">different</strong>"</span>
+<span class="path">FeatureContext::iCreateABlogPostWithTitleAndContent()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">Then </span>
+<span class="text">I should be on "<strong class="passed_param">/blog/evening-2</strong>"</span>
+<span class="path">FeatureContext::assertPageAddress()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">And </span>
+<span class="text">I should see "<strong class="passed_param">different</strong>"</span>
+<span class="path">FeatureContext::assertPageContainsText()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">And </span>
+<span class="text">I should not see "<strong class="passed_param">content</strong>"</span>
+<span class="path">FeatureContext::assertPageNotContainsText()</span>
+</div>
+</li>
+</ol>
+</div>
+<div class="scenario">
+<h3>
+<span class="keyword">Scenario: </span>
+<span class="title">I can see all the blog posts</span>
+<span class="path">app/tests/acceptance/Blog.feature:38</span>
+</h3>
+<ol>
+<li class="passed">
+<div class="step">
+<span class="keyword">Given </span>
+<span class="text">there is a blog post with title "<strong class="passed_param">First Post</strong>" and content "<strong class="passed_param">first post content</strong>"</span>
+<span class="path">FeatureContext::thereIsABlogPostWithTitleAndContent()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">And </span>
+<span class="text">there is a blog post with title "<strong class="passed_param">Second Post</strong>" and content "<strong class="passed_param">second post content</strong>"</span>
+<span class="path">FeatureContext::thereIsABlogPostWithTitleAndContent()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">When </span>
+<span class="text">I am on "<strong class="passed_param">/blog</strong>"</span>
+<span class="path">FeatureContext::visit()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">Then </span>
+<span class="text">I should see all blogs</span>
+<span class="path">FeatureContext::iShouldSeeAllBlogs()</span>
+</div>
+</li>
+</ol>
+</div>
+<div class="scenario">
+<h3>
+<span class="keyword">Scenario: </span>
+<span class="title">When I see posts, the titles are capitalised</span>
+<span class="path">app/tests/acceptance/Blog.feature:44</span>
+</h3>
+<ol>
+<li class="passed">
+<div class="step">
+<span class="keyword">Given </span>
+<span class="text">I am logged in</span>
+<span class="path">FeatureContext::iAmLoggedIn()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">And </span>
+<span class="text">I create a blog post with title "<strong class="passed_param">no capitals</strong>" and content "<strong class="passed_param">first post content</strong>"</span>
+<span class="path">FeatureContext::iCreateABlogPostWithTitleAndContent()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">Then </span>
+<span class="text">the title should be "<strong class="passed_param">No Capitals</strong>"</span>
+<span class="path">FeatureContext::theTitleShouldBe()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">And </span>
+<span class="text">when I go to "<strong class="passed_param">/blog</strong>" I should see the title "<strong class="passed_param">No Capitals</strong>"</span>
+<span class="path">FeatureContext::whenIGoToIShouldSeeTheTitle()</span>
+</div>
+</li>
+</ol>
+</div>
+<div class="scenario">
+<h3>
+<span class="keyword">Scenario: </span>
+<span class="title">I can use markdown to create posts</span>
+<span class="path">app/tests/acceptance/Blog.feature:50</span>
+</h3>
+<ol>
+<li class="passed">
+<div class="step">
+<span class="keyword">Given </span>
+<span class="text">I am logged in</span>
+<span class="path">FeatureContext::iAmLoggedIn()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">And </span>
+<span class="text">I create a blog post with the title "<strong class="passed_param">Markdown Test</strong>" and content:</span>
+<span class="path">FeatureContext::iCreateABlogPostWithTheTitleAndContent()</span>
+</div>
+<pre class="argument"># Heading 1
+
+## Heading 2
+
+*emphasis*
+
+**strong**
+
+1. First ordered item
+2. Second ordered item
+
+* First unordered item
+* Second unordered item
+
+[link](http://foo.bar.com)
+
+Test we can create `inline code`
+
+Test that we an also add paragraphs
+
+Hey look, more paragraphs!</pre>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">Then </span>
+<span class="text">I should see the compiled markdown</span>
+<span class="path">FeatureContext::iShouldSeeTheCompiledMarkdown()</span>
+</div>
+</li>
+</ol>
+</div>
+<div class="scenario">
+<h3>
+<span class="keyword">Scenario: </span>
+<span class="title">The index page only shows the first paragraph of each post</span>
+<span class="path">app/tests/acceptance/Blog.feature:78</span>
+</h3>
+<ol>
+<li class="passed">
+<div class="step">
+<span class="keyword">And </span>
+<span class="text">there is a blog post with the title "<strong class="passed_param">Paragraph Test</strong>" and content:</span>
+<span class="path">FeatureContext::thereIsABlogPostWithTheTitleAndContent()</span>
+</div>
+<pre class="argument">This is a nice paragraph
+
+Oh goodness, so is this!
+
+I shouldn't be able to see this</pre>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">When </span>
+<span class="text">I am on "<strong class="passed_param">/blog</strong>"</span>
+<span class="path">FeatureContext::visit()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">Then </span>
+<span class="text">I should see "<strong class="passed_param">This is a nice paragraph</strong>"</span>
+<span class="path">FeatureContext::assertPageContainsText()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">And </span>
+<span class="text">I shouldn't see "<strong class="passed_param">Oh goodness, so is this!</strong>"</span>
+<span class="path">FeatureContext::iShouldntSee()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">And </span>
+<span class="text">I shouldn't see "<strong class="passed_param">I shouldn't be able to see this</strong>"</span>
+<span class="path">FeatureContext::iShouldntSee()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">And </span>
+<span class="text">I should see a button saying "<strong class="passed_param">Continue Reading...</strong>"</span>
+<span class="path">FeatureContext::iShouldSeeAButtonSaying()</span>
+</div>
+</li>
+</ol>
+</div>
+<div class="scenario">
+<h3>
+<span class="keyword">Scenario: </span>
+<span class="title">We get a graceful fail when a blog post isn't found</span>
+<span class="path">app/tests/acceptance/Blog.feature:93</span>
+</h3>
+<ol>
+<li class="passed">
+<div class="step">
+<span class="keyword">Given </span>
+<span class="text">there are no blog posts</span>
+<span class="path">FeatureContext::thereAreNoBlogPosts()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">When </span>
+<span class="text">I am on "<strong class="passed_param">/blog/foo</strong>"</span>
+<span class="path">FeatureContext::visit()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">Then </span>
+<span class="text">I should see a flash message "<strong class="passed_param">Blog post not found</strong>"</span>
+<span class="path">FeatureContext::iShouldSeeAFlashMessage()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">And </span>
+<span class="text">I should be on "<strong class="passed_param">/blog</strong>"</span>
+<span class="path">FeatureContext::assertPageAddress()</span>
+</div>
+</li>
+</ol>
+</div>
+<div class="scenario">
+<h3>
+<span class="keyword">Scenario: </span>
+<span class="title">We can edit blog posts</span>
+<span class="path">app/tests/acceptance/Blog.feature:99</span>
+</h3>
+<ol>
+<li class="passed">
+<div class="step">
+<span class="keyword">Given </span>
+<span class="text">there is a blog post with title "<strong class="passed_param">Editing Test</strong>" and content "<strong class="passed_param">I made a boo boo</strong>"</span>
+<span class="path">FeatureContext::thereIsABlogPostWithTitleAndContent()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">When </span>
+<span class="text">I am logged in</span>
+<span class="path">FeatureContext::iAmLoggedIn()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">And </span>
+<span class="text">I am on "<strong class="passed_param">blog/editing-test/edit</strong>"</span>
+<span class="path">FeatureContext::visit()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">Then </span>
+<span class="text">I should be able to edit the post</span>
+<span class="path">FeatureContext::iShouldBeAbleToEditThePost()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">And </span>
+<span class="text">I should see the edited content</span>
+<span class="path">FeatureContext::iShouldSeeTheEditedContent()</span>
+</div>
+</li>
+</ol>
+</div>
+<div class="scenario">
+<h3>
+<span class="keyword">Scenario: </span>
+<span class="title">We can only edit posts if you're logged in</span>
+<span class="path">app/tests/acceptance/Blog.feature:106</span>
+</h3>
+<ol>
+<li class="passed">
+<div class="step">
+<span class="keyword">Given </span>
+<span class="text">there is a blog post with title "<strong class="passed_param">Editing Test</strong>" and content "<strong class="passed_param">I made a boo boo</strong>"</span>
+<span class="path">FeatureContext::thereIsABlogPostWithTitleAndContent()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">When </span>
+<span class="text">I am on "<strong class="passed_param">blog/editing-test/edit</strong>"</span>
+<span class="path">FeatureContext::visit()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">Then </span>
+<span class="text">I should be on "<strong class="passed_param">/login</strong>"</span>
+<span class="path">FeatureContext::assertPageAddress()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">And </span>
+<span class="text">I should see a flash message "<strong class="passed_param">You're not authorised to do that</strong>"</span>
+<span class="path">FeatureContext::iShouldSeeAFlashMessage()</span>
+</div>
+</li>
+</ol>
+</div>
+<div class="scenario">
+<h3>
+<span class="keyword">Scenario: </span>
+<span class="title">We can only edit posts that are real</span>
+<span class="path">app/tests/acceptance/Blog.feature:112</span>
+</h3>
+<ol>
+<li class="passed">
+<div class="step">
+<span class="keyword">Given </span>
+<span class="text">I am logged in</span>
+<span class="path">FeatureContext::iAmLoggedIn()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">And </span>
+<span class="text">there are no blog posts</span>
+<span class="path">FeatureContext::thereAreNoBlogPosts()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">When </span>
+<span class="text">I am on "<strong class="passed_param">blog/editing-test/edit</strong>"</span>
+<span class="path">FeatureContext::visit()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">Then </span>
+<span class="text">I should be on "<strong class="passed_param">/blog</strong>"</span>
+<span class="path">FeatureContext::assertPageAddress()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">And </span>
+<span class="text">I should see a flash message "<strong class="passed_param">Blog post not found</strong>"</span>
+<span class="path">FeatureContext::iShouldSeeAFlashMessage()</span>
+</div>
+</li>
+</ol>
+</div>
+<div class="scenario">
+<h3>
+<span class="keyword">Scenario: </span>
+<span class="title">We can only edit posts so they are valid</span>
+<span class="path">app/tests/acceptance/Blog.feature:119</span>
+</h3>
+<ol>
+<li class="passed">
+<div class="step">
+<span class="keyword">Given </span>
+<span class="text">I am logged in</span>
+<span class="path">FeatureContext::iAmLoggedIn()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">And </span>
+<span class="text">I create a blog post with title "<strong class="passed_param">Editing Test</strong>" and content "<strong class="passed_param">I made a boo boo</strong>"</span>
+<span class="path">FeatureContext::iCreateABlogPostWithTitleAndContent()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">And </span>
+<span class="text">I am on "<strong class="passed_param">blog/editing-test/edit</strong>"</span>
+<span class="path">FeatureContext::visit()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">When </span>
+<span class="text">I input invalid blog data</span>
+<span class="path">FeatureContext::iInputInvalidBlogData()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">Then </span>
+<span class="text">I should see a flash message "<strong class="passed_param">That's not a valid blog post</strong>"</span>
+<span class="path">FeatureContext::iShouldSeeAFlashMessage()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">And </span>
+<span class="text">I should be on "<strong class="passed_param">blog/editing-test/edit</strong>"</span>
+<span class="path">FeatureContext::assertPageAddress()</span>
+</div>
+</li>
+</ol>
+</div>
+<div class="scenario">
+<h3>
+<span class="keyword">Scenario: </span>
+<span class="title">We can see the edit button if we're logged in</span>
+<span class="path">app/tests/acceptance/Blog.feature:127</span>
+</h3>
+<ol>
+<li class="passed">
+<div class="step">
+<span class="keyword">Given </span>
+<span class="text">I am logged in</span>
+<span class="path">FeatureContext::iAmLoggedIn()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">And </span>
+<span class="text">there is a blog post with title "<strong class="passed_param">Editing Test</strong>" and content "<strong class="passed_param">I made a boo boo</strong>"</span>
+<span class="path">FeatureContext::thereIsABlogPostWithTitleAndContent()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">When </span>
+<span class="text">I am on "<strong class="passed_param">blog/editing-test</strong>"</span>
+<span class="path">FeatureContext::visit()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">Then </span>
+<span class="text">I should see "<strong class="passed_param">Edit Post</strong>"</span>
+<span class="path">FeatureContext::assertPageContainsText()</span>
+</div>
+</li>
+</ol>
+</div>
+<div class="scenario">
+<h3>
+<span class="keyword">Scenario: </span>
+<span class="title">We can't see the edit button if we're not logged in</span>
+<span class="path">app/tests/acceptance/Blog.feature:133</span>
+</h3>
+<ol>
+<li class="passed">
+<div class="step">
+<span class="keyword">Given </span>
+<span class="text">there is a blog post with title "<strong class="passed_param">Editing Test</strong>" and content "<strong class="passed_param">I made a boo boo</strong>"</span>
+<span class="path">FeatureContext::thereIsABlogPostWithTitleAndContent()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">When </span>
+<span class="text">I am on "<strong class="passed_param">blog/editing-test</strong>"</span>
+<span class="path">FeatureContext::visit()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">Then </span>
+<span class="text">I should not see "<strong class="passed_param">Edit Post</strong>"</span>
+<span class="path">FeatureContext::assertPageNotContainsText()</span>
+</div>
+</li>
+</ol>
+</div>
+<div class="scenario">
+<h3>
+<span class="keyword">Scenario: </span>
+<span class="title">When we see blog posts, they are paginated</span>
+<span class="path">app/tests/acceptance/Blog.feature:138</span>
+</h3>
+<ol>
+<li class="passed">
+<div class="step">
+<span class="keyword">Given </span>
+<span class="text">there are <strong class="passed_param">15</strong> blog posts</span>
+<span class="path">FeatureContext::thereAreBlogPosts()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">When </span>
+<span class="text">I am on "<strong class="passed_param">/blog</strong>"</span>
+<span class="path">FeatureContext::visit()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">Then </span>
+<span class="text">I should see "<strong class="passed_param">«</strong>"</span>
+<span class="path">FeatureContext::assertPageContainsText()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">And </span>
+<span class="text">I should see "<strong class="passed_param">»</strong>"</span>
+<span class="path">FeatureContext::assertPageContainsText()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">And </span>
+<span class="text">I should see <strong class="passed_param">6</strong> copies of "<strong class="passed_param">.blog-title</strong>"</span>
+<span class="path">FeatureContext::iShouldSee()</span>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="feature">
+<h2>
+<span class="keyword">Feature: </span>
+<span class="title">Gigs</span>
+</h2>
+<p>
+<br />
+In order publicise concerts<br />
+As the site owner<br />
+I can update the gig list<br />
+</p>
+
+<div class="scenario background">
+<h3>
+<span class="keyword">Background: </span>
+<span class="title">There is a user</span>
+<span class="path">app/tests/acceptance/Gigs.feature:7</span>
+</h3>
+<ol>
+<li class="passed">
+<div class="step">
+<span class="keyword">Given </span>
+<span class="text">there is a user</span>
+<span class="path">FeatureContext::thereIsAUser()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">And </span>
+<span class="text">I am logged in</span>
+<span class="path">FeatureContext::iAmLoggedIn()</span>
+</div>
+</li>
+</ol>
+</div>
+<div class="scenario">
+<h3>
+<span class="keyword">Scenario: </span>
+<span class="title">Only the site owner may create gig postings</span>
+<span class="path">app/tests/acceptance/Gigs.feature:11</span>
+</h3>
+<ol>
+<li class="passed">
+<div class="step">
+<span class="keyword">Given </span>
+<span class="text">I am not logged in</span>
+<span class="path">FeatureContext::iAmNotLoggedIn()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">When </span>
+<span class="text">I am on "<strong class="passed_param">gigs/create</strong>"</span>
+<span class="path">FeatureContext::visit()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">Then </span>
+<span class="text">I should be on "<strong class="passed_param">/login</strong>"</span>
+<span class="path">FeatureContext::assertPageAddress()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">And </span>
+<span class="text">I should see a flash message "<strong class="passed_param">You're not authorised to do that</strong>"</span>
+<span class="path">FeatureContext::iShouldSeeAFlashMessage()</span>
+</div>
+</li>
+</ol>
+</div>
+<div class="scenario">
+<h3>
+<span class="keyword">Scenario: </span>
+<span class="title">The site owner adds a gig to the database</span>
+<span class="path">app/tests/acceptance/Gigs.feature:17</span>
+</h3>
+<ol>
+<li class="passed">
+<div class="step">
+<span class="keyword">Given </span>
+<span class="text">I am on "<strong class="passed_param">gigs/create</strong>"</span>
+<span class="path">FeatureContext::visit()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">And </span>
+<span class="text">I fill in the following:</span>
+<span class="path">FeatureContext::fillFields()</span>
+</div>
+<table class="argument">
+<thead>
+<tr class="row">
+<td>date</td>
+<td>2030-01-01</td>
+</tr>
+</thead>
+<tbody>
+<tr class="row">
+<td>time</td>
+<td>8:00pm (Doors at 7:30)</td>
+</tr>
+<tr class="row">
+<td>location</td>
+<td>Shakespeare's</td>
+</tr>
+<tr class="row">
+<td>about</td>
+<td>Some interesting text</td>
+</tr>
+<tr class="row">
+<td>cost</td>
+<td>£50 million</td>
+</tr>
+<tr class="row">
+<td>ticketlink</td>
+<td>http://someaddress.com</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">When </span>
+<span class="text">I press "<strong class="passed_param">Create Gig</strong>"</span>
+<span class="path">FeatureContext::pressButton()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">Then </span>
+<span class="text">I should see a flash message "<strong class="passed_param">Gig created</strong>"</span>
+<span class="path">FeatureContext::iShouldSeeAFlashMessage()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">And </span>
+<span class="text">the database should contain <strong class="passed_param">1</strong> <strong class="passed_param">gig</strong></span>
+<span class="path">FeatureContext::theDatabaseShouldContainXRowsInTableY()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">And </span>
+<span class="text">I should see <strong class="passed_param">1</strong> gigs</span>
+<span class="path">FeatureContext::iShouldSeeGigs()</span>
+</div>
+</li>
+</ol>
+</div>
+<div class="scenario">
+<h3>
+<span class="keyword">Scenario: </span>
+<span class="title">I can view the gigs</span>
+<span class="path">app/tests/acceptance/Gigs.feature:31</span>
+</h3>
+<ol>
+<li class="passed">
+<div class="step">
+<span class="keyword">Given </span>
+<span class="text">there are <strong class="passed_param">5</strong> gigs</span>
+<span class="path">FeatureContext::thereAreGigs()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">When </span>
+<span class="text">I am on "<strong class="passed_param">gigs/</strong>"</span>
+<span class="path">FeatureContext::visit()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">Then </span>
+<span class="text">I should see <strong class="passed_param">5</strong> gigs</span>
+<span class="path">FeatureContext::iShouldSeeGigs()</span>
+</div>
+</li>
+</ol>
+</div>
+<div class="scenario">
+<h3>
+<span class="keyword">Scenario: </span>
+<span class="title">Old gigs are not shown</span>
+<span class="path">app/tests/acceptance/Gigs.feature:36</span>
+</h3>
+<ol>
+<li class="passed">
+<div class="step">
+<span class="keyword">Given </span>
+<span class="text">there is a gig in the past</span>
+<span class="path">FeatureContext::thereIsAGigInThePast()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">When </span>
+<span class="text">I am on "<strong class="passed_param">gigs/</strong>"</span>
+<span class="path">FeatureContext::visit()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">Then </span>
+<span class="text">I should see <strong class="passed_param">0</strong> gigs</span>
+<span class="path">FeatureContext::iShouldSeeGigs()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">And </span>
+<span class="text">I should see "<strong class="passed_param">No bookings, check back soon!</strong>"</span>
+<span class="path">FeatureContext::assertPageContainsText()</span>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="feature">
+<h2>
+<span class="keyword">Feature: </span>
+<span class="title">Login</span>
+</h2>
+<p>
+<br />
+As a user<br />
+I can log in<br />
+To update the site<br />
+</p>
+
+<div class="scenario background">
+<h3>
+<span class="keyword">Background: </span>
+<span class="title">There is a user</span>
+<span class="path">app/tests/acceptance/Login.feature:7</span>
+</h3>
+<ol>
+<li class="passed">
+<div class="step">
+<span class="keyword">Given </span>
+<span class="text">there is a user</span>
+<span class="path">FeatureContext::thereIsAUser()</span>
+</div>
+</li>
+</ol>
+</div>
+<div class="scenario">
+<h3>
+<span class="keyword">Scenario: </span>
+<span class="title">I can log in with valid information</span>
+<span class="path">app/tests/acceptance/Login.feature:10</span>
+</h3>
+<ol>
+<li class="passed">
+<div class="step">
+<span class="keyword">Given </span>
+<span class="text">I am on "<strong class="passed_param">/login</strong>"</span>
+<span class="path">FeatureContext::visit()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">And </span>
+<span class="text">I fill in my login details</span>
+<span class="path">FeatureContext::iFillInMyLoginDetails()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">Then </span>
+<span class="text">I should see a flash message "<strong class="passed_param">Login successful!</strong>"</span>
+<span class="path">FeatureContext::iShouldSeeAFlashMessage()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">And </span>
+<span class="text">I should be logged in</span>
+<span class="path">FeatureContext::iShouldBeLoggedIn()</span>
+</div>
+</li>
+</ol>
+</div>
+<div class="scenario">
+<h3>
+<span class="keyword">Scenario: </span>
+<span class="title">I can't log in without valid information</span>
+<span class="path">app/tests/acceptance/Login.feature:16</span>
+</h3>
+<ol>
+<li class="passed">
+<div class="step">
+<span class="keyword">Given </span>
+<span class="text">I am on "<strong class="passed_param">/login</strong>"</span>
+<span class="path">FeatureContext::visit()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">And </span>
+<span class="text">I fill in invalid login details</span>
+<span class="path">FeatureContext::iFillInInvalidLoginDetails()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">Then </span>
+<span class="text">I should not be logged in</span>
+<span class="path">FeatureContext::iShouldNotBeLoggedIn()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">And </span>
+<span class="text">I should be on "<strong class="passed_param">/login</strong>"</span>
+<span class="path">FeatureContext::assertPageAddress()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">And </span>
+<span class="text">I should see a flash message "<strong class="passed_param">Incorrect username/password</strong>"</span>
+<span class="path">FeatureContext::iShouldSeeAFlashMessage()</span>
+</div>
+</li>
+</ol>
+</div>
+<div class="scenario">
+<h3>
+<span class="keyword">Scenario: </span>
+<span class="title">I can log out</span>
+<span class="path">app/tests/acceptance/Login.feature:23</span>
+</h3>
+<ol>
+<li class="passed">
+<div class="step">
+<span class="keyword">Given </span>
+<span class="text">I am logged in</span>
+<span class="path">FeatureContext::iAmLoggedIn()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">And </span>
+<span class="text">I am on "<strong class="passed_param">/logout</strong>"</span>
+<span class="path">FeatureContext::visit()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">Then </span>
+<span class="text">I should not be logged in</span>
+<span class="path">FeatureContext::iShouldNotBeLoggedIn()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">And </span>
+<span class="text">I should see a flash message "<strong class="passed_param">You are now logged out</strong>"</span>
+<span class="path">FeatureContext::iShouldSeeAFlashMessage()</span>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="feature">
+<h2>
+<span class="keyword">Feature: </span>
+<span class="title">Navigation</span>
+</h2>
+<p>
+<br />
+As a user<br />
+I can use the navbar<br />
+So I can navigate the site<br />
+</p>
+
+<div class="scenario background">
+<h3>
+<span class="keyword">Background: </span>
+<span class="title">I start on the home page</span>
+<span class="path">app/tests/acceptance/Navigation.feature:7</span>
+</h3>
+<ol>
+<li class="passed">
+<div class="step">
+<span class="keyword">Given </span>
+<span class="text">I am on "<strong class="passed_param">/</strong>"</span>
+<span class="path">FeatureContext::visit()</span>
+</div>
+</li>
+</ol>
+</div>
+<div class="scenario">
+<h3>
+<span class="keyword">Scenario: </span>
+<span class="title">I can log in using the navbar</span>
+<span class="path">app/tests/acceptance/Navigation.feature:10</span>
+</h3>
+<ol>
+<li class="passed">
+<div class="step">
+<span class="keyword">And </span>
+<span class="text">I click "<strong class="passed_param">Login</strong>"</span>
+<span class="path">FeatureContext::iClick()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">Then </span>
+<span class="text">I should be on "<strong class="passed_param">/login</strong>"</span>
+<span class="path">FeatureContext::assertPageAddress()</span>
+</div>
+</li>
+</ol>
+</div>
+<div class="scenario">
+<h3>
+<span class="keyword">Scenario: </span>
+<span class="title">I can log out using the navbar</span>
+<span class="path">app/tests/acceptance/Navigation.feature:14</span>
+</h3>
+<ol>
+<li class="passed">
+<div class="step">
+<span class="keyword">Given </span>
+<span class="text">there is a user</span>
+<span class="path">FeatureContext::thereIsAUser()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">And </span>
+<span class="text">I am logged in</span>
+<span class="path">FeatureContext::iAmLoggedIn()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">And </span>
+<span class="text">I click "<strong class="passed_param">Logout</strong>"</span>
+<span class="path">FeatureContext::iClick()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">Then </span>
+<span class="text">I should not be logged in</span>
+<span class="path">FeatureContext::iShouldNotBeLoggedIn()</span>
+</div>
+</li>
+</ol>
+</div>
+<div class="scenario">
+<h3>
+<span class="keyword">Scenario: </span>
+<span class="title">I can visit the home page</span>
+<span class="path">app/tests/acceptance/Navigation.feature:20</span>
+</h3>
+<ol>
+<li class="passed">
+<div class="step">
+<span class="keyword">Given </span>
+<span class="text">I am on "<strong class="passed_param">/login</strong>"</span>
+<span class="path">FeatureContext::visit()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">When </span>
+<span class="text">I click "<strong class="passed_param">Home</strong>"</span>
+<span class="path">FeatureContext::iClick()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">Then </span>
+<span class="text">I should be on the home page</span>
+<span class="path">FeatureContext::iShouldBeOnTheHomePage()</span>
+</div>
+</li>
+</ol>
+</div>
+<div class="scenario">
+<h3>
+<span class="keyword">Scenario: </span>
+<span class="title">I can visit the blog page</span>
+<span class="path">app/tests/acceptance/Navigation.feature:25</span>
+</h3>
+<ol>
+<li class="passed">
+<div class="step">
+<span class="keyword">When </span>
+<span class="text">I click "<strong class="passed_param">Blog</strong>"</span>
+<span class="path">FeatureContext::iClick()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">Then </span>
+<span class="text">I should be on "<strong class="passed_param">/blog</strong>"</span>
+<span class="path">FeatureContext::assertPageAddress()</span>
+</div>
+</li>
+</ol>
+</div>
+<div class="scenario">
+<h3>
+<span class="keyword">Scenario: </span>
+<span class="title">I can visit the gig page</span>
+<span class="path">app/tests/acceptance/Navigation.feature:29</span>
+</h3>
+<ol>
+<li class="passed">
+<div class="step">
+<span class="keyword">When </span>
+<span class="text">I click "<strong class="passed_param">Gigs</strong>"</span>
+<span class="path">FeatureContext::iClick()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">Then </span>
+<span class="text">I should be on "<strong class="passed_param">/gigs</strong>"</span>
+<span class="path">FeatureContext::assertPageAddress()</span>
+</div>
+</li>
+</ol>
+</div>
+<div class="scenario">
+<h3>
+<span class="keyword">Scenario: </span>
+<span class="title">I can visit the about page</span>
+<span class="path">app/tests/acceptance/Navigation.feature:33</span>
+</h3>
+<ol>
+<li class="passed">
+<div class="step">
+<span class="keyword">When </span>
+<span class="text">I click "<strong class="passed_param">About</strong>"</span>
+<span class="path">FeatureContext::iClick()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">Then </span>
+<span class="text">I should be on "<strong class="passed_param">/about</strong>"</span>
+<span class="path">FeatureContext::assertPageAddress()</span>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="feature">
+<h2>
+<span class="keyword">Feature: </span>
+<span class="title">Tags</span>
+</h2>
+<p>
+<br />
+As an admin<br />
+I can tag posts<br />
+So that we can find similar posts<br />
+</p>
+
+<div class="scenario background">
+<h3>
+<span class="keyword">Background: </span>
+<span class="title">I should have an empty site</span>
+<span class="path">app/tests/acceptance/Tags.feature:7</span>
+</h3>
+<ol>
+<li class="passed">
+<div class="step">
+<span class="keyword">Given </span>
+<span class="text">there is a user</span>
+<span class="path">FeatureContext::thereIsAUser()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">And </span>
+<span class="text">I am logged in</span>
+<span class="path">FeatureContext::iAmLoggedIn()</span>
+</div>
+</li>
+</ol>
+</div>
+<div class="scenario">
+<h3>
+<span class="keyword">Scenario: </span>
+<span class="title">I can tag a post</span>
+<span class="path">app/tests/acceptance/Tags.feature:11</span>
+</h3>
+<ol>
+<li class="passed">
+<div class="step">
+<span class="keyword">When </span>
+<span class="text">I create a blog post and tag it "<strong class="passed_param">testing</strong>"</span>
+<span class="path">FeatureContext::iCreateABlogPostAndTagIt()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">Then </span>
+<span class="text">I should see the tag "<strong class="passed_param">testing</strong>"</span>
+<span class="path">FeatureContext::iShouldSeeTheTag()</span>
+</div>
+</li>
+</ol>
+</div>
+<div class="scenario">
+<h3>
+<span class="keyword">Scenario: </span>
+<span class="title">I can tag a post with multiple tags</span>
+<span class="path">app/tests/acceptance/Tags.feature:15</span>
+</h3>
+<ol>
+<li class="passed">
+<div class="step">
+<span class="keyword">When </span>
+<span class="text">I create a blog post and tag it "<strong class="passed_param">testing, test1, test2</strong>"</span>
+<span class="path">FeatureContext::iCreateABlogPostAndTagIt()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">Then </span>
+<span class="text">I should see the tag "<strong class="passed_param">testing</strong>"</span>
+<span class="path">FeatureContext::iShouldSeeTheTag()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">And </span>
+<span class="text">I should see the tag "<strong class="passed_param">test1</strong>"</span>
+<span class="path">FeatureContext::iShouldSeeTheTag()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">And </span>
+<span class="text">I should see the tag "<strong class="passed_param">test</strong>"</span>
+<span class="path">FeatureContext::iShouldSeeTheTag()</span>
+</div>
+</li>
+<li class="failed">
+<div class="step">
+<span class="keyword">And </span>
+<span class="text">I shouldn't see "<strong class="failed_param">,</strong>"</span>
+<span class="path">FeatureContext::iShouldntSee()</span>
+</div>
+<pre class="backtrace">The text &quot;,&quot; appears in the text of this page, but it should not.</pre>
+</li>
+</ol>
+</div>
+<div class="scenario">
+<h3>
+<span class="keyword">Scenario: </span>
+<span class="title">I can search by a tag</span>
+<span class="path">app/tests/acceptance/Tags.feature:22</span>
+</h3>
+<ol>
+<li class="passed">
+<div class="step">
+<span class="keyword">Given </span>
+<span class="text">there are <strong class="passed_param">9</strong> blog posts with the tag "<strong class="passed_param">foo</strong>"</span>
+<span class="path">FeatureContext::thereAreBlogPostsWithTheTag()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">And </span>
+<span class="text">there are <strong class="passed_param">3</strong> blog posts with the tag "<strong class="passed_param">bar</strong>"</span>
+<span class="path">FeatureContext::thereAreBlogPostsWithTheTag()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">When </span>
+<span class="text">I am on "<strong class="passed_param">/tag/foo</strong>"</span>
+<span class="path">FeatureContext::visit()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">Then </span>
+<span class="text">I should see <strong class="passed_param">6</strong> copies of "<strong class="passed_param">.blog-title</strong>"</span>
+<span class="path">FeatureContext::iShouldSee()</span>
+</div>
+</li>
+</ol>
+</div>
+<div class="scenario">
+<h3>
+<span class="keyword">Scenario: </span>
+<span class="title">I can see all tags</span>
+<span class="path">app/tests/acceptance/Tags.feature:28</span>
+</h3>
+<ol>
+<li class="passed">
+<div class="step">
+<span class="keyword">Given </span>
+<span class="text">there are <strong class="passed_param">4</strong> blog posts with the tag "<strong class="passed_param">foo</strong>"</span>
+<span class="path">FeatureContext::thereAreBlogPostsWithTheTag()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">And </span>
+<span class="text">there are <strong class="passed_param">4</strong> blog posts with the tag "<strong class="passed_param">bar</strong>"</span>
+<span class="path">FeatureContext::thereAreBlogPostsWithTheTag()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">And </span>
+<span class="text">there are <strong class="passed_param">4</strong> blog posts with the tag "<strong class="passed_param">baz</strong>"</span>
+<span class="path">FeatureContext::thereAreBlogPostsWithTheTag()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">And </span>
+<span class="text">there are <strong class="passed_param">4</strong> blog posts with the tag "<strong class="passed_param">bau</strong>"</span>
+<span class="path">FeatureContext::thereAreBlogPostsWithTheTag()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">And </span>
+<span class="text">there are <strong class="passed_param">4</strong> blog posts with the tag "<strong class="passed_param">baa</strong>"</span>
+<span class="path">FeatureContext::thereAreBlogPostsWithTheTag()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">And </span>
+<span class="text">there are <strong class="passed_param">4</strong> blog posts with the tag "<strong class="passed_param">bab</strong>"</span>
+<span class="path">FeatureContext::thereAreBlogPostsWithTheTag()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">And </span>
+<span class="text">there are <strong class="passed_param">4</strong> blog posts with the tag "<strong class="passed_param">bac</strong>"</span>
+<span class="path">FeatureContext::thereAreBlogPostsWithTheTag()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">When </span>
+<span class="text">I am on "<strong class="passed_param">/tag</strong>"</span>
+<span class="path">FeatureContext::visit()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">Then </span>
+<span class="text">I should see "<strong class="passed_param">foo</strong>"</span>
+<span class="path">FeatureContext::assertPageContainsText()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">And </span>
+<span class="text">I should see "<strong class="passed_param">bar</strong>"</span>
+<span class="path">FeatureContext::assertPageContainsText()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">And </span>
+<span class="text">I should see "<strong class="passed_param">baz</strong>"</span>
+<span class="path">FeatureContext::assertPageContainsText()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">And </span>
+<span class="text">I should see <strong class="passed_param">18</strong> copies of "<strong class="passed_param">.tagged-post</strong>"</span>
+<span class="path">FeatureContext::iShouldSee()</span>
+</div>
+</li>
+</ol>
+</div>
+<div class="scenario">
+<h3>
+<span class="keyword">Scenario: </span>
+<span class="title">We get a graceful fail when a tag isn't found</span>
+<span class="path">app/tests/acceptance/Tags.feature:42</span>
+</h3>
+<ol>
+<li class="passed">
+<div class="step">
+<span class="keyword">Given </span>
+<span class="text">there are no tags</span>
+<span class="path">FeatureContext::thereAreNoTags()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">When </span>
+<span class="text">I am on "<strong class="passed_param">/tag/foo</strong>"</span>
+<span class="path">FeatureContext::visit()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">Then </span>
+<span class="text">I should see a flash message "<strong class="passed_param">Tag not found</strong>"</span>
+<span class="path">FeatureContext::iShouldSeeAFlashMessage()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">And </span>
+<span class="text">I should be on "<strong class="passed_param">/tag</strong>"</span>
+<span class="path">FeatureContext::assertPageAddress()</span>
+</div>
+</li>
+</ol>
+</div>
+<div class="scenario">
+<h3>
+<span class="keyword">Scenario: </span>
+<span class="title">I can tag a post after editing it</span>
+<span class="path">app/tests/acceptance/Tags.feature:48</span>
+</h3>
+<ol>
+<li class="passed">
+<div class="step">
+<span class="keyword">Given </span>
+<span class="text">there is a blog post with title "<strong class="passed_param">Editing Test</strong>" and content "<strong class="passed_param">I made a boo boo</strong>"</span>
+<span class="path">FeatureContext::thereIsABlogPostWithTitleAndContent()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">When </span>
+<span class="text">I am on "<strong class="passed_param">/blog/editing-test/edit</strong>"</span>
+<span class="path">FeatureContext::visit()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">And </span>
+<span class="text">I tag it "<strong class="passed_param">testing</strong>"</span>
+<span class="path">FeatureContext::iTagIt()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">Then </span>
+<span class="text">I should see the tag "<strong class="passed_param">testing</strong>"</span>
+<span class="path">FeatureContext::iShouldSeeTheTag()</span>
+</div>
+</li>
+</ol>
+</div>
+<div class="scenario">
+<h3>
+<span class="keyword">Scenario: </span>
+<span class="title">When I edit a post the previous tags are there</span>
+<span class="path">app/tests/acceptance/Tags.feature:54</span>
+</h3>
+<ol>
+<li class="passed">
+<div class="step">
+<span class="keyword">Given </span>
+<span class="text">there is a blog post with tags "<strong class="passed_param">foo, bar</strong>"</span>
+<span class="path">FeatureContext::thereIsABlogPostWithTags()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">When </span>
+<span class="text">I go to the edit page</span>
+<span class="path">FeatureContext::iGoToTheEditPage()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">Then </span>
+<span class="text">I should see it tagged "<strong class="passed_param">foo, bar</strong>"</span>
+<span class="path">FeatureContext::iShouldSeeItTagged()</span>
+</div>
+</li>
+</ol>
+</div>
+<div class="scenario">
+<h3>
+<span class="keyword">Scenario: </span>
+<span class="title">I can change the tags of a post while editing it</span>
+<span class="path">app/tests/acceptance/Tags.feature:59</span>
+</h3>
+<ol>
+<li class="passed">
+<div class="step">
+<span class="keyword">Given </span>
+<span class="text">there is a blog post with tag "<strong class="passed_param">foo</strong>"</span>
+<span class="path">FeatureContext::thereIsABlogPostWithTag()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">When </span>
+<span class="text">I go to the edit page</span>
+<span class="path">FeatureContext::iGoToTheEditPage()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">And </span>
+<span class="text">I tag it "<strong class="passed_param">bar</strong>"</span>
+<span class="path">FeatureContext::iTagIt()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">Then </span>
+<span class="text">I should see the tag "<strong class="passed_param">bar</strong>"</span>
+<span class="path">FeatureContext::iShouldSeeTheTag()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">And </span>
+<span class="text">I should not see the tag "<strong class="passed_param">foo</strong>"</span>
+<span class="path">FeatureContext::iShouldNotSeeTheTag()</span>
+</div>
+</li>
+</ol>
+</div>
+<div class="scenario">
+<h3>
+<span class="keyword">Scenario: </span>
+<span class="title">All tags are lower case</span>
+<span class="path">app/tests/acceptance/Tags.feature:66</span>
+</h3>
+<ol>
+<li class="passed">
+<div class="step">
+<span class="keyword">Given </span>
+<span class="text">I create a blog post and tag it "<strong class="passed_param">foo, Bar</strong>"</span>
+<span class="path">FeatureContext::iCreateABlogPostAndTagIt()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">Then </span>
+<span class="text">I should see the tag "<strong class="passed_param">foo</strong>"</span>
+<span class="path">FeatureContext::iShouldSeeTheTag()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">And </span>
+<span class="text">I should see the tag "<strong class="passed_param">bar</strong>"</span>
+<span class="path">FeatureContext::iShouldSeeTheTag()</span>
+</div>
+</li>
+</ol>
+</div>
+<div class="scenario">
+<h3>
+<span class="keyword">Scenario: </span>
+<span class="title">When tags have no posts, we can't see them</span>
+<span class="path">app/tests/acceptance/Tags.feature:71</span>
+</h3>
+<ol>
+<li class="passed">
+<div class="step">
+<span class="keyword">Given </span>
+<span class="text">there is a blog post with tag "<strong class="passed_param">foo</strong>"</span>
+<span class="path">FeatureContext::thereIsABlogPostWithTag()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">And </span>
+<span class="text">I go to the edit page</span>
+<span class="path">FeatureContext::iGoToTheEditPage()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">And </span>
+<span class="text">I tag it "<strong class="passed_param">bar</strong>"</span>
+<span class="path">FeatureContext::iTagIt()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">When </span>
+<span class="text">I am on "<strong class="passed_param">/tag</strong>"</span>
+<span class="path">FeatureContext::visit()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">Then </span>
+<span class="text">I should not see "<strong class="passed_param">foo</strong>"</span>
+<span class="path">FeatureContext::assertPageNotContainsText()</span>
+</div>
+</li>
+<li class="passed">
+<div class="step">
+<span class="keyword">And </span>
+<span class="text">I should see "<strong class="passed_param">bar</strong>"</span>
+<span class="path">FeatureContext::assertPageContainsText()</span>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="summary failed">
+<div class="counters">
+<p class="scenarios">
+39 scenarios (<strong class="passed">38 passed</strong>, <strong class="failed">1 failed</strong>)
+</p>
+<p class="steps">
+219 steps (<strong class="passed">218 passed</strong>, <strong class="failed">1 failed</strong>)
+</p>
+<p class="time">
+0m17.94s
+</p>
+</div>
+<div class="switchers">
+    <a href="javascript:void(0)" id="behat_show_all">[+] all</a>
+    <a href="javascript:void(0)" id="behat_hide_all">[-] all</a>
+</div>
+</div>
+
+    </div>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.3/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('#behat .feature h2').click(function(){
+                $(this).parent().toggleClass('jq-toggle-opened');
+            }).parent().addClass('jq-toggle');
+
+            $('#behat .scenario h3').click(function(){
+                $(this).parent().toggleClass('jq-toggle-opened');
+            }).parent().addClass('jq-toggle');
+
+            $('#behat_show_all').click(function(){
+                $('#behat .feature').addClass('jq-toggle-opened');
+                $('#behat .scenario').addClass('jq-toggle-opened');
+            });
+
+            $('#behat_hide_all').click(function(){
+                $('#behat .feature').removeClass('jq-toggle-opened');
+                $('#behat .scenario').removeClass('jq-toggle-opened');
+            });
+
+            $('#behat .summary .counters .scenarios .passed')
+                .addClass('switcher')
+                .click(function(){
+                    var $scenario = $('.feature .scenario:not(:has(.failed, .pending))');
+                    var $feature  = $scenario.parent();
+
+                    $('#behat_hide_all').click();
+
+                    $scenario.addClass('jq-toggle-opened');
+                    $feature.addClass('jq-toggle-opened');
+                });
+
+            $('#behat .summary .counters .steps .passed')
+                .addClass('switcher')
+                .click(function(){
+                    var $scenario = $('.feature .scenario:has(.passed)');
+                    var $feature  = $scenario.parent();
+
+                    $('#behat_hide_all').click();
+
+                    $scenario.addClass('jq-toggle-opened');
+                    $feature.addClass('jq-toggle-opened');
+                });
+
+            $('#behat .summary .counters .failed')
+                .addClass('switcher')
+                .click(function(){
+                    var $scenario = $('.feature .scenario:has(.failed)');
+                    var $feature = $scenario.parent();
+
+                    $('#behat_hide_all').click();
+
+                    $scenario.addClass('jq-toggle-opened');
+                    $feature.addClass('jq-toggle-opened');
+                });
+
+            $('#behat .summary .counters .skipped')
+                .addClass('switcher')
+                .click(function(){
+                    var $scenario = $('.feature .scenario:has(.skipped)');
+                    var $feature = $scenario.parent();
+
+                    $('#behat_hide_all').click();
+
+                    $scenario.addClass('jq-toggle-opened');
+                    $feature.addClass('jq-toggle-opened');
+                });
+
+            $('#behat .summary .counters .pending')
+                .addClass('switcher')
+                .click(function(){
+                    var $scenario = $('.feature .scenario:has(.pending)');
+                    var $feature = $scenario.parent();
+
+                    $('#behat_hide_all').click();
+
+                    $scenario.addClass('jq-toggle-opened');
+                    $feature.addClass('jq-toggle-opened');
+                });
+        });
+    </script>
+</body>
+</html>

@@ -33,7 +33,3 @@ Feature: Navigation
   Scenario: I can visit the about page
     When I click "About"
     Then I should be on "/about"
-
-  Scenario: I can visit the tags pages
-    When I click "Tags"
-    Then I should be on "/tag"

@@ -8,7 +8,7 @@
     <div class="row topspace">
         <article class="col-md-8 maincontent">
             <header class="page-header">
-                <h2 class="page-title">
+                <h2 class="page-title blog-title">
                     {{ ucwords($blog->title) }}
                 </h2>
             </header>

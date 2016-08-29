@@ -3,7 +3,7 @@
     <div class="entry-meta">
       <span class="posted-on"><time class="entry-date published" date="{{ $blog->created_at }}">{{ $blog->present()->getDate() }}</time></span>
     </div>
-    <h1 class="entry-title">{{ link_to_route("blog.show", ucwords($blog->title), $blog->slug, ['rel' => 'bookmark']) }}
+    <h1 class="entry-title blog-title">{{ link_to_route("blog.show", ucwords($blog->title), $blog->slug, ['rel' => 'bookmark']) }}
     </h1>
   </header>
   <div class="entry-content">
@@ -13,7 +13,7 @@
           "blog.show",
           "Continue Reading...",
           $blog->slug,
-          array('class' => 'btn btn-action')
+          array('class' => 'btn btn-action btn-blog')
         ) }}
     </p>
   </div>

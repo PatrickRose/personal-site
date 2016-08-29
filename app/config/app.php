@@ -13,7 +13,9 @@ return array(
   |
    */
 
-    'debug' => getenv('APP_DEBUG'),
+    'debug' => false,
+
+    'cipher' => MCRYPT_RIJNDAEL_256,
 
     /*
   |--------------------------------------------------------------------------

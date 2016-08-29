@@ -17,7 +17,7 @@ Feature: Tags
     Then I should see the tag "testing"
     And I should see the tag "test1"
     And I should see the tag "test"
-    And I shouldn't see ","
+    And I shouldn't see "testing, test1, test2"
 
   Scenario: I can search by a tag
     Given there are 9 blog posts with the tag "foo"
