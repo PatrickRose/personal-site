@@ -24,7 +24,7 @@ class StaticPagesController extends Controller
     public function homePage()
     {
         $blogs = $this->blogRepo->getOnly(4);
-        return \View::make("staticpages.home", compact('blogs'))
+        return \View::make("staticpages.home", compact('blogs'));
     }
 
     public function aboutPage()
