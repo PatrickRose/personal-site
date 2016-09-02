@@ -1,0 +1,31 @@
+.about-header {
+  @extend .page-header;
+
+  margin-top: 0;
+}
+
+#about-singing {
+  @include about-header("../img/singing.jpg", 50%, 40%);
+}
+
+#about-guitar {
+  @include about-header("../img/guitar.jpg", 75%, 0%);
+}
+
+#about-calling {
+  @include about-header("../img/calling.jpg", 40%, 20%);
+  background-size: 120%;
+}
+
+.about-header {
+  text-align: center;
+  background-color: #ffffff;
+  background-image: none;
+  opacity:0.6;
+  color: #000000;
+  border-radius: 25px;
+  filter:alpha(opacity=60); /* For IE8 and earlier */
+  h2 {
+    color: #000000;
+  }
+}

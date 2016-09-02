@@ -1,0 +1,8 @@
+default:
+    extensions:
+        Laracasts\Behat:
+            env_path: .env
+        Behat\MinkExtension:
+            default_session: laravel
+            laravel: ~
+            base_url: http://personal.dev
