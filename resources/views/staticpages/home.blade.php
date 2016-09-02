@@ -69,7 +69,7 @@
         <div class="col-md-3 col-sm-6">
 	  <h3>{{ ucwords($blog->title) }}</h3>
 	  <div class="home-page-blog-text">
-	    {{ $blog->present()->getFirstParagraph() }}
+	    {!! $blog->present()->getFirstParagraph() !!}
 	  </div>
 	  <p class="text-center">
             {{ link_to_route("blog.show", "Read more", $blog->slug, ['class' => 'btn btn-action']) }}
