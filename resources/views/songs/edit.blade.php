@@ -28,7 +28,7 @@
     </div>
     <div class="form-group">
         {{ Form::label("video", "Youtube link: ") }}
-        {{ Form::textarea("video", null, array("class" => "form-control", "placeholder" => "Youtube video id...")) }}
+        {{ Form::text("video", null, array("class" => "form-control", "placeholder" => "Youtube video id...")) }}
     </div>
     {{ Form::submit("Update Song", array("class" => "btn btn-primary")) }}
 
