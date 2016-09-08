@@ -40,7 +40,7 @@ class DbBlogRepository implements BlogRepositoryInterface
     {
         $blogContent = $input->only('title', 'content');
         $blog = new Blog($blogContent);
-        $blog->slug = $blog->makeSlug();
+        $blog->makeSlug();
         if (!$blog->save()) {
             throw new DatabaseConnectionException();
         };

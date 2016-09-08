@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <title>@yield("title") - Patrick Rose</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
     <link rel="stylesheet" href="{{ asset("css/main.css") }}" />
     <link rel="stylesheet" href="{{ asset("css/styles.css") }}" />
     <link rel="stylesheet" href="http://yandex.st/highlightjs/8.0/styles/default.min.css">
@@ -10,17 +11,17 @@
   </head>
   <body>
     <header id="header">
-      <div id="head" class="parallax" parallax-speed="2">
+      <div id="head" class="parallax" data-parallax-speed="2">
         <h1 id="logo" class="text-center">
-          <img class="img-circle" src="{{ asset('img/header.jpg') }}">
+          <img class="img-circle" src="{{ asset('img/header.jpg') }}" alt="">
           <span class="title">Patrick Rose</span>
           <span class="tagline">
             Singer, Guitarist, Caller<br />
-            <div class="email">
+            <span class="email">
               <a href="mailto:whoelse@patrickrosemusic.co.uk">
                 whoelse@patrickrosemusic.co.uk
                 <span class="mobile-email glyphicon glyphicon-envelope"></span></a>
-            </div>
+            </span>
           </span>
 
         </h1>
@@ -53,7 +54,7 @@
             <div class="widget-body">
               <p>
                 Copyright &copy; {{ date('Y') }} Patrick Rose<br>
-                Design: <a href="http://www.gettemplate.com" rel="designer">Initio by GetTemplate</a> </p>
+                Design: <a href="http://www.gettemplate.com">Initio by GetTemplate</a>
               </p>
             </div>
           </div>

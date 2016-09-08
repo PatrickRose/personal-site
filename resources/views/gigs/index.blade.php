@@ -6,7 +6,7 @@
 
 @section('content')
     <div class="page-header">
-        <h1>
+        <h1 class="text-center">
             Upcoming Gigs
         </h1>
     </div>

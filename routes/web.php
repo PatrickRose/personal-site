@@ -41,3 +41,4 @@ Route::get('about', array(
 ));
 
 Route::resource('gigs', 'GigsController');
+Route::resource('songs', 'SongsController');

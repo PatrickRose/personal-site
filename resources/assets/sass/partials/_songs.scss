@@ -1,0 +1,36 @@
+.song-information {
+    @extend .panel-body;
+}
+
+.song-composer, .song-title {
+    display: inline;
+}
+
+.song-lyrics {
+    margin-top: 0.5em;
+
+    .song-chorus {
+        font-style: italic;
+    }
+}
+
+.song-available-on {
+    @extend .panel-body;
+}
+
+.song-book-panel {
+    @extend .panel-default;
+    .song-book-list {
+        @extend .list-group;
+        margin-bottom: 0;
+    }
+}
+
+.song-book-list a.song {
+    @extend .list-group-item;
+
+    .song-composer {
+        align-self: flex-end;
+        @extend .text-muted;
+    }
+}

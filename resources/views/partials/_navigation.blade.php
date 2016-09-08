@@ -11,6 +11,7 @@
         <li @if (Route::currentRouteName() == 'about')class="active"@endif><a href="{{ route('about') }}">About</a></li>
         <li @if (Route::currentRouteName() == 'gigs.index')class="active"@endif><a href="{{ route('gigs.index') }}">Gigs</a></li>
         <li @if (Route::currentRouteName() == 'blog.index')class="active"@endif><a href="{{ route('blog.index') }}">Blog</a></li>
+        <li @if (Route::currentRouteName() == 'songs.index')class="active"@endif><a href="{{ route('songs.index') }}">Songs</a></li>
         <li><a href="{{ route(Auth::check() ? 'logout' : 'login') }}">{{ Auth::check() ? 'Logout' : 'Login' }}</a></li>
       </ul>
     </div><!--/.nav-collapse -->

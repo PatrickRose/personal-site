@@ -7,6 +7,8 @@ use PatrickRose\Validation\BlogValidator;
 use PatrickRose\Repositories\DbBlogRepository;
 use PatrickRose\Repositories\DbTagRepository;
 use PatrickRose\Repositories\DbGigRepository;
+use PatrickRose\Repositories\SongRepositoryInterface;
+use PatrickRose\Repositories\DbSongRepository;
 
 class BackendServiceProvider extends ServiceProvider
 {
@@ -21,6 +23,7 @@ class BackendServiceProvider extends ServiceProvider
         $this->registerBlogRepository();
         $this->registerTagRepository();
         $this->registerGigRepository();
+        $this->registerSongRepository();
     }
 
     public function registerBlogRepository()
@@ -40,5 +43,10 @@ class BackendServiceProvider extends ServiceProvider
         $this->app->bind("PatrickRose\\Repositories\\GigRepositoryInterface", function () {
             return new DbGigRepository();
         });
+    }
+
+    private function registerSongRepository()
+    {
+        $this->app->bind(SongRepositoryInterface::class, DbSongRepository::class);
     }
 }

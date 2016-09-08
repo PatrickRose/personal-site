@@ -5,26 +5,18 @@ namespace PatrickRose;
 use Illuminate\Database\Eloquent\Model;
 use Laracasts\Presenter\PresentableTrait;
 use PatrickRose\Presenters\BlogPresenter;
+use PatrickRose\Repositories\SluggableInterface;
+use PatrickRose\Repositories\SluggableTrait;
 
-class Blog extends Model
+class Blog extends Model implements SluggableInterface
 {
 
     use PresentableTrait;
+    use SluggableTrait;
     
     protected $presenter = BlogPresenter::class;
     
     protected $fillable = ['title', 'content'];
-
-    public function makeSlug()
-    {
-        $slug = preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower($this->title));
-        $count = Blog::where("slug", "LIKE", $slug)->count();
-        if ($count != 0) {
-            $count += 1;
-            $slug .= "-{$count}";
-        }
-        return $slug;
-    }
 
     public function tags()
     {
@@ -38,6 +30,11 @@ class Blog extends Model
             $temp[] = $tag->tag;
         };
         return implode(", ", $temp);
+    }
+
+    protected function getSluggableField()
+    {
+        return 'title';
     }
 }
 

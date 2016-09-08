@@ -19,6 +19,7 @@ class BackendServiceProvider extends ServiceProvider
         $this->registerBlogRepository();
         $this->registerTagRepository();
         $this->registerGigRepository();
+        $this->registerSongRepository();
     }
 
     public function registerBlogRepository()

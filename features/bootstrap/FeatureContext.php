@@ -5,11 +5,11 @@ require_once __DIR__ . "/../../bootstrap/app.php";
 
 define('HTML_DUMP_PATH', __DIR__ . '/failures');
 
+use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Behat\Event\FeatureEvent;
 use Behat\Behat\Hook\Scope\BeforeScenarioScope;
 use Behat\Behat\Hook\Scope\AfterScenarioScope;
 use Behat\Behat\Event\SuiteEvent;
-use Behat\Behat\Exception\PendingException;
 use Behat\Gherkin\Node\PyStringNode;
 use Behat\Mink\Exception\ResponseTextException;
 use Behat\MinkExtension\Context\MinkContext;
@@ -635,6 +635,211 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
             "about" => $factory->sentence(),
             "cost" => '£' . $factory->randomNumber(),
             'ticketlink' => 'http://www.' . $factory->word . '.com'
+        ]);
+    }
+
+    /**
+     * @Given I create a song
+     */
+    public function iCreateASong()
+    {
+        $this->fillField("title", "A new song");
+        $this->fillField("composer", "Patrick Rose");
+        $this->fillField("lyrics", "There was an old man from nantucket
+He's sadly now kicked the bucket
+His mother is sad
+His father is glad
+For money will now be no object
+
+I hate it when you use half-rhymes
+It means you are wasting my time
+If you just used skill
+You'd find out you will
+Be committing a lyrical crime");
+        $this->fillField("info", "This was two limericks I wrote because I needed some test content
+
+God help me.");
+        
+        $this->pressButton("Create Song");
+    }
+
+    public function iShouldSeeTheSongTitle($songTitle) {
+        $session = $this->getMink()->getSession();
+        $search = $session->getPage()->find('css', '.song-title');
+        if (!$search) {
+            throw new ResponseTextException("I couldn't find the song title.", $session);
+        }
+
+        if ($search->getText() != $songTitle) {
+            throw new ResponseTextException("The song title was '" . $search->getText() . "', expected '{$songTitle}'", $session);
+        }
+    }
+
+    public function iShouldSeeTheComposer($composer) {
+        $session = $this->getMink()->getSession();
+        $search = $session->getPage()->find('css', '.song-composer');
+        if (!$search) {
+            throw new ResponseTextException("I couldn't find the song composer.", $session);
+        }
+
+        if ($search->getText() != $composer) {
+            throw new ResponseTextException("The composer was '" . $search->getText() . "', expected '{$composer}'", $session);
+        }
+    }
+
+    public function iShouldSeeTheLyricsSetOutLike(array $verses, array $choruses = [])
+    {
+        $session = $this->getMink()->getSession();
+        $verseCSS = $session->getPage()->findAll('css', '.song-lyrics .song-verse');
+
+        $verses = array_map('nl2br', $verses);
+        
+        foreach($verseCSS as $verse) {
+            $text = trim(str_replace('<br>', '<br />', $verse->getHTML()));
+            $index = array_search($text, $verses);
+            if ($index === false) {
+                throw new ResponseTextException("I wasn't expecting this verse:\n" . $text . "\nlooking in:\n" . implode("\n\n", $verses), $session);
+            }
+            unset($verses[$index]);
+        }
+
+        if (count($verses)) {
+            throw new ResponseTextException("Verse(s) not found:\n" . implode("\n\n", $verses), $session);
+        }
+        
+        $chorusCSS = $session->getPage()->findAll('css', '.song-lyrics .song-chorus');
+
+        $choruses = array_map('nl2br', $choruses);
+        
+        foreach($chorusCSS as $chorus) {
+            $text = trim(str_replace('<br>', '<br />', $chorus->getHTML()));
+            $index = array_search($text, $choruses);
+            if ($index === false) {
+                throw new ResponseTextException("I wasn't expecting this chorus:\n" . $text . "\nlooking in:\n" . implode("\n\n", $choruses), $session);
+            }
+            unset($choruses[$index]);
+        }
+
+        if (count($verses)) {
+            throw new ResponseTextException("Chorus(es) not found:\n" . implode("\n\n", $choruses), $session);
+        }
+    }
+
+    public function iShouldSeeInfo($info)
+    {
+        $session = $this->getMink()->getSession();
+        $information = $session->getPage()->find('css', '.song-information');
+
+        if (!$information) {
+            throw new ResponseTextException("Could not find .song-information", $session);
+        }
+
+        if (trim($information->getHTML()) != $info) {
+            throw new ResponseTextException("The information was '" . $information->getHTML() . "', not '$info'", $session);            
+        }
+    }
+
+    /**
+     * @Then I should see the song
+     */
+    public function iShouldSeeTheSong()
+    {
+        $this->iShouldSeeTheSongTitle("A New Song");
+        $this->iShouldSeeTheComposer("Patrick Rose");
+        $this->iShouldSeeTheLyricsSetOutLike([
+            "There was an old man from nantucket
+He's sadly now kicked the bucket
+His mother is sad
+His father is glad
+For money will now be no object",
+            "I hate it when you use half-rhymes
+It means you are wasting my time
+If you just used skill
+You'd find out you will
+Be committing a lyrical crime"
+        ]);
+        $this->iShouldSeeInfo("<p>This was two limericks I wrote because I needed some test content</p>
+
+<p>God help me.</p>");
+    }
+
+    /**
+     * @Given there is a song
+     */
+    public function thereIsASong()
+    {
+        $song = new PatrickRose\Song([
+            "title" => "A new song",
+            "composer" => "Patrick Rose",
+            "lyrics" => "There was an old man from nantucket
+He's sadly now kicked the bucket
+His mother is sad
+His father is glad
+For money will now be no object
+
+I hate it when you use half-rhymes
+It means you are wasting my time
+If you just used skill
+You'd find out you will
+Be committing a lyrical crime",
+            "info" => "This was two limericks I wrote because I needed some test content
+
+God help me.",
+        ]);
+        $song->makeSlug();
+        $song->save();
+    }
+
+    /**
+     * @Then I should see :number songs
+     */
+    public function iShouldSeeSongs($number)
+    {
+        $this->iShouldSee($number, '.song-title');
+    }
+
+    /**
+     * @Given I create a song with a chorus
+     */
+    public function iCreateASongWithAChorus()
+    {
+        $this->fillField("title", "A new song");
+        $this->fillField("composer", "Patrick Rose");
+        $this->fillField("lyrics", "There was an old man from nantucket
+He's sadly now kicked the bucket
+His mother is sad
+His father is glad
+For money will now be no object
+
+{chorus}
+I hate it when you use half-rhymes
+It means you are wasting my time
+If you just used skill
+You'd find out you will
+Be committing a lyrical crime");
+        $this->fillField("info", "This was two limericks I wrote because I needed some test content
+
+God help me.");
+        
+        $this->pressButton("Create Song");
+    }
+
+    /**
+     * @Then I should see the song chorus
+     */
+    public function iShouldSeeTheSongChorus()
+    {
+        $this->iShouldSeeTheLyricsSetOutLike([
+            "There was an old man from nantucket
+He's sadly now kicked the bucket
+His mother is sad
+His father is glad
+For money will now be no object",],
+                                             ["I hate it when you use half-rhymes
+It means you are wasting my time
+If you just used skill
+You'd find out you will
+Be committing a lyrical crime"
         ]);
     }
 }
