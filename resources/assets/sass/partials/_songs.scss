@@ -26,6 +26,10 @@
     }
 }
 
+.song-verse, .song-chorus {
+    margin-bottom: 10px;
+}
+
 .song-book-list a.song {
     @extend .list-group-item;
 

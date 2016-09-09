@@ -5882,6 +5882,9 @@ button.close {
 .song-book-panel .song-book-list {
   margin-bottom: 0; }
 
+.song-verse, .song-chorus {
+  margin-bottom: 10px; }
+
 .song-book-list a.song .song-composer {
   align-self: flex-end; }
 
