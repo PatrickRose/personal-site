@@ -19,7 +19,7 @@ class SongPresenter extends Presenter
 
     public function getLyrics()
     {
-        $lyrics = explode("\n\n", $this->lyrics);
+        $lyrics = explode("\n\n", str_replace("\r", "", $this->lyrics));
 
         $content = "";
 
